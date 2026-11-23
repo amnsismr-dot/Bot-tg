@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Mini App</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        :root {
+            --bg-main: #0e0e10;
+            --bg-card: #1a1a1e;
+            --bg-pill: #26262b;
+            --text-main: #ffffff;
+            --text-muted: #8e8e93;
+            --accent-red: #b91c1c;
+            --accent-gold: #d97706;
+            --table-green: #152b1e;
+            --table-border: #6b5335;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; user-select: none; }
+        body { background-color: var(--bg-main); color: var(--text-main); height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+        
+        /* Шапка */
+        .header { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; }
+        .title-pill { background: var(--bg-card); padding: 8px 24px; border-radius: 20px; font-weight: 600; font-size: 16px; border: 1px solid #2c2c30; }
+        .balance-bar { display: flex; gap: 8px; justify-content: flex-end; padding: 0 16px 10px; }
+        .bal-badge { background: var(--bg-card); padding: 6px 12px; border-radius: 14px; font-size: 14px; font-weight: 700; display: flex; align-items: center; gap: 6px; border: 1px solid #2c2c30; }
+
+        /* Контент */
+        .screen { flex: 1; overflow-y: auto; padding: 0 16px 80px; display: none; }
+        .screen.active { display: block; }
+
+        /* Профиль / Инвентарь */
+        .inv-card { background: linear-gradient(145deg, #222226, #161618); border-radius: 20px; padding: 20px; text-align: center; border: 1px solid #2e2e34; margin-bottom: 16px; }
+        .inv-label { font-size: 11px; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; }
+        .inv-value { font-size: 32px; font-weight: 800; margin: 8px 0; }
+        .inv-stats { display: flex; justify-content: center; gap: 8px; margin-bottom: 16px; }
+        .stat-chip { background: var(--bg-pill); padding: 4px 10px; border-radius: 12px; font-size: 12px; color: #d1d1d6; }
+        .action-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+        .action-btn { background: var(--bg-pill); border: none; color: #fff; padding: 10px; border-radius: 12px; font-size: 13px; font-weight: 600; cursor: pointer; }
+        
+        .items-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 12px; }
+        .nft-item { background: var(--bg-card); border-radius: 16px; padding: 12px; text-align: center; border: 1px solid #2c2c30; position: relative; }
+        .nft-num { position: absolute; top: 8px; right: 8px; background: rgba(0,0,0,0.6); font-size: 11px; padding: 2px 6px; border-radius: 8px; }
+        .nft-img { font-size: 48px; margin: 16px 0; }
+        .nft-name { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+        .nft-price { font-size: 13px; color: #f43f5e; font-weight: 700; }
+
+        /* Blackjack стол */
+        .bj-table { background: radial-gradient(circle, #1d3b29 0%, var(--table-green) 100%); border: 2px solid var(--table-border); border-radius: 24px; padding: 16px; display: flex; flex-direction: column; justify-content: space-between; min-height: 360px; position: relative; }
+        .bj-info { text-align: center; font-size: 11px; color: #a3b899; letter-spacing: 1px; }
+        .hand-area { display: flex; flex-direction: column; align-items: center; margin: 12px 0; }
+        .hand-header { width: 100%; display: flex; justify-content: space-between; font-size: 13px; color: #cbd5e1; margin-bottom: 8px; }
+        .score-badge { background: rgba(0,0,0,0.5); padding: 2px 10px; border-radius: 10px; font-weight: 700; color: #fff; }
+        .cards-row { display: flex; gap: 8px; min-height: 84px; }
+        .card { width: 58px; height: 84px; background: #fff; color: #111; border-radius: 8px; display: flex; flex-direction: column; justify-content: space-between; padding: 6px; font-weight: 800; font-size: 16px; box-shadow: 0 4px 10px rgba(0,0,0,0.4); }
+        .card.red { color: #dc2626; }
+        .card.hidden { background: repeating-linear-gradient(45deg, #991b1b, #991b1b 6px, #7f1d1d 6px, #7f1d1d 12px); border: 2px solid #fff; }
+        
+        .bet-chip { background: var(--accent-red); border: 2px dashed #fff; width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 12px; margin: 4px auto; box-shadow: 0 4px 8px rgba(0,0,0,0.5); }
+
+        .bj-controls { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 14px; }
+        .btn-bj { border: none; padding: 14px; border-radius: 14px; font-weight: 700; font-size: 15px; cursor: pointer; }
+        .btn-hit { background: #ffffff; color: #000; }
+        .btn-stand { background: var(--accent-red); color: #fff; }
+        .btn-double { background: var(--accent-gold); color: #fff; }
+        .btn-bj:disabled { opacity: 0.4; }
+        .status-msg { text-align: center; margin-top: 10px; font-weight: 700; color: #fbbf24; min-height: 20px; }
+
+        /* Нижнее меню */
+        .bottom-nav { position: fixed; bottom: 12px; left: 16px; right: 16px; background: #18181b; border: 1px solid #27272a; border-radius: 24px; display: flex; justify-content: space-around; padding: 8px 4px; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--text-muted); font-size: 11px; cursor: pointer; padding: 4px 10px; border-radius: 14px; }
+        .nav-item.active { color: #f43f5e; background: rgba(244, 63, 94, 0.1); }
+        .nav-icon { font-size: 18px; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div style="width: 32px;"></div>
+        <div class="title-pill" id="page-title">Inventory</div>
+        <div style="width: 32px;"></div>
+    </div>
+
+    <div class="balance-bar">
+        <div class="bal-badge">💎 <span id="gems-bal">2 015</span></div>
+        <div class="bal-badge">🪙 <span id="chips-bal">6350</span></div>
+    </div>
+
+    <!-- Экран Профиля / Инвентаря -->
+    <div id="screen-profile" class="screen active">
+        <div class="inv-card">
+            <div class="inv-label">Стоимость инвентаря</div>
+            <div class="inv-value">💎 <span id="inv-total">24 941</span></div>
+            <div class="inv-stats">
+                <span class="stat-chip" id="items-count">2 подарков</span>
+                <span class="stat-chip">2 NFT</span>
+            </div>
+            <div class="action-row">
+                <button class="action-btn" onclick="alert('Раздел Рынок в разработке')">📈 Рынок</button>
+                <button class="action-btn" onclick="switchTab('games', 'Blackjack')">🎰 Игры</button>
+                <button class="action-btn" onclick="openCase()">💼 Кейс (500🪙)</button>
+            </div>
+        </div>
+
+        <div class="items-grid" id="inventory-grid">
+            <div class="nft-item" onclick="sellItem(this, 21879)">
+                <span class="nft-num">#426</span>
+                <div class="nft-img">💀</div>
+                <div class="nft-name">Electric Skull</div>
+                <div class="nft-price">💎 21 879</div>
+            </div>
+            <div class="nft-item" onclick="sellItem(this, 3062)">
+                <span class="nft-num">#261</span>
+                <div class="nft-img">💍</div>
+                <div class="nft-name">Diamond Ring</div>
+                <div class="nft-price">💎 3 062</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Экран Игры Blackjack -->
+    <div id="screen-games" class="screen">
+        <div class="bj-table">
+            <div class="bj-info">BLACKJACK PAYS 3 TO 2<br>Дилер берёт карты до 17</div>
+            
+            <div class="hand-area">
+                <div class="hand-header"><span>Дилер</span><span class="score-badge" id="dealer-score">0</span></div>
+                <div class="cards-row" id="dealer-cards"></div>
+            </div>
+
+            <div class="bet-chip" id="current-bet">500</div>
+
+            <div class="hand-area">
+                <div class="cards-row" id="player-cards"></div>
+                <div class="hand-header" style="margin-top:8px; margin-bottom:0;"><span>Вы • ставка <span id="bet-text">500</span></span><span class="score-badge" id="player-score">0</span></div>
+            </div>
+        </div>
+
+        <div class="status-msg" id="bj-status"></div>
+
+        <div class="bj-controls">
+            <button class="btn-bj btn-hit" id="btn-hit" onclick="hit()">Ещё</button>
+            <button class="btn-bj btn-stand" id="btn-stand" onclick="stand()">Хватит</button>
+            <button class="btn-bj btn-double" id="btn-double" onclick="doubleBet()">Удвоить</button>
+        </div>
+        <button class="action-btn" id="btn-restart" style="width:100%; margin-top:10px; display:none; background:#2563eb;" onclick="startBJ()">Новая раздача (500 🪙)</button>
+    </div>
+
+    <!-- Нижняя панель -->
+    <div class="bottom-nav">
+        <div class="nav-item" onclick="alert('Магазин в разработке')"><span class="nav-icon">🛍️</span>Магазин</div>
+        <div class="nav-item" onclick="alert('Карты в разработке')"><span class="nav-icon">🃏</span>Карты</div>
+        <div class="nav-item" id="nav-games" onclick="switchTab('games', 'Blackjack')"><span class="nav-icon">▶️</span>Игры</div>
+        <div class="nav-item" onclick="alert('Рейтинг в разработке')"><span class="nav-icon">🏆</span>Рейтинг</div>
+        <div class="nav-item active" id="nav-profile" onclick="switchTab('profile', 'Inventory')"><span class="nav-icon">👤</span>Профиль</div>
+    </div>
+
+    <script>
+        const tg = window.Telegram.WebApp;
+        tg.expand();
+
+        let chips = 6350;
+        let gems = 2015;
+        let invTotal = 24941;
+
+        function updateBalances() {
+            document.getElementById('chips-bal').innerText = chips;
+            document.getElementById('gems-bal').innerText = gems;
+            document.getElementById('inv-total').innerText = invTotal;
+        }
+
+        function switchTab(tab, title) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            document.getElementById('screen-' + tab).classList.add('active');
+            document.getElementById('nav-' + tab).classList.add('active');
+            document.getElementById('page-title').innerText = title;
+            if (tab === 'games' && deck.length === 0) startBJ();
+        }
+
+        function sellItem(el, price) {
+            if (confirm(`Продать подарок за ${price} 💎?`)) {
+                gems += price;
+                invTotal -= price;
+                el.remove();
+                updateBalances();
+            }
+        }
+
+        function openCase() {
+            if (chips < 500) return alert('Недостаточно фишек!');
+            chips -= 500;
+            const gifts = [
+                { name: 'Cyber Cat', price: 1500, icon: '🐱' },
+                { name: 'Golden Watch', price: 4200, icon: '⌚' },
+                { name: 'Neon Plush', price: 850, icon: '🧸' }
+            ];
+            const won = gifts[Math.floor(Math.random() * gifts.length)];
+            invTotal += won.price;
+            const grid = document.getElementById('inventory-grid');
+            grid.innerHTML += `
+                <div class="nft-item" onclick="sellItem(this, ${won.price})">
+                    <span class="nft-num">#${Math.floor(Math.random()*900+100)}</span>
+                    <div class="nft-img">${won.icon}</div>
+                    <div class="nft-name">${won.name}</div>
+                    <div class="nft-price">💎 ${won.price}</div>
+                </div>`;
+            updateBalances();
+            alert(`Вы выбили: ${won.name}!`);
+        }
+
+        let deck = [], playerHand = [], dealerHand = [], bet = 500, gameOver = false;
+        const suits = ['♠', '♣', '♥', '♦'];
+        const values = ['2','3','4','5','6','7','8','9','10','J','Q','K','A'];
+
+        function createDeck() {
+            deck = [];
+            for (let s of suits) for (let v of values) deck.push({ s, v });
+            deck.sort(() => Math.random() - 0.5);
+        }
+
+        function getScore(hand) {
+            let score = 0, aces = 0;
+            for (let c of hand) {
+                if (['J','Q','K'].includes(c.v)) score += 10;
+                else if (c.v === 'A') { score += 11; aces++; }
+                else score += parseInt(c.v);
+            }
+            while (score > 21 && aces > 0) { score -= 10; aces--; }
+            return score;
+        }
+
+        function renderCards(hideDealer = true) {
+            const pDiv = document.getElementById('player-cards');
+            const dDiv = document.getElementById('dealer-cards');
+            pDiv.innerHTML = ''; dDiv.innerHTML = '';
+
+            playerHand.forEach(c => {
+                const isRed = c.s === '♥' || c.s === '♦';
+                pDiv.innerHTML += `<div class="card ${isRed?'red':''}"><div>${c.v}</div><div style="text-align:right">${c.s}</div></div>`;
+            });
+
+            dealerHand.forEach((c, idx) => {
+                if (idx === 1 && hideDealer) {
+                    dDiv.innerHTML += `<div class="card hidden"></div>`;
+                } else {
+                    const isRed = c.s === '♥' || c.s === '♦';
+                    dDiv.innerHTML += `<div class="card ${isRed?'red':''}"><div>${c.v}</div><div style="text-align:right">${c.s}</div></div>`;
+                }
+            });
+
+            document.getElementById('player-score').innerText = getScore(playerHand);
+            document.getElementById('dealer-score').innerText = hideDealer ? getScore([dealerHand[0]]) : getScore(dealerHand);
+        }
+
+        function startBJ() {
+            bet = 500;
+            if (chips < bet) { document.getElementById('bj-status').innerText = 'Недостаточно фишек!'; return; }
+            chips -= bet;
+            updateBalances();
+            gameOver = false;
+            document.getElementById('bj-status').innerText = '';
+            document.getElementById('bet-text').innerText = bet;
+            document.getElementById('current-bet').innerText = bet;
+            document.getElementById('btn-restart').style.display = 'none';
+            toggleControls(true);
+
+            createDeck();
+            playerHand = [deck.pop(), deck.pop()];
+            dealerHand = [deck.pop(), deck.pop()];
+            renderCards(true);
+
+            if (getScore(playerHand) === 21) stand();
+        }
+
+        function toggleControls(enable) {
+            document.getElementById('btn-hit').disabled = !enable;
+            document.getElementById('btn-stand').disabled = !enable;
+            document.getElementById('btn-double').disabled = !enable;
+        }
+
+        function hit() {
+            if (gameOver) return;
+            playerHand.push(deck.pop());
+            renderCards(true);
+            if (getScore(playerHand) > 21) endGame('Перебор! Вы проиграли.', 0);
+        }
+
+        function doubleBet() {
+            if (chips < bet) return alert('Не хватает фишек для удвоения');
+            chips -= bet;
+            bet *= 2;
+            updateBalances();
+            document.getElementById('bet-text').innerText = bet;
+            document.getElementById('current-bet').innerText = bet;
+            playerHand.push(deck.pop());
+            renderCards(true);
+            if (getScore(playerHand) > 21) endGame('Перебор! Вы проиграли.', 0);
+            else stand();
+        }
+
+        function stand() {
+            if (gameOver) return;
+            while (getScore(dealerHand) < 17) dealerHand.push(deck.pop());
+            renderCards(false);
+            const p = getScore(playerHand), d = getScore(dealerHand);
+            if (d > 21 || p > d) endGame(`Победа! +${bet * 2} 🪙`, bet * 2);
+            else if (p === d) endGame('Ничья! Ставка возвращена.', bet);
+            else endGame('Дилер выиграл.', 0);
+        }
+
+        function endGame(msg, winAmount) {
+            gameOver = true;
+            chips += winAmount;
+            updateBalances();
+            renderCards(false);
+            document.getElementById('bj-status').innerText = msg;
+            toggleControls(false);
+            document.getElementById('btn-restart').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
