@@ -133,9 +133,44 @@
         .market-model-field[hidden], .market-buy-field[hidden] { display: none; }
         .market-buy-field { display: grid; gap: 7px; }
         .market-buy-field .upg-banner-btn { min-height: 42px; }
+        .gift-quote-button { width: 100%; margin-top: 8px; }
         .market-buy-status { font-size: 12px; color: #f1d493; }
         .market-buy-status:empty { display: none; }
         .market-catalog > * { max-width: 700px; margin-inline: auto; }
+        .catalog-launchers { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-bottom: 12px; }
+        .catalog-launchers button { min-height: 44px; text-align: left; }
+        .market-quote-header { background: radial-gradient(ellipse at 100% 0, #273e41, #18232d 48%, #141820); }
+        .market-quotes-list { display: grid; gap: 6px; margin-top: 9px; }
+        .market-quote-card { display: grid; grid-template-columns: 42px minmax(0, 1fr) repeat(2, minmax(55px, auto)); align-items: center; gap: 7px; width: 100%; min-height: 61px; padding: 6px 8px; border: 1px solid #2c3745; border-radius: 12px; color: #f4f7fc; background: #171d27; text-align: left; cursor: pointer; }
+        .market-quote-card:hover { border-color: #619b91; background: #1d2934; }
+        .market-quote-card:focus-visible { outline: 2px solid #8df3d9; outline-offset: 2px; }
+        .market-quote-card .nft-art-box { margin: 0; border-radius: 8px; }
+        .market-quote-card .gift-symbol { display: none; }
+        .market-quote-name { font-weight: 760; font-size: 13px; overflow-wrap: anywhere; }
+        .market-quote-currency { display: block; text-align: right; white-space: nowrap; }
+        .market-quote-currency b { display: block; font-size: 12px; font-variant-numeric: tabular-nums; }
+        .market-quote-currency small { display: block; margin-top: 2px; font-size: 9px; color: #b5c3d2; }
+        .market-quote-currency.gram { color: #a3f4df; }
+        .market-quote-currency.stars { color: #f5d996; }
+        .market-quote-card[data-currency="portals"], .market-quote-card[data-currency="telegram"] { grid-template-columns: 42px minmax(0, 1fr) auto; }
+        .market-quote-card[data-currency="portals"] .stars, .market-quote-card[data-currency="telegram"] .gram { display: none; }
+        .quote-dialog { width: min(calc(100% - 28px), 460px); }
+        .quote-dialog > h2 { margin: 3px 41px 4px 0; font-size: 21px; overflow-wrap: anywhere; }
+        .quote-dialog .gift-sheet-close { top: 12px; right: 11px; }
+        .quote-dialog .market-model-select { margin-top: 4px; }
+        .quote-dialog-status { color: #b6c5d8; margin: 6px 0 10px; font-size: 12px; line-height: 1.4; }
+        .quote-dialog-status:empty { display: none; }
+        .market-quote-offer { border: 1px solid #2d3a4c; background: #1b2531; border-radius: 11px; padding: 9px 10px; margin: 6px 0; }
+        .market-quote-offer strong { display: block; font-size: 13px; }
+        .market-quote-offer b { display: block; font-size: 21px; margin-top: 3px; color: #adefdc; font-variant-numeric: tabular-nums; }
+        .market-quote-offer[data-market="telegram"] b { color: #f4d797; }
+        .market-quote-offer small { display: block; font-size: 10px; color: #b3c1d2; margin-top: 3px; }
+        .market-quote-offer a { display: inline-block; color: #a4f2de; font-size: 12px; margin-top: 6px; }
+        .quote-history { border: 1px solid #354250; border-radius: 11px; margin-top: 9px; padding: 8px 10px; font-size: 12px; color: #c7d6e4; }
+        .quote-history summary { cursor: pointer; }
+        .quote-history dl { display: grid; grid-template-columns: 1fr auto; gap: 4px 10px; margin: 8px 0 3px; }
+        .quote-history dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; }
+        #quote-retry { margin-left: 5px; }
 
         .game-box { background: var(--bg-card); border-radius: 22px; padding: 16px; border: 1px solid #2c2c34; text-align: center; }
         .primary-btn { width: 100%; background: linear-gradient(90deg, #e11d48, #be123c); color: #fff; border: none; padding: 14px; border-radius: 14px; font-weight: 700; font-size: 15px; cursor: pointer; margin-top: 12px; }
@@ -435,7 +470,10 @@
 
     <!-- МАГАЗИН / КЕЙСЫ -->
     <div id="screen-cases" class="screen">
-        <button type="button" class="action-btn" onclick="openGiftMarket()" style="width:100%; margin-bottom:12px;">Каталог подарков Telegram</button>
+        <div class="catalog-launchers">
+            <button type="button" class="action-btn" onclick="openGiftMarket()">Каталог подарков Telegram</button>
+            <button type="button" class="action-btn" onclick="openMarketQuotes()">Рынок · TON и Stars</button>
+        </div>
         <div class="game-box" style="margin-bottom: 12px;">
             <div style="font-size:12px; color:var(--text-muted); font-weight:700; text-transform:uppercase;">Все доступные награды и NFT</div>
             <div class="items-grid-3" id="case-board-grid"></div>
@@ -456,6 +494,7 @@
     <div id="screen-gift-market" class="screen market-catalog">
         <div class="game-box gift-market-header">
             <p>Покупка игровых копий за алмазы NERVANA.</p>
+            <button type="button" class="gift-filter" onclick="openMarketQuotes('gift-market')" style="margin-bottom:8px;">Цены Portals и Telegram</button>
             <input type="search" class="market-search" id="market-gift-search" placeholder="Название подарка" aria-label="Поиск подарков" oninput="resetGiftMarket()">
             <div class="market-controls">
                 <div class="gift-filters" aria-label="Категории каталога">
@@ -475,6 +514,32 @@
         <div class="items-grid-3" id="market-gift-grid"></div>
         <button type="button" class="primary-btn" id="market-more-btn" onclick="showMoreMarketGifts()">Показать ещё</button>
         <p class="market-credit">Каталог и иллюстрации от <a href="https://t.me/GiftChanges" target="_blank" rel="noopener noreferrer">@GiftChanges</a> · <a href="https://t.me/portals/market" target="_blank" rel="noopener noreferrer">Открыть Portals</a></p>
+    </div>
+
+    <div id="screen-market-quotes" class="screen market-catalog">
+        <div class="game-box gift-market-header market-quote-header">
+            <p>Минимальные цены предложений. Portals в GRAM (TON), Telegram в Stars.</p>
+            <input type="search" class="market-search" id="quote-search" placeholder="Название коллекции" aria-label="Поиск коллекций" oninput="resetMarketQuotes()">
+            <div class="market-controls">
+                <div class="gift-filters" aria-label="Валюта">
+                    <button type="button" class="gift-filter" data-quote-filter="all" aria-pressed="true" onclick="setQuoteFilter('all')">Все</button>
+                    <button type="button" class="gift-filter" data-quote-filter="portals" aria-pressed="false" onclick="setQuoteFilter('portals')">TON</button>
+                    <button type="button" class="gift-filter" data-quote-filter="telegram" aria-pressed="false" onclick="setQuoteFilter('telegram')">Stars</button>
+                </div>
+                <select class="market-sort" id="quote-sort" aria-label="Порядок рыночных цен" onchange="resetMarketQuotes()">
+                    <option value="name">Название А → Я</option>
+                    <option value="portals-up">TON: сначала дешёвые</option>
+                    <option value="portals-down">TON: сначала дорогие</option>
+                    <option value="telegram-up">Stars: сначала дешёвые</option>
+                    <option value="telegram-down">Stars: сначала дорогие</option>
+                </select>
+            </div>
+            <div class="market-count" id="quote-count" role="status"></div>
+            <button type="button" class="gift-filter" id="quote-retry" onclick="loadMarketQuotes()" hidden>Повторить</button>
+        </div>
+        <div id="quote-list" class="market-quotes-list"></div>
+        <button type="button" class="primary-btn" id="quote-more" onclick="showMoreMarketQuotes()" hidden>Показать ещё</button>
+        <p class="market-credit">Данные <a href="https://starprice.net/gifts" target="_blank" rel="noopener noreferrer">StarPrice</a> · <a href="https://t.me/portals/market" target="_blank" rel="noopener noreferrer">Открыть Portals</a></p>
     </div>
 
     <!-- КАРТЫ / СЛОТЫ -->
@@ -705,6 +770,9 @@
         <h2 class="gift-detail-title" id="gift-detail-title"></h2>
         <p class="gift-detail-type" id="gift-detail-type"></p>
         <dl class="gift-traits" id="gift-detail-traits"></dl>
+        <p class="quote-dialog-status" id="gift-original-star-price" hidden>
+            <span id="gift-original-star-value"></span> · <a href="https://gift-club.github.io/telegram-gifts-dataset/" target="_blank" rel="noopener noreferrer" style="color:#a9e8db;">Gift Club, CC BY 4.0</a>
+        </p>
         <div class="gift-detail-actions" id="gift-detail-actions">
             <button type="button" class="upg-banner-btn" id="gift-sell-btn" onclick="sellViewedGift()"></button>
             <button type="button" class="action-btn" onclick="upgradeViewedGift()">В апгрейдер</button>
@@ -718,6 +786,24 @@
             <button type="button" class="action-btn" id="market-target-btn" onclick="targetMarketGift()">В цель апгрейда</button>
             <div class="market-buy-status" id="market-buy-status" role="status"></div>
         </div>
+        <button type="button" class="gift-filter gift-quote-button" id="gift-quote-button" onclick="openViewedGiftQuotes()" hidden>Рыночные цены коллекции</button>
+    </dialog>
+
+    <dialog class="gift-sheet quote-dialog" id="quote-sheet" aria-labelledby="quote-title" onclick="if(event.target === this) this.close()">
+        <button type="button" class="gift-sheet-close" onclick="this.closest('dialog').close()" aria-label="Закрыть цены">×</button>
+        <h2 id="quote-title"></h2>
+        <p class="gift-detail-type" id="quote-detail-type"></p>
+        <label class="market-model-field" id="quote-model-field" hidden>
+            Модель
+            <select class="market-model-select" id="quote-model" onchange="renderQuoteDetails()"></select>
+        </label>
+        <p class="quote-dialog-status" id="quote-detail-status" role="status"></p>
+        <div id="quote-offers"></div>
+        <details class="quote-history" id="quote-history" hidden>
+            <summary>Последние цены коллекции в Portals</summary>
+            <dl id="quote-history-values"></dl>
+        </details>
+        <p class="market-credit">Источник <a id="quote-source" href="https://starprice.net/gifts" target="_blank" rel="noopener noreferrer">StarPrice</a></p>
     </dialog>
 
     <!-- НИЖНЕЕ МЕНЮ -->
@@ -733,7 +819,7 @@
         const tg = window.Telegram.WebApp;
         tg.expand();
 
-        const APP_VERSION = "2.9";
+        const APP_VERSION = "3.0";
 
         // Подключение к вашей облачной базе Supabase
         const SUPABASE_URL = "https://kcycpjrriegjfbzddbos.supabase.co";
@@ -1089,6 +1175,7 @@
         const giftSymbols = [['✦', 'Искра'], ['☾', 'Месяц'], ['✧', 'Созвездие'], ['◇', 'Кристалл'], ['❋', 'Розетка']];
         let giftFilter = 'all';
         let viewedGift = null;
+        let viewedQuoteName = null;
         let marketFilter = 'all';
         let marketLimit = 18;
         let marketPreview = null;
@@ -1178,6 +1265,8 @@
             const meta = getGiftMeta(item);
             const traits = getGiftTraits(item, meta);
             viewedGift = owned ? item : null;
+            viewedQuoteName = meta.isNft && meta.id ? meta.name : null;
+            document.getElementById('gift-quote-button').hidden = !viewedQuoteName;
             marketPreview = null;
             document.getElementById('market-buy-field').hidden = true;
             document.getElementById('market-model-field').hidden = true;
@@ -1185,6 +1274,13 @@
             document.getElementById('gift-detail-title').textContent = meta.name;
             document.getElementById('gift-detail-type').textContent = meta.isNft
                 ? `Коллекционный подарок${traits.serial ? ` · №${traits.serial}` : ''}` : 'Обычный подарок';
+            const originalPrice = !meta.isNft ? originalStarsPrices.get(meta.id) : null;
+            document.getElementById('gift-original-star-price').hidden = !originalPrice;
+            if (originalPrice) {
+                const [price, regular] = originalPrice;
+                const label = regular ? 'Цена в Telegram по архивным данным' : 'Цена выпуска в Telegram';
+                document.getElementById('gift-original-star-value').textContent = `${label}: ${quoteMoney.format(price)} Stars`;
+            }
             const attributes = [['Модель', item.model || meta.model]];
             if (meta.isNft) attributes.push(['Фон', traits.backdrop], ['Символ', `${traits.symbol} ${traits.symbolName}`]);
             attributes.push(['Стоимость', `${meta.price.toLocaleString('ru-RU')} 💎`]);
@@ -1238,6 +1334,380 @@
             document.getElementById('market-count').textContent = `Показано ${visible.length} из ${matches.length}`;
             const more = document.getElementById('market-more-btn');
             more.hidden = visible.length === matches.length;
+        }
+
+        // Архив цен обычных подарков Gift Club, CC BY 4.0.
+        const originalStarsPrices = new Map([
+            ["5170145012310081615",[15,true]],
+            ["5170233102089322756",[15,true]],
+            ["5170250947678437525",[25,true]],
+            ["5168103777563050263",[25,true]],
+            ["5170144170496491616",[50,true]],
+            ["5170314324215857265",[50,true]],
+            ["5170564780938756245",[50,true]],
+            ["6028601630662853006",[50,true]],
+            ["5168043875654172773",[100,true]],
+            ["5170690322832818290",[100,true]],
+            ["5170521118301225164",[100,true]],
+            ["5782984811920491178",[350,false]],
+            ["5782988952268964995",[150,false]],
+            ["5783075783622787539",[500,false]],
+            ["5167939598143193218",[25,false]],
+            ["5170594532177215681",[15,false]],
+            ["5821261908354794038",[15,false]],
+            ["5821205665758053411",[25,false]],
+            ["5821384757304362229",[15,false]],
+            ["5837059369300132790",[25,false]],
+            ["5836780359634649414",[15,false]],
+            ["5837063436634161765",[15,false]],
+            ["5825480571261813595",[15,false]],
+            ["5825801628657124140",[15,false]],
+            ["5825895989088617224",[25,false]],
+            ["5841336413697606412",[15,false]],
+            ["5839038009193792264",[25,false]],
+            ["5841391256135008713",[25,false]],
+            ["5841632504448025405",[25,false]],
+            ["5841689550203650524",[50,false]],
+            ["5843762284240831056",[100,false]],
+            ["5845776576658015084",[15,false]],
+            ["5846192273657692751",[25,false]],
+            ["5846226946928673709",[50,false]],
+            ["5857140566201991735",[100,false]],
+            ["5859442703032386168",[500,false]],
+            ["5856973938650776169",[50,false]],
+            ["5882252952218894938",[50,false]],
+            ["5882125812596999035",[100,false]],
+            ["5879737836550226478",[500,false]],
+            ["5913517067138499193",[500,false]],
+            ["5915550639663874519",[100,false]],
+            ["5915521180483191380",[1000,false]],
+            ["5915733223018594841",[50,false]],
+            ["5915502858152706668",[25,false]],
+            ["5913442287462908725",[15,false]],
+            ["5936013938331222567",[2000,false]],
+            ["5933671725160989227",[1000,false]],
+            ["5933629604416717361",[500,false]],
+            ["5933531623327795414",[350,false]],
+            ["5936085638515261992",[150,false]],
+            ["5936043693864651359",[100,false]],
+            ["5935936766358847989",[50,false]],
+            ["5936017773737018241",[25,false]],
+            ["5933590374185435592",[15,false]],
+            ["5981026247860290310",[200,false]],
+            ["5980789805615678057",[100,false]],
+            ["5981132629905245483",[75,false]],
+            ["5983471780763796287",[50,false]],
+            ["5983259145522906006",[25,false]],
+            ["5983484377902875708",[15,false]],
+            ["6001473264306619020",[25,false]],
+            ["6003735372041814769",[25,false]],
+            ["6003643167683903930",[15,false]],
+            ["6001538689543439169",[15,false]],
+            ["6003767644426076664",[10,false]],
+            ["6003373314888696650",[10,false]],
+            ["6023752243218481939",[50,false]],
+            ["6023679164349940429",[25,false]],
+            ["6023917088358269866",[25,false]],
+            ["6028283532500009446",[50,false]],
+            ["6028426950047957932",[25,false]],
+            ["5868455043362980631",[10000,false]],
+            ["5870947077877400011",[300,false]],
+            ["5868659926187901653",[2500,false]],
+            ["5870784783948186838",[200,false]],
+            ["5868561433997870501",[500,false]],
+            ["5868503709637411929",[1000,false]],
+            ["5868220813026526561",[500,false]],
+            ["5868348541058942091",[1000,false]],
+            ["5868595669182186720",[400,false]],
+            ["5872744075014177223",[500,false]],
+            ["5870972044522291836",[200,false]],
+            ["5871002671934079382",[250,false]],
+            ["5870661333703197240",[5000,false]],
+            ["5870862540036113469",[300,false]],
+            ["5870720080265871962",[10000,false]],
+            ["5895518353849582541",[10000,false]],
+            ["5895328365971244193",[5000,false]],
+            ["5897593557492957738",[1000,false]],
+            ["5895544372761461960",[300,false]],
+            ["5897581235231785485",[200,false]],
+            ["5895603153683874485",[100,false]],
+            ["5913351908466098791",[100,false]],
+            ["5933793770951673155",[2500,false]],
+            ["5933937398953018107",[1000,false]],
+            ["5933770397739647689",[200,false]],
+            ["5933543975653737112",[50,false]],
+            ["5935877878062253519",[100,false]],
+            ["5933737850477478635",[150,false]],
+            ["5960747083030856414",[100,false]],
+            ["5963238670868677492",[250,false]],
+            ["5998981470310368313",[100,false]],
+            ["6003456431095808759",[100,false]],
+            ["6005797617768858105",[5000,false]],
+            ["6005659564635063386",[300,false]],
+            ["6005880141270483700",[200,false]],
+            ["6006064678835323371",[100,false]],
+            ["6005564615793050414",[50,false]],
+            ["6042113507581755979",[200,false]],
+            ["5773668482394620318",[200,false]],
+            ["5773725897517433693",[150,false]],
+            ["5773791997064119815",[75,false]],
+            ["5807641025165919973",[100,false]],
+            ["5830323722413671504",[100,false]],
+            ["5832325860073407546",[150,false]],
+            ["5830340739074097859",[300,false]],
+            ["5898012527257715797",[75,false]],
+            ["5900177027566142759",[100,false]],
+            ["5897607679345427347",[150,false]],
+            ["5902339509239940491",[5000,false]],
+            ["5999277561060787166",[150,false]],
+            ["5999298447486747746",[250,false]],
+            ["5999116401002939514",[5000,false]],
+            ["6014591077976114307",[200,false]],
+            ["6012607142387778152",[500,false]],
+            ["6012435906336654262",[1000,false]],
+            ["6014675319464657779",[5000,false]],
+            ["6014697240977737490",[10000,false]],
+            ["5834651202612102354",[30000,false]],
+            ["5832279504491381684",[5000,false]],
+            ["5832497899283415733",[2500,false]],
+            ["5834918435477259676",[500,false]],
+            ["5832644211639321671",[300,false]],
+            ["5832371318007268701",[150,false]],
+            ["5884080014126745057",[5000,false]],
+            ["5882129648002794519",[2500,false]],
+            ["5886387158889005864",[1000,false]],
+            ["5886756255493523118",[500,false]],
+            ["6003477390536213997",[41000,false]],
+            ["6001425315291727333",[10000,false]],
+            ["6001229799790478558",[10000,false]],
+            ["5775955135867913556",[15000,false]],
+            ["5776227780391864916",[5000,false]],
+            ["5775966332847654507",[500,false]],
+            ["5992502615223568003",[50,false]]
+        ]);
+
+        const marketQuotesApi = 'https://starprice.net/api/v1/gifts';
+        const marketQuoteCache = new Map();
+        const quoteSources = { portals: { name: 'Portals', currency: 'TON' }, telegram: { name: 'Telegram', currency: 'Stars' } };
+        const quoteMoney = new Intl.NumberFormat('ru-RU', { maximumFractionDigits: 9 });
+        const quoteTime = new Intl.DateTimeFormat('ru-RU', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
+        const quoteDay = new Intl.DateTimeFormat('ru-RU', { day: 'numeric', month: 'short', timeZone: 'UTC' });
+        const quoteArtwork = new Map(telegramGiftCollections.filter(([, name]) => name).map(([id, name]) =>
+            [normalizeQuoteName(name), `telegram_gift_${id}`]));
+        let marketQuotes = [];
+        let quoteFilter = 'all';
+        let quoteLimit = 24;
+        let quoteListLoading = false;
+        let quoteListFailed = false;
+        let activeQuote = null;
+        let quoteReturnScreen = 'cases';
+
+        function normalizeQuoteName(value) {
+            return value.toLowerCase().normalize('NFKD').replace(/[^\p{L}\p{N}]/gu, '');
+        }
+
+        function readQuoteApi(path = '') {
+            const cached = marketQuoteCache.get(path);
+            if (cached && Date.now() - cached.started < 5 * 60 * 1000) return cached.result;
+            const result = fetch(marketQuotesApi + path, { signal: AbortSignal.timeout(9000) })
+                .then(response => {
+                    if (!response.ok) throw new Error(`StarPrice HTTP ${response.status}`);
+                    return response.json();
+                }).catch(error => {
+                    marketQuoteCache.delete(path);
+                    throw error;
+                });
+            marketQuoteCache.set(path, { started: Date.now(), result });
+            return result;
+        }
+
+        function getQuoteOffer(gift, market) {
+            const offers = Array.isArray(gift?.offers) ? gift.offers : [];
+            const currencies = market === 'telegram' ? ['STARS', 'XTR'] : ['GRAM', 'TON'];
+            return offers.find(offer => offer?.market === market && currencies.includes(offer.currency)
+                && Number.isFinite(Number(offer.price)) && Number(offer.price) > 0) ?? null;
+        }
+
+        function openMarketQuotes(returnScreen = 'cases') {
+            quoteReturnScreen = returnScreen;
+            openGame('market-quotes', 'Цены рынка');
+            return loadMarketQuotes();
+        }
+
+        async function openViewedGiftQuotes() {
+            const name = viewedQuoteName;
+            const giftSheet = document.getElementById('gift-sheet');
+            if (!name || !giftSheet.open) return;
+            const returnScreen = document.getElementById('screen-profile').classList.contains('active') ? 'profile' : 'gift-market';
+            giftSheet.close();
+            const search = document.getElementById('quote-search');
+            search.value = name;
+            setQuoteFilter('all');
+            await openMarketQuotes(returnScreen);
+            if (search.value !== name || !document.getElementById('screen-market-quotes').classList.contains('active')) return;
+            const index = marketQuotes.findIndex(entry => normalizeQuoteName(entry.name) === normalizeQuoteName(name));
+            if (index !== -1) openQuoteDetails(index);
+        }
+
+        async function loadMarketQuotes() {
+            if (quoteListLoading) return;
+            quoteListLoading = true;
+            quoteListFailed = false;
+            renderMarketQuotes();
+            try {
+                const data = await readQuoteApi();
+                if (!Array.isArray(data?.gifts)) throw new Error('Неожиданный формат каталога цен');
+                marketQuotes = data.gifts.filter(row => typeof row?.name === 'string' && typeof row.slug === 'string'
+                    && /^[a-z0-9-]{1,85}$/.test(row.slug));
+            } catch (error) {
+                quoteListFailed = true;
+                console.warn('Не удалось загрузить котировки', error);
+            } finally {
+                quoteListLoading = false;
+                renderMarketQuotes();
+            }
+        }
+
+        function resetMarketQuotes() {
+            quoteLimit = 24;
+            renderMarketQuotes();
+        }
+
+        function setQuoteFilter(filter) {
+            quoteFilter = filter;
+            document.querySelectorAll('[data-quote-filter]').forEach(button => {
+                button.setAttribute('aria-pressed', String(button.dataset.quoteFilter === filter));
+            });
+            resetMarketQuotes();
+        }
+
+        function showMoreMarketQuotes() {
+            quoteLimit += 24;
+            renderMarketQuotes();
+        }
+
+        function renderMarketQuotes() {
+            const query = normalizeQuoteName(document.getElementById('quote-search').value);
+            const [currency, direction] = document.getElementById('quote-sort').value.split('-');
+            const rows = marketQuotes.map((entry, index) => ({ entry, index, portals: getQuoteOffer(entry, 'portals'), telegram: getQuoteOffer(entry, 'telegram') }))
+                .filter(row => normalizeQuoteName(row.entry.name).includes(query) && (quoteFilter === 'all' || row[quoteFilter]));
+            rows.sort((a, b) => {
+                const byName = marketNameOrder.compare(a.entry.name, b.entry.name);
+                if (currency === 'name') return byName;
+                const first = a[currency], second = b[currency];
+                if (!first || !second) return (Number(!first) - Number(!second)) || byName;
+                return (direction === 'down' ? second.price - first.price : first.price - second.price) || byName;
+            });
+            const visible = rows.slice(0, quoteLimit);
+            const list = document.getElementById('quote-list');
+            list.innerHTML = visible.map(({ entry, index, portals, telegram }) => {
+                const key = quoteArtwork.get(normalizeQuoteName(entry.name));
+                const art = key ? renderGiftArt({ key }) : '<span class="nft-art-box gift-night" aria-hidden="true">◇</span>';
+                return `<button type="button" class="market-quote-card" data-currency="${quoteFilter}" onclick="openQuoteDetails(${index})">${art}
+                    <span class="market-quote-name">${escapeGiftText(entry.name)}</span>
+                    <span class="market-quote-currency gram"><b>${portals ? quoteMoney.format(portals.price) : '—'}</b><small>TON · Portals</small></span>
+                    <span class="market-quote-currency stars"><b>${telegram ? quoteMoney.format(telegram.price) : '—'}</b><small>Stars · TG</small></span>
+                </button>`;
+            }).join('');
+            if (!visible.length && !quoteListLoading && !quoteListFailed) list.innerHTML = '<div class="empty-state">Подходящих коллекций нет.</div>';
+            const status = document.getElementById('quote-count');
+            if (quoteListFailed) status.textContent = marketQuotes.length ? 'Не удалось обновить цены. Показаны последние полученные данные.' : 'Не удалось загрузить цены.';
+            else if (quoteListLoading && !marketQuotes.length) status.textContent = 'Загружаем рыночные цены…';
+            else status.textContent = `Показано ${visible.length} из ${rows.length}`;
+            document.getElementById('quote-retry').hidden = !quoteListFailed;
+            document.getElementById('quote-more').hidden = rows.length <= quoteLimit;
+        }
+
+        function getPortalsOfferUrl(offer) {
+            const fallback = 'https://t.me/portals/market';
+            if (typeof offer?.url !== 'string') return fallback;
+            try {
+                const url = new URL(offer.url);
+                if (url.protocol === 'https:' && ['t.me', 'telegram.me'].includes(url.hostname) && url.pathname.replace(/\/$/, '') === '/portals/market'
+                    && !url.username && !url.password && !url.port) return url.href;
+            } catch {
+                return fallback;
+            }
+            return fallback;
+        }
+
+        async function openQuoteDetails(index) {
+            const entry = marketQuotes[index];
+            if (!entry) return;
+            const dialog = document.getElementById('quote-sheet');
+            const select = document.getElementById('quote-model');
+            const active = { entry, detail: null };
+            activeQuote = active;
+            select.replaceChildren(new Option('Вся коллекция', ''));
+            document.getElementById('quote-model-field').hidden = true;
+            document.getElementById('quote-title').textContent = entry.name;
+            document.getElementById('quote-source').href = `https://starprice.net/gifts/${entry.slug}`;
+            document.getElementById('quote-detail-status').textContent = 'Загружаем модели и историю…';
+            renderQuoteDetails();
+            if (!dialog.open) dialog.showModal();
+            try {
+                const detail = await readQuoteApi(`/${entry.slug}?history=1`);
+                if (activeQuote !== active || !dialog.open) return;
+                if (!detail || typeof detail !== 'object') throw new Error('Неожиданный формат коллекции');
+                active.detail = detail;
+                active.models = Array.isArray(detail.models) ? detail.models.filter(model => typeof model?.name === 'string') : [];
+                active.models.forEach((model, position) => select.add(new Option(model.name, String(position))));
+                document.getElementById('quote-model-field').hidden = !active.models.length;
+                document.getElementById('quote-detail-status').textContent = '';
+                renderQuoteDetails();
+            } catch (error) {
+                if (activeQuote !== active || !dialog.open) return;
+                document.getElementById('quote-detail-status').textContent = 'Модели и история временно недоступны. Показаны цены коллекции.';
+                console.warn('Не удалось загрузить данные коллекции', error);
+            }
+        }
+
+        function renderQuoteDetails() {
+            if (!activeQuote) return;
+            const { entry, detail, models } = activeQuote;
+            const modelValue = document.getElementById('quote-model').value;
+            const model = modelValue === '' ? null : models?.[Number(modelValue)];
+            const selected = model || detail || entry;
+            const caption = model ? `Модель · ${model.name}` : 'Вся коллекция';
+            const rarity = model && typeof model.rarity_pct === 'number' ? ` · Редкость ${quoteMoney.format(model.rarity_pct)}%` : '';
+            document.getElementById('quote-detail-type').textContent = caption + rarity;
+
+            const cards = Object.entries(quoteSources).map(([market, source]) => {
+                const offer = getQuoteOffer(selected, market);
+                const card = document.createElement('section');
+                card.className = 'market-quote-offer';
+                card.dataset.market = market;
+                const title = document.createElement('strong');
+                title.textContent = source.name;
+                const price = document.createElement('b');
+                price.textContent = offer ? `${quoteMoney.format(offer.price)} ${source.currency}` : 'Нет цены';
+                card.append(title, price);
+                if (offer) {
+                    const date = Date.parse(offer.updated_at);
+                    const note = document.createElement('small');
+                    const lots = Number.isSafeInteger(offer.lots) && offer.lots > 0 ? ` · Лотов: ${quoteMoney.format(offer.lots)}` : '';
+                    note.textContent = (Number.isFinite(date) ? `Обновлено ${quoteTime.format(date)}` : 'Время обновления не указано') + lots;
+                    card.append(note);
+                }
+                if (market === 'portals' && offer) {
+                    const link = document.createElement('a');
+                    link.href = getPortalsOfferUrl(offer);
+                    link.target = '_blank';
+                    link.rel = 'noopener noreferrer';
+                    link.textContent = 'Открыть предложения в Portals ↗';
+                    card.append(link);
+                }
+                return card;
+            });
+            document.getElementById('quote-offers').replaceChildren(...cards);
+
+            const rows = (Array.isArray(detail?.history) ? detail.history : []).filter(row =>
+                typeof row?.date === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(row.date)
+                && Number.isFinite(Date.parse(row.date)) && typeof row.portals === 'number' && row.portals > 0);
+            rows.sort((a, b) => b.date.localeCompare(a.date));
+            document.getElementById('quote-history').hidden = Boolean(model) || !rows.length;
+            document.getElementById('quote-history-values').innerHTML = rows.slice(0, 10).map(row =>
+                `<dt>${quoteDay.format(Date.parse(row.date))}</dt><dd>${quoteMoney.format(row.portals)} TON</dd>`).join('');
         }
 
         async function openMarketGift(key) {
@@ -1850,7 +2320,11 @@
             document.getElementById('page-title').innerText = title; document.getElementById('btn-back').style.visibility = 'visible';
         }
         function goBack() {
-            if (document.getElementById('screen-gift-market').classList.contains('active')) openCases();
+            if (document.getElementById('screen-market-quotes').classList.contains('active')) {
+                if (quoteReturnScreen === 'gift-market') openGiftMarket();
+                else if (quoteReturnScreen === 'profile') switchTab('profile', 'Инвентарь');
+                else openCases();
+            } else if (document.getElementById('screen-gift-market').classList.contains('active')) openCases();
             else switchTab('games', 'Игры');
         }
 
