@@ -16,40 +16,34 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; user-select: none; -webkit-tap-highlight-color: transparent; }
         body { background-color: var(--bg-main); color: var(--text-main); height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
         
-        /* Верхняя плавающая шапка */
+        /* Шапка и баланс */
         .top-bar { display: flex; justify-content: space-between; align-items: center; padding: 10px 16px; position: relative; z-index: 10; }
-        .icon-circle { width: 38px; height: 38px; border-radius: 50%; background: rgba(34, 34, 40, 0.85); border: 1px solid #2e2e36; display: flex; align-items: center; justify-content: center; font-size: 16px; cursor: pointer; color: #fff; }
-        .title-pill { background: rgba(26, 26, 30, 0.9); padding: 8px 26px; border-radius: 20px; font-weight: 700; font-size: 16px; border: 1px solid #2c2c34; backdrop-filter: blur(8px); }
-        
-        /* Баланс */
+        .icon-circle { width: 38px; height: 38px; border-radius: 50%; background: rgba(34, 34, 40, 0.9); border: 1px solid #2e2e36; display: flex; align-items: center; justify-content: center; font-size: 16px; cursor: pointer; color: #fff; }
+        .title-pill { background: rgba(26, 26, 30, 0.95); padding: 8px 26px; border-radius: 20px; font-weight: 700; font-size: 16px; border: 1px solid #2c2c34; }
         .balance-bar { display: flex; gap: 8px; justify-content: flex-end; padding: 0 16px 10px; }
         .bal-badge { background: var(--bg-card); padding: 6px 12px; border-radius: 14px; font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 6px; border: 1px solid #282830; }
 
         /* Экраны */
-        .screen { flex: 1; overflow-y: auto; padding: 4px 16px 95px; display: none; }
+        .screen { flex: 1; overflow-y: auto; padding: 4px 16px 96px; display: none; }
         .screen.active { display: block; }
         .screen::-webkit-scrollbar { display: none; }
 
-        /* Заголовки секций в Играх */
+        /* Каталог игр */
         .cat-title { font-size: 12px; font-weight: 700; color: var(--text-muted); letter-spacing: 1.5px; text-transform: uppercase; margin: 18px 0 10px 4px; }
         .cat-title:first-child { margin-top: 4px; }
-
-        /* Баннеры игр (как на скринах) */
-        .game-banner { border-radius: 22px; padding: 18px 20px; margin-bottom: 12px; position: relative; overflow: hidden; border: 1px solid rgba(255,255,255,0.08); cursor: pointer; transition: transform 0.12s; min-height: 148px; display: flex; flex-direction: column; justify-content: space-between; }
+        .game-banner { border-radius: 22px; padding: 18px 20px; margin-bottom: 12px; position: relative; overflow: hidden; border: 1px solid rgba(255,255,255,0.08); cursor: pointer; min-height: 144px; display: flex; flex-direction: column; justify-content: space-between; }
         .game-banner:active { transform: scale(0.98); }
-        .gb-content { max-width: 66%; position: relative; z-index: 2; }
+        .gb-content { max-width: 68%; position: relative; z-index: 2; }
         .gb-sub { font-size: 11px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; opacity: 0.75; margin-bottom: 4px; }
-        .gb-title { font-size: 23px; font-weight: 800; margin-bottom: 6px; letter-spacing: -0.3px; }
+        .gb-title { font-size: 22px; font-weight: 800; margin-bottom: 6px; }
         .gb-desc { font-size: 12px; line-height: 1.35; color: rgba(255,255,255,0.8); margin-bottom: 12px; }
         .gb-pill { display: inline-flex; align-items: center; gap: 6px; background: rgba(0,0,0,0.45); padding: 5px 11px; border-radius: 12px; font-size: 11px; font-weight: 600; }
         .dot-green { width: 7px; height: 7px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 6px #22c55e; }
         .dot-gold { width: 7px; height: 7px; border-radius: 50%; background: #f59e0b; box-shadow: 0 0 6px #f59e0b; }
-        .gb-art { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); font-size: 64px; opacity: 0.9; z-index: 1; filter: drop-shadow(0 6px 14px rgba(0,0,0,0.5)); }
+        .gb-art { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); font-size: 62px; opacity: 0.9; z-index: 1; }
 
-        /* Градиенты карточек */
-        .bg-roulette { background: linear-gradient(135deg, #0d3b22 0%, #15472b 50%, #0a2415 100%); }
+        .bg-roulette { background: linear-gradient(135deg, #0d3b22 0%, #15472b 60%, #0a2415 100%); }
         .bg-rocket { background: linear-gradient(135deg, #161836 0%, #232854 60%, #111329 100%); }
-        .bg-plinko { background: linear-gradient(135deg, #2b2118 0%, #3d2c1e 60%, #1c1510 100%); }
         .bg-wheel { background: linear-gradient(135deg, #1f1f24 0%, #2d2d35 60%, #141418 100%); }
         .bg-bj { background: linear-gradient(135deg, #103824 0%, #1a5236 60%, #0c2619 100%); }
         .bg-slots { background: linear-gradient(135deg, #2d174d 0%, #442273 60%, #1c0e30 100%); }
@@ -60,10 +54,8 @@
         .bg-miner { background: linear-gradient(135deg, #4d260b 0%, #783b10 60%, #2b1405 100%); }
         .bg-clan { background: linear-gradient(135deg, #331426 0%, #1d213b 100%); }
         .bg-boss { background: linear-gradient(135deg, #4f1313 0%, #781c1c 60%, #2e0a0a 100%); }
-        .bg-tokyo { background: linear-gradient(135deg, #103c3d 0%, #185759 60%, #0a2424 100%); }
-        .bg-duels { background: linear-gradient(135deg, #162254 0%, #223582 60%, #0d1433 100%); }
 
-        /* Профиль / Инвентарь */
+        /* Карточки NFT и подарков (точный стиль со скриншота) */
         .inv-card { background: linear-gradient(145deg, #1e1e24, #141418); border-radius: 22px; padding: 20px; text-align: center; border: 1px solid #2c2c34; margin-bottom: 16px; }
         .inv-label { font-size: 11px; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; }
         .inv-value { font-size: 32px; font-weight: 800; margin: 8px 0; }
@@ -71,30 +63,82 @@
         .stat-chip { background: var(--bg-pill); padding: 4px 10px; border-radius: 12px; font-size: 12px; color: #d1d1d6; }
         .action-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
         .action-btn { background: var(--bg-pill); border: 1px solid #32323a; color: #fff; padding: 10px; border-radius: 14px; font-size: 13px; font-weight: 600; cursor: pointer; }
-        .items-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 12px; }
-        .empty-state { grid-column: span 2; text-align: center; color: var(--text-muted); padding: 32px 16px; font-size: 13px; background: var(--bg-card); border-radius: 18px; border: 1px dashed #2c2c34; line-height: 1.5; }
-        .nft-item { background: linear-gradient(180deg, #1d263b 0%, #151821 100%); border-radius: 18px; padding: 12px; text-align: center; border: 1px solid #2c354d; position: relative; }
-        .nft-num { position: absolute; top: 8px; right: 8px; background: rgba(0,0,0,0.6); font-size: 11px; padding: 2px 7px; border-radius: 8px; font-weight: 600; }
-        .nft-img { font-size: 46px; margin: 14px 0 10px; }
-        .nft-name { font-weight: 700; font-size: 14px; margin-bottom: 4px; }
-        .nft-price { font-size: 13px; color: #f43f5e; font-weight: 700; }
+        .items-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 10px; }
+        .items-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 10px; }
+        .empty-state { grid-column: 1 / -1; text-align: center; color: var(--text-muted); padding: 28px 16px; font-size: 13px; background: var(--bg-card); border-radius: 18px; border: 1px dashed #2c2c34; line-height: 1.45; }
 
-        /* Игровые экраны внутри */
+        .nft-item { background: #141418; border-radius: 16px; padding: 7px; text-align: left; border: 1.5px solid #25252d; position: relative; cursor: pointer; transition: border-color 0.15s, box-shadow 0.15s; }
+        .nft-item.selected { border-color: #60a5fa; box-shadow: 0 0 14px rgba(96, 165, 250, 0.35); }
+        .nft-art-box { width: 100%; aspect-ratio: 1; border-radius: 11px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; margin-bottom: 7px; }
+        .nft-art-box::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(rgba(255,255,255,0.12) 1px, transparent 1px); background-size: 10px 10px; opacity: 0.45; }
+        .nft-art-box svg { width: 68%; height: 68%; position: relative; z-index: 2; filter: drop-shadow(0 4px 10px rgba(0,0,0,0.45)); }
+        .nft-num { position: absolute; top: 6px; right: 6px; background: rgba(0,0,0,0.55); font-size: 10px; padding: 2px 6px; border-radius: 8px; font-weight: 700; z-index: 3; backdrop-filter: blur(4px); }
+        .nft-name { font-weight: 700; font-size: 11.5px; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding: 0 2px; }
+        .nft-price { font-size: 11.5px; color: #e2e8f0; font-weight: 700; display: flex; align-items: center; gap: 4px; padding: 0 2px 2px; }
+
+        /* Градиенты фонов для каждого NFT */
+        .theme-blue { background: radial-gradient(circle at 50% 45%, #2563eb 0%, #172554 90%); }
+        .theme-green { background: radial-gradient(circle at 50% 45%, #15803d 0%, #062c16 90%); }
+        .theme-red { background: radial-gradient(circle at 50% 45%, #991b1b 0%, #3b0707 90%); }
+        .theme-purple { background: radial-gradient(circle at 50% 45%, #6b21a8 0%, #270942 90%); }
+        .theme-dark { background: radial-gradient(circle at 50% 45%, #24242c 0%, #15151a 90%); }
+
+        /* Общие кнопки и блоки */
         .game-box { background: var(--bg-card); border-radius: 22px; padding: 18px; border: 1px solid #2c2c34; text-align: center; }
         .primary-btn { width: 100%; background: linear-gradient(90deg, #e11d48, #be123c); color: #fff; border: none; padding: 14px; border-radius: 14px; font-weight: 700; font-size: 15px; cursor: pointer; margin-top: 12px; }
-        .primary-btn:disabled { opacity: 0.45; }
+        .primary-btn:disabled { opacity: 0.4; }
 
-        /* Blackjack */
-        .bj-table { background: radial-gradient(circle, #1d3b29 0%, #12261a 100%); border: 2px solid #6b5335; border-radius: 22px; padding: 16px; display: flex; flex-direction: column; justify-content: space-between; min-height: 330px; }
-        .hand-area { display: flex; flex-direction: column; align-items: center; margin: 10px 0; }
-        .hand-header { width: 100%; display: flex; justify-content: space-between; font-size: 13px; color: #cbd5e1; margin-bottom: 8px; }
+        /* МАЙНЕР АТ-ПОЛЯ */
+        .miner-hero { background: radial-gradient(circle at 50% 25%, #5c2d0c 0%, #241205 65%, #140b04 100%); border: 1px solid #4a270d; border-radius: 24px; padding: 22px 18px; text-align: center; margin-bottom: 12px; }
+        .hex-cluster { font-size: 58px; margin: 4px 0 14px; filter: drop-shadow(0 0 18px #f59e0b); }
+        .miner-lv-label { font-size: 11px; letter-spacing: 1.5px; color: #d97706; font-weight: 700; text-transform: uppercase; }
+        .miner-big-num { font-size: 42px; font-weight: 800; color: #fbbf24; margin: 4px 0; }
+        .miner-sub { font-size: 13px; color: #d1d5db; display: flex; align-items: center; justify-content: center; gap: 6px; margin-bottom: 14px; }
+        .progress-track { width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 6px; overflow: hidden; margin-bottom: 10px; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, #f97316, #fbbf24); width: 15%; transition: width 0.3s; }
+        .miner-stats-line { font-size: 12px; color: #9ca3af; margin-bottom: 16px; }
+        .btn-claim-orange { width: 100%; background: linear-gradient(90deg, #f97316, #fbbf24); color: #111; border: none; padding: 14px; border-radius: 16px; font-weight: 800; font-size: 15px; cursor: pointer; }
+        .upgrade-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+        .upg-card { background: var(--bg-card); border: 1px solid #2c2c34; border-radius: 20px; padding: 14px; display: flex; flex-direction: column; justify-content: space-between; }
+        .upg-tag { font-size: 10px; color: #d97706; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 4px; }
+        .upg-lv { font-size: 17px; font-weight: 800; margin-bottom: 4px; }
+        .upg-diff { font-size: 12px; color: var(--text-muted); margin-bottom: 12px; }
+        .btn-upg-red { background: #9f1239; color: #fff; border: none; padding: 10px; border-radius: 12px; font-weight: 700; font-size: 13px; cursor: pointer; width: 100%; }
+        .btn-upg-red:disabled { opacity: 0.45; }
+        .miner-hint { background: var(--bg-card); border: 1px solid #26262e; border-radius: 16px; padding: 12px; font-size: 12px; color: var(--text-muted); text-align: center; line-height: 1.4; }
+
+        /* АПГРЕЙДЕР */
+        .upg-banner-btn { width: 100%; background: linear-gradient(90deg, #6366f1, #8b5cf6); color: #fff; border: none; padding: 14px; border-radius: 16px; font-weight: 800; font-size: 15px; cursor: pointer; margin-bottom: 14px; }
+        .upg-banner-btn:disabled { opacity: 0.4; }
+        .sec-header { font-size: 11px; font-weight: 700; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; margin: 12px 0 6px; }
+
+        /* СУДОКУ */
+        .sudoku-top { background: var(--bg-card); border-radius: 18px; padding: 10px 14px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; border: 1px solid #2c2c34; }
+        .sudoku-board { display: grid; grid-template-columns: repeat(9, 1fr); background: #2c2c35; border: 2px solid #4b4b59; border-radius: 12px; overflow: hidden; aspect-ratio: 1; }
+        .s-cell { background: #16161c; border: 0.5px solid #282832; display: flex; align-items: center; justify-content: center; font-size: 17px; font-weight: 700; color: #fff; cursor: pointer; }
+        .s-cell.b-right { border-right: 2px solid #525263; }
+        .s-cell.b-bottom { border-bottom: 2px solid #525263; }
+        .s-cell.fixed { color: #e2e8f0; }
+        .s-cell.user-num { color: #38bdf8; }
+        .s-cell.selected { background: #2b4c7e; }
+        .numpad { display: grid; grid-template-columns: repeat(9, 1fr); gap: 4px; margin-top: 12px; }
+        .num-btn { background: var(--bg-card); border: 1px solid #2c2c34; border-radius: 10px; padding: 10px 0; text-align: center; font-weight: 800; font-size: 16px; color: #fff; cursor: pointer; }
+        .sudoku-actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 10px; }
+
+        /* BLACKJACK */
+        .bj-table { background: radial-gradient(circle, #1d3b29 0%, #12261a 100%); border: 2px solid #6b5335; border-radius: 22px; padding: 16px; display: flex; flex-direction: column; justify-content: space-between; min-height: 350px; }
+        .hand-area { display: flex; flex-direction: column; align-items: center; margin: 6px 0; }
+        .hand-header { width: 100%; display: flex; justify-content: space-between; font-size: 13px; color: #cbd5e1; margin-bottom: 6px; }
         .score-badge { background: rgba(0,0,0,0.5); padding: 2px 10px; border-radius: 10px; font-weight: 700; color: #fff; }
-        .cards-row { display: flex; gap: 8px; min-height: 80px; }
-        .card { width: 54px; height: 80px; background: #fff; color: #111; border-radius: 8px; display: flex; flex-direction: column; justify-content: space-between; padding: 6px; font-weight: 800; font-size: 15px; }
+        .cards-row { display: flex; gap: 8px; min-height: 78px; }
+        .card { width: 52px; height: 78px; background: #fff; color: #111; border-radius: 8px; display: flex; flex-direction: column; justify-content: space-between; padding: 5px; font-weight: 800; font-size: 15px; }
         .card.red { color: #dc2626; }
         .card.hidden { background: repeating-linear-gradient(45deg, #991b1b, #991b1b 6px, #7f1d1d 6px, #7f1d1d 12px); border: 2px solid #fff; }
+        .center-bet-pill { display: inline-flex; align-items: center; gap: 6px; background: rgba(0,0,0,0.55); padding: 5px 14px; border-radius: 20px; font-weight: 800; font-size: 14px; margin: 6px auto; border: 1px solid rgba(255,255,255,0.12); }
+        .chip-dot { width: 18px; height: 18px; border-radius: 50%; background: #dc2626; border: 2px dashed #fff; display: inline-block; }
         .bj-controls { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 12px; }
         .btn-bj { border: none; padding: 13px; border-radius: 14px; font-weight: 700; font-size: 14px; cursor: pointer; }
+        .how-to-box { background: var(--bg-card); border: 1px solid #2c2c34; border-radius: 16px; padding: 12px 16px; margin-top: 10px; text-align: left; font-size: 13px; cursor: pointer; }
 
         /* Сапёр */
         .mines-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin: 16px 0; }
@@ -122,7 +166,7 @@
         <div class="bal-badge">🪙 <span id="chips-bal">0</span></div>
     </div>
 
-    <!-- ВКЛАДКА: КАТАЛОГ ИГР -->
+    <!-- КАТАЛОГ ИГР -->
     <div id="screen-games" class="screen active">
         <div class="cat-title">КАЗИНО</div>
 
@@ -188,6 +232,16 @@
             <div class="gb-art">🎁</div>
         </div>
 
+        <div class="game-banner bg-upgrader" onclick="openUpgrader()">
+            <div class="gb-content">
+                <div class="gb-sub">NFT UPGRADER</div>
+                <div class="gb-title">Апгрейдер</div>
+                <div class="gb-desc">Поставьте подарки и рискните получить NFT дороже</div>
+                <div class="gb-pill"><span class="dot-green"></span> Шанс до 75%</div>
+            </div>
+            <div class="gb-art">⬆️</div>
+        </div>
+
         <div class="cat-title">МИНИ-ИГРЫ</div>
 
         <div class="game-banner bg-mines" onclick="openGame('mines', 'Сапёр')">
@@ -200,13 +254,23 @@
             <div class="gb-art">💣</div>
         </div>
 
+        <div class="game-banner bg-sudoku" onclick="openSudoku()">
+            <div class="gb-content">
+                <div class="gb-sub">SUDOKU</div>
+                <div class="gb-title">Судоку</div>
+                <div class="gb-desc">Реши головоломку 9×9 и получи крупную награду</div>
+                <div class="gb-pill"><span class="dot-gold"></span> +500 💎 за победу</div>
+            </div>
+            <div class="gb-art">🔢</div>
+        </div>
+
         <div class="cat-title">МАЙНИНГ И КЛАНЫ</div>
 
         <div class="game-banner bg-miner" onclick="openGame('miner', 'Майнер АТ-поля')">
             <div class="gb-content">
                 <div class="gb-sub">AT-FIELD MINER</div>
                 <div class="gb-title">Майнер АТ-поля</div>
-                <div class="gb-desc">Ядро добывает фишки даже когда вы не в игре</div>
+                <div class="gb-desc">Ядро добывает фишки даже когда вы не в игре. Улучшайте мощность и хранилище</div>
                 <div class="gb-pill"><span class="dot-green"></span> Добыча идёт</div>
             </div>
             <div class="gb-art">⚛️</div>
@@ -233,7 +297,7 @@
         </div>
     </div>
 
-    <!-- ВКЛАДКА: ПРОФИЛЬ / ИНВЕНТАРЬ -->
+    <!-- ПРОФИЛЬ / ИНВЕНТАРЬ -->
     <div id="screen-profile" class="screen">
         <div class="inv-card">
             <div class="inv-label">Стоимость инвентаря</div>
@@ -243,7 +307,7 @@
                 <span class="stat-chip" id="nft-count">0 NFT</span>
             </div>
             <div class="action-row">
-                <button class="action-btn" onclick="switchTab('games', 'Игры')">📈 Рынок</button>
+                <button class="action-btn" onclick="openUpgrader()">⬆️ Апгрейд</button>
                 <button class="action-btn" onclick="openGame('slots', 'Слоты')">🎰 Слоты</button>
                 <button class="action-btn" onclick="openGame('cases', 'Кейсы')">💼 Кейсы</button>
             </div>
@@ -251,45 +315,114 @@
         <div class="items-grid" id="inventory-grid"></div>
     </div>
 
-    <!-- ИГРА: BLACKJACK -->
+    <!-- МАЙНЕР АТ-ПОЛЯ -->
+    <div id="screen-miner" class="screen">
+        <div class="miner-hero">
+            <div class="hex-cluster">⬡🔆⬡</div>
+            <div class="miner-lv-label">AT-FIELD MINER • LV <span id="miner-main-lv">1</span></div>
+            <div class="miner-big-num" id="mined-chips">0</div>
+            <div class="miner-sub"><span class="chip-dot"></span> добыто</div>
+            <div class="progress-track"><div class="progress-fill" id="miner-bar"></div></div>
+            <div class="miner-stats-line">
+                <span id="miner-rate-text">60</span> фишек/час • хранилище <span id="miner-cap-hours">4</span> ч • всего добыто <span id="miner-total-all">0</span>
+            </div>
+            <button class="btn-claim-orange" onclick="claimMiner()">Забрать</button>
+        </div>
+
+        <div class="upgrade-grid">
+            <div class="upg-card">
+                <div>
+                    <div class="upg-tag">МОЩНОСТЬ ЯДРА</div>
+                    <div class="upg-lv">Уровень <span id="core-lv">1</span> / 25</div>
+                    <div class="upg-diff" id="core-diff">60 → 79 фишек/час</div>
+                </div>
+                <button class="btn-upg-red" id="btn-upg-core" onclick="upgradeCore()">💎 <span id="core-cost">1 500</span></button>
+            </div>
+            <div class="upg-card">
+                <div>
+                    <div class="upg-tag">ХРАНИЛИЩЕ</div>
+                    <div class="upg-lv">Уровень <span id="storage-lv">1</span> / 11</div>
+                    <div class="upg-diff" id="storage-diff">4 → 6 часов</div>
+                </div>
+                <button class="btn-upg-red" id="btn-upg-storage" onclick="upgradeStorage()">💎 <span id="storage-cost">2 500</span></button>
+            </div>
+        </div>
+
+        <div class="miner-hint">
+            Ядро копит фишки, пока вы не в игре. Когда хранилище заполнено, добыча останавливается — заходите забирать. При улучшении добытое забирается автоматически
+        </div>
+    </div>
+
+    <!-- АПГРЕЙДЕР -->
+    <div id="screen-upgrader" class="screen">
+        <button class="upg-banner-btn" id="btn-do-upgrade" onclick="runUpgrade()" disabled>Апгрейд • выберите подарки</button>
+        
+        <div class="sec-header">ВАШИ ПОДАРКИ • ВЫБРАНО <span id="upg-sel-count">0</span>/6 (<span id="upg-sel-val">0</span> 💎)</div>
+        <div class="items-grid-3" id="upg-user-grid"></div>
+
+        <div class="sec-header" style="margin-top: 18px;">ЦЕЛЬ АПГРЕЙДА</div>
+        <div class="items-grid-3" id="upg-target-grid"></div>
+    </div>
+
+    <!-- СУДОКУ -->
+    <div id="screen-sudoku" class="screen">
+        <div class="sudoku-top">
+            <div><div style="font-size:10px; color:var(--text-muted);">СЛОЖНОСТЬ</div><b>Лёгкий</b></div>
+            <div style="font-size:18px; font-weight:800;" id="sudoku-timer">0:00</div>
+            <div class="stat-chip" style="color:#f43f5e; font-weight:700;">+500 💎</div>
+        </div>
+        <div class="sudoku-board" id="sudoku-board"></div>
+        <div class="numpad" id="sudoku-numpad"></div>
+        <div class="sudoku-actions">
+            <button class="action-btn" onclick="inputSudoku(0)">🗑️ Стереть</button>
+            <button class="action-btn" onclick="checkSudokuWin()">✅ Проверить</button>
+            <button class="action-btn" onclick="initSudoku()">🔄 Заново</button>
+        </div>
+    </div>
+
+    <!-- BLACKJACK -->
     <div id="screen-bj" class="screen">
         <div class="bj-table">
-            <div style="text-align:center; font-size:11px; color:#a3b899;">BLACKJACK PAYS 3 TO 2 • Дилер берёт до 17</div>
+            <div style="text-align:center; font-size:11px; color:#a3b899; letter-spacing:1px;">BLACKJACK PAYS 3 TO 2<br>Дилер берёт карты до 17</div>
             <div class="hand-area">
                 <div class="hand-header"><span>Дилер</span><span class="score-badge" id="dealer-score">0</span></div>
                 <div class="cards-row" id="dealer-cards"></div>
             </div>
+            <div class="center-bet-pill"><span class="chip-dot"></span> <span id="center-bet-val">50</span></div>
             <div class="hand-area">
                 <div class="cards-row" id="player-cards"></div>
                 <div class="hand-header" style="margin-top:8px;"><span>Вы • ставка <span id="bet-text">50</span> 💎</span><span class="score-badge" id="player-score">0</span></div>
             </div>
         </div>
-        <div id="bj-status" style="text-align:center; margin-top:10px; font-weight:700; color:#fbbf24; min-height:20px;"></div>
+        <div id="bj-status" style="text-align:center; margin-top:8px; font-weight:700; color:#fbbf24; min-height:20px;"></div>
         <div class="bj-controls">
             <button class="btn-bj" style="background:#fff; color:#000;" id="btn-hit" onclick="hit()" disabled>Ещё</button>
             <button class="btn-bj" style="background:#b91c1c; color:#fff;" id="btn-stand" onclick="stand()" disabled>Хватит</button>
             <button class="btn-bj" style="background:#d97706; color:#fff;" id="btn-double" onclick="doubleBet()" disabled>Удвоить</button>
         </div>
         <button class="primary-btn" id="btn-restart" onclick="startBJ()">Сделать ставку (50 💎)</button>
+        <div class="how-to-box" onclick="const el=this.querySelector('p'); el.style.display=el.style.display==='none'?'block':'none';">
+            <div style="display:flex; justify-content:space-between; font-weight:700;"><span>Как играть</span><span>›</span></div>
+            <p style="display:none; color:var(--text-muted); margin-top:8px; line-height:1.4;">Наберите сумму очков ближе к 21, чем у дилера, но не превышайте 21. Туз даёт 1 или 11, картинки — по 10.</p>
+        </div>
     </div>
 
-    <!-- ИГРА: КОЛЕСО УДАЧИ -->
+    <!-- ОСТАЛЬНЫЕ МИНИ-ИГРЫ -->
     <div id="screen-wheel" class="screen">
         <div class="game-box">
-            <div style="font-size: 72px; margin: 16px 0;" id="wheel-icon">🎡</div>
+            <div style="font-size: 72px; margin: 16px 0;">🎡</div>
             <h3>Колесо удачи</h3>
-            <p style="font-size:13px; color:var(--text-muted); margin-top:6px;">Испытай удачу и выиграй от 50 до 500 💎 или фишки!</p>
+            <p style="font-size:13px; color:var(--text-muted); margin-top:6px;">Бесплатный спин каждый день: от 100 до 500 💎!</p>
             <div id="wheel-res" style="margin-top:14px; font-weight:700; color:#22c55e;"></div>
             <button class="primary-btn" id="btn-spin-wheel" onclick="spinWheel()">Крутить бесплатно</button>
         </div>
     </div>
 
-    <!-- ИГРА: КЕЙСЫ И СЛОТЫ -->
     <div id="screen-cases" class="screen">
         <div class="game-box">
             <div style="font-size: 64px; margin: 12px 0;">🎁</div>
             <h3>Кейс NERV NFT</h3>
-            <p style="font-size:13px; color:var(--text-muted); margin-top:6px;">Внутри: Diamond Ring, Neon Plush, Golden Watch, Electric Skull</p>
+            <p style="font-size:13px; color:var(--text-muted); margin-top:6px;">Внутри: Сердце, Ginger Cookie, Candy Cane, Diamond Ring, Electric Skull</p>
             <button class="primary-btn" onclick="openCase()">Открыть кейс за 100 💎</button>
         </div>
     </div>
@@ -303,7 +436,6 @@
         </div>
     </div>
 
-    <!-- ИГРА: САПЁР -->
     <div id="screen-mines" class="screen">
         <div class="game-box">
             <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -315,12 +447,11 @@
         </div>
     </div>
 
-    <!-- ИГРА: РУЛЕТКА -->
     <div id="screen-roulette" class="screen">
         <div class="game-box">
             <div style="font-size: 64px; margin: 12px 0;">🎯</div>
             <h3>Рулетка (ставка 50 💎)</h3>
-            <p style="font-size:13px; color:var(--text-muted); margin: 6px 0 16px;">Выберите цвет: Красное (x2), Чёрное (x2) или Зеро (x14)</p>
+            <p style="font-size:13px; color:var(--text-muted); margin: 6px 0 16px;">Красное (x2), Чёрное (x2) или Зеро (x14)</p>
             <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px;">
                 <button class="btn-bj" style="background:#dc2626; color:#fff;" onclick="playRoulette('red')">Красное</button>
                 <button class="btn-bj" style="background:#16a34a; color:#fff;" onclick="playRoulette('green')">Зеро</button>
@@ -330,28 +461,16 @@
         </div>
     </div>
 
-    <!-- ИГРА: РАКЕТА -->
     <div id="screen-rocket" class="screen">
         <div class="game-box">
             <div style="font-size: 56px; margin: 10px 0;">🚀</div>
             <div id="rocket-mult" style="font-size: 36px; font-weight: 800; color: #38bdf8;">1.00x</div>
-            <p style="font-size:13px; color:var(--text-muted); margin-top:6px;">Ставка: 50 💎. Успей забрать до взрыва!</p>
+            <p style="font-size:13px; color:var(--text-muted); margin-top:6px;">Ставка: 50 💎. Забери до взрыва!</p>
             <button class="primary-btn" id="btn-rocket" onclick="toggleRocket()">Запустить (50 💎)</button>
         </div>
     </div>
 
-    <!-- ИГРА: МАЙНЕР АТ-ПОЛЯ -->
-    <div id="screen-miner" class="screen">
-        <div class="game-box">
-            <div style="font-size: 64px; margin: 12px 0;">⚛️</div>
-            <h3>Майнер АТ-поля</h3>
-            <p style="font-size:13px; color:var(--text-muted); margin-top:6px;">Накоплено в хранилище:</p>
-            <div style="font-size: 32px; font-weight: 800; margin: 12px 0; color:#fbbf24;">🪙 <span id="mined-chips">0</span></div>
-            <button class="primary-btn" onclick="claimMiner()">Собрать фишки</button>
-        </div>
-    </div>
-
-    <!-- Нижнее меню навигации -->
+    <!-- НИЖНЕЕ МЕНЮ -->
     <div class="bottom-nav">
         <div class="nav-item" onclick="openGame('cases', 'Магазин')"><span class="nav-icon">🛍️</span>Магазин</div>
         <div class="nav-item" onclick="openGame('slots', 'Карты')"><span class="nav-icon">🃏</span>Карты</div>
@@ -364,57 +483,202 @@
         const tg = window.Telegram.WebApp;
         tg.expand();
 
-        // Стартовые значения: 300 алмазов, 0 фишек, 0 инвентарь
-        let state = JSON.parse(localStorage.getItem('nerv_v3')) || {
+        // База уникальных векторных иконок (SVG) и фонов для каждого подарка/NFT
+        const GIFT_CATALOG = {
+            skull: {
+                name: 'Electric Skull',
+                price: 21879,
+                isNft: true,
+                theme: 'theme-blue',
+                svg: `<svg viewBox="0 0 100 100"><defs><radialGradient id="gSkull" cx="50%" cy="40%" r="50%"><stop offset="0%" stop-color="#e0f2fe"/><stop offset="60%" stop-color="#60a5fa"/><stop offset="100%" stop-color="#1d4ed8"/></radialGradient></defs><circle cx="50" cy="48" r="36" fill="none" stroke="#93c5fd" stroke-width="2" stroke-dasharray="8 5" opacity="0.7"/><path d="M50 18 C32 18 22 30 22 46 C22 57 28 65 34 69 L34 80 L66 80 L66 69 C72 65 78 57 78 46 C78 30 68 18 50 18 Z" fill="url(#gSkull)"/><circle cx="38" cy="46" r="7" fill="#0f172a"/><circle cx="62" cy="46" r="7" fill="#0f172a"/><polygon points="50,53 46,61 54,61" fill="#0f172a"/><path d="M42 71 L42 80 M50 71 L50 80 M58 71 L58 80" stroke="#0f172a" stroke-width="3"/><path d="M25 22 L38 35 L31 39 L44 52 M76 26 L62 38 L69 42 L56 54" stroke="#ffffff" stroke-width="3" fill="none" stroke-linecap="round"/></svg>`
+            },
+            ring: {
+                name: 'Diamond Ring',
+                price: 3062,
+                isNft: true,
+                theme: 'theme-green',
+                svg: `<svg viewBox="0 0 100 100"><path d="M24 38 L46 22 L78 32 L56 52 Z" fill="#f43f5e"/><path d="M24 38 L56 52 L56 76 L24 60 Z" fill="#be123c"/><path d="M56 52 L78 32 L78 56 L56 76 Z" fill="#fb7185"/><ellipse cx="51" cy="41" rx="14" ry="8" fill="#4c0519"/><circle cx="51" cy="43" r="9" fill="none" stroke="#e2e8f0" stroke-width="3.5"/><polygon points="51,28 45,34 51,39 57,34" fill="#38bdf8" stroke="#fff" stroke-width="1"/></svg>`
+            },
+            candy_cane: {
+                name: 'Candy Cane',
+                price: 1057,
+                isNft: true,
+                theme: 'theme-red',
+                svg: `<svg viewBox="0 0 100 100"><polygon points="50,22 28,48 40,48 22,68 36,68 18,86 82,86 64,68 78,68 60,48 72,48" fill="#16a34a" stroke="#bbf7d0" stroke-width="2" stroke-linejoin="round"/><polygon points="50,10 53,18 61,18 55,23 57,31 50,26 43,31 45,23 39,18 47,18" fill="#facc15"/><path d="M35 55 Q50 62 65 52 M28 74 Q50 82 72 72" stroke="#ffffff" stroke-width="2.5" fill="none" stroke-dasharray="4 3"/></svg>`
+            },
+            cookie: {
+                name: 'Ginger Cookie',
+                price: 876,
+                isNft: true,
+                theme: 'theme-red',
+                svg: `<svg viewBox="0 0 100 100"><circle cx="50" cy="30" r="14" fill="#d97706"/><path d="M24 46 L76 46 C80 46 80 54 76 54 L62 54 L68 80 C69 85 61 87 59 82 L50 66 L41 82 C39 87 31 85 32 80 L38 54 L24 54 C20 54 20 46 24 46 Z" fill="#d97706"/><circle cx="45" cy="27" r="2.2" fill="#fff"/><circle cx="55" cy="27" r="2.2" fill="#fff"/><path d="M44 34 Q50 39 56 34" stroke="#ef4444" stroke-width="2.5" fill="none" stroke-linecap="round"/><polygon points="50,44 43,40 43,48" fill="#22c55e"/><polygon points="50,44 57,40 57,48" fill="#22c55e"/><circle cx="50" cy="53" r="2.5" fill="#38bdf8"/><circle cx="50" cy="60" r="2.5" fill="#facc15"/></svg>`
+            },
+            heart: {
+                name: 'Сердце',
+                price: 85,
+                isNft: false,
+                theme: 'theme-dark',
+                svg: `<svg viewBox="0 0 100 100"><defs><linearGradient id="gHeart" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#f472b6"/><stop offset="100%" stop-color="#db2777"/></linearGradient></defs><path d="M50 84 C50 84 16 60 16 36 C16 24 25 16 36 16 C43 16 48 20 50 25 C52 20 57 16 64 16 C75 16 84 24 84 36 C84 60 50 84 50 84 Z" fill="url(#gHeart)"/><path d="M14 48 Q50 64 86 44 L84 54 Q50 74 16 58 Z" fill="#facc15" stroke="#ca8a04" stroke-width="1"/></svg>`
+            },
+            sparkler: {
+                name: 'Party Sparkler',
+                price: 975,
+                isNft: true,
+                theme: 'theme-blue',
+                svg: `<svg viewBox="0 0 100 100"><polygon points="44,68 72,38 78,44 50,74" fill="#92400e"/><polygon points="34,78 46,66 52,72 40,84" fill="#451a03"/><circle cx="76" cy="36" r="14" fill="#fef08a" opacity="0.5"/><path d="M76 16 L76 56 M56 36 L96 36 M62 22 L90 50 M90 22 L62 50" stroke="#facc15" stroke-width="3" stroke-linecap="round"/><circle cx="76" cy="36" r="5" fill="#fff"/></svg>`
+            },
+            lollipop: {
+                name: 'Hypno Lollipop',
+                price: 991,
+                isNft: true,
+                theme: 'theme-purple',
+                svg: `<svg viewBox="0 0 100 100"><rect x="47" y="56" width="6" height="32" rx="3" fill="#e2e8f0"/><circle cx="50" cy="40" r="24" fill="#f43f5e" stroke="#fda4af" stroke-width="2"/><path d="M50 40 m0 -18 a18 18 0 1 1 -15 8 a12 12 0 1 1 12 10 a6 6 0 1 1 -4 -6" fill="none" stroke="#ffffff" stroke-width="4.5" stroke-linecap="round"/></svg>`
+            },
+            jackbox: {
+                name: 'Jack-in-the-Box',
+                price: 1054,
+                isNft: true,
+                theme: 'theme-blue',
+                svg: `<svg viewBox="0 0 100 100"><rect x="28" y="34" width="44" height="44" rx="4" fill="#d97706" stroke="#78350f" stroke-width="2.5"/><path d="M28 46 L72 46 M34 46 L66 78" stroke="#92400e" stroke-width="3"/><path d="M72 54 L82 54 L82 46" fill="none" stroke="#cbd5e1" stroke-width="3.5" stroke-linecap="round"/><circle cx="82" cy="44" r="3" fill="#ef4444"/><path d="M28 52 L20 48 L22 58 Z" fill="#f43f5e"/></svg>`
+            }
+        };
+
+        // Стартовый баланс: 300 алмазов, 0 фишек, 0 инвентарь
+        let state = JSON.parse(localStorage.getItem('nerv_v5')) || {
             chips: 0,
             gems: 300,
             items: [],
             wheelUsed: false,
-            mined: 0
+            miner: {
+                coreLv: 1,
+                storageLv: 1,
+                stored: 0,
+                totalMined: 0,
+                lastTick: Date.now()
+            }
         };
 
         function saveState() {
-            localStorage.setItem('nerv_v3', JSON.stringify(state));
+            localStorage.setItem('nerv_v5', JSON.stringify(state));
+        }
+
+        function renderGiftCardHTML(item, idx, extraAttrs = '', topBadge = null) {
+            const meta = GIFT_CATALOG[item.key] || GIFT_CATALOG.heart;
+            const badgeText = topBadge !== null ? topBadge : (meta.isNft && item.num ? `#${item.num}` : '');
+            return `
+                <div class="nft-item ${extraAttrs.includes('selected') ? 'selected' : ''}" ${extraAttrs}>
+                    <div class="nft-art-box ${meta.theme}">
+                        ${badgeText ? `<span class="nft-num">${badgeText}</span>` : ''}
+                        ${meta.svg}
+                    </div>
+                    <div class="nft-name">${meta.name}</div>
+                    <div class="nft-price">💎 ${meta.price.toLocaleString('ru-RU')}</div>
+                </div>
+            `;
+        }
+
+        // Расчёт параметров майнера
+        function getMinerRate() { return 60 + (state.miner.coreLv - 1) * 19; }
+        function getMinerHours() { return 4 + (state.miner.storageLv - 1) * 2; }
+        function getMinerMaxCap() { return getMinerRate() * getMinerHours(); }
+
+        function tickMiner() {
+            const now = Date.now();
+            const elapsedSec = Math.floor((now - state.miner.lastTick) / 1000);
+            if (elapsedSec > 0) {
+                const perSec = getMinerRate() / 3600;
+                const earned = elapsedSec * perSec;
+                const cap = getMinerMaxCap();
+                if (state.miner.stored < cap) {
+                    const add = Math.min(cap - state.miner.stored, earned);
+                    state.miner.stored += add;
+                    state.miner.totalMined += add;
+                }
+                state.miner.lastTick = now;
+                saveState();
+            }
+            renderMinerUI();
+        }
+        setInterval(tickMiner, 1000);
+
+        function renderMinerUI() {
+            const rate = getMinerRate();
+            const hours = getMinerHours();
+            const cap = getMinerMaxCap();
+            const storedFloor = Math.floor(state.miner.stored);
+            const pct = Math.min(100, (state.miner.stored / cap) * 100);
+
+            document.getElementById('miner-main-lv').innerText = state.miner.coreLv;
+            document.getElementById('mined-chips').innerText = storedFloor;
+            document.getElementById('miner-bar').style.width = pct + '%';
+            document.getElementById('miner-rate-text').innerText = rate;
+            document.getElementById('miner-cap-hours').innerText = hours;
+            document.getElementById('miner-total-all').innerText = Math.floor(state.miner.totalMined);
+
+            const coreCost = state.miner.coreLv * 1500;
+            const storCost = state.miner.storageLv * 2500;
+            document.getElementById('core-lv').innerText = state.miner.coreLv;
+            document.getElementById('core-diff').innerText = state.miner.coreLv < 25 ? `${rate} → ${rate + 19} фишек/час` : 'Макс. уровень';
+            document.getElementById('core-cost').innerText = coreCost.toLocaleString('ru-RU');
+            document.getElementById('btn-upg-core').disabled = state.miner.coreLv >= 25;
+
+            document.getElementById('storage-lv').innerText = state.miner.storageLv;
+            document.getElementById('storage-diff').innerText = state.miner.storageLv < 11 ? `${hours} → ${hours + 2} часов` : 'Макс. уровень';
+            document.getElementById('storage-cost').innerText = storCost.toLocaleString('ru-RU');
+            document.getElementById('btn-upg-storage').disabled = state.miner.storageLv >= 11;
+        }
+
+        function claimMiner() {
+            const amt = Math.floor(state.miner.stored);
+            if (amt <= 0) return alert('Пока нечего забирать!');
+            state.chips += amt;
+            state.miner.stored -= amt;
+            updateUI();
+            alert(`Забрано ${amt} 🪙!`);
+        }
+
+        function upgradeCore() {
+            const cost = state.miner.coreLv * 1500;
+            if (state.gems < cost) return alert(`Недостаточно алмазов (нужно ${cost} 💎)`);
+            const autoClaim = Math.floor(state.miner.stored);
+            state.chips += autoClaim;
+            state.miner.stored = 0;
+            state.gems -= cost;
+            state.miner.coreLv++;
+            updateUI();
+        }
+
+        function upgradeStorage() {
+            const cost = state.miner.storageLv * 2500;
+            if (state.gems < cost) return alert(`Недостаточно алмазов (нужно ${cost} 💎)`);
+            const autoClaim = Math.floor(state.miner.stored);
+            state.chips += autoClaim;
+            state.miner.stored = 0;
+            state.gems -= cost;
+            state.miner.storageLv++;
+            updateUI();
         }
 
         function updateUI() {
-            const invTotal = state.items.reduce((sum, item) => sum + item.price, 0);
-            document.getElementById('chips-bal').innerText = state.chips;
-            document.getElementById('gems-bal').innerText = state.gems;
-            document.getElementById('inv-total').innerText = invTotal;
+            const invTotal = state.items.reduce((sum, item) => sum + (GIFT_CATALOG[item.key]?.price || 0), 0);
+            const nftOnlyCount = state.items.filter(item => GIFT_CATALOG[item.key]?.isNft).length;
+
+            document.getElementById('chips-bal').innerText = state.chips.toLocaleString('ru-RU');
+            document.getElementById('gems-bal').innerText = state.gems.toLocaleString('ru-RU');
+            document.getElementById('inv-total').innerText = invTotal.toLocaleString('ru-RU');
             document.getElementById('items-count').innerText = `${state.items.length} подарков`;
-            document.getElementById('nft-count').innerText = `${state.items.length} NFT`;
-            document.getElementById('mined-chips').innerText = state.mined;
+            document.getElementById('nft-count').innerText = `${nftOnlyCount} NFT`;
 
             const grid = document.getElementById('inventory-grid');
             if (state.items.length === 0) {
-                grid.innerHTML = `<div class="empty-state">Инвентарь пуст.<br>Откройте кейс или выиграйте NFT в слотах!</div>`;
+                grid.innerHTML = `<div class="empty-state">Инвентарь пуст.<br>Откройте кейс за 100 💎 или выиграйте NFT в слотах!</div>`;
             } else {
-                grid.innerHTML = state.items.map((item, idx) => `
-                    <div class="nft-item" onclick="sellItem(${idx})">
-                        <span class="nft-num">#${item.num}</span>
-                        <div class="nft-img">${item.icon}</div>
-                        <div class="nft-name">${item.name}</div>
-                        <div class="nft-price">💎 ${item.price}</div>
-                    </div>
-                `).join('');
+                grid.innerHTML = state.items.map((item, idx) =>
+                    renderGiftCardHTML(item, idx, `onclick="sellItem(${idx})"`)
+                ).join('');
             }
+            renderMinerUI();
             saveState();
-        }
-
-        // Пассивный майнинг фишек (1 фишка каждые 2 секунды)
-        setInterval(() => {
-            state.mined += 1;
-            document.getElementById('mined-chips').innerText = state.mined;
-            saveState();
-        }, 2000);
-
-        function claimMiner() {
-            if (state.mined === 0) return alert('Хранилище пока пустое!');
-            state.chips += state.mined;
-            alert(`Собрано ${state.mined} 🪙!`);
-            state.mined = 0;
-            updateUI();
         }
 
         function switchTab(tab, title) {
@@ -434,57 +698,190 @@
             document.getElementById('btn-back').style.visibility = 'visible';
         }
 
-        function goBack() {
-            switchTab('games', 'Игры');
-        }
+        function goBack() { switchTab('games', 'Игры'); }
 
-        function addGift(name, price, icon) {
-            state.items.push({ name, price, icon, num: Math.floor(Math.random() * 900 + 100) });
+        function addGift(key) {
+            const meta = GIFT_CATALOG[key];
+            state.items.push({
+                key,
+                num: meta.isNft ? Math.floor(Math.random() * 899 + 100) : null
+            });
             updateUI();
         }
 
         function sellItem(idx) {
             const item = state.items[idx];
             if (!item) return;
-            if (confirm(`Продать ${item.name} за ${item.price} 💎?`)) {
-                state.gems += item.price;
+            const meta = GIFT_CATALOG[item.key];
+            if (confirm(`Продать ${meta.name} за ${meta.price} 💎?`)) {
+                state.gems += meta.price;
                 state.items.splice(idx, 1);
                 updateUI();
             }
         }
 
-        // Кейсы
-        function openCase() {
-            if (state.gems < 100) return alert('Недостаточно алмазов (нужно 100 💎)');
-            state.gems -= 100;
-            const pool = [
-                { name: 'Neon Plush', price: 85, icon: '🧸' },
-                { name: 'Diamond Ring', price: 300, icon: '💍' },
-                { name: 'Cyber Frog', price: 520, icon: '🐸' },
-                { name: 'Electric Skull', price: 1500, icon: '💀' }
-            ];
-            const won = pool[Math.floor(Math.random() * pool.length)];
-            addGift(won.name, won.price, won.icon);
-            alert(`Вам выпал NFT: ${won.name} (${won.price} 💎)!`);
+        // АПГРЕЙДЕР
+        let selectedUserGifts = [], selectedTargetIdx = 0;
+        const upgTargetKeys = ['sparkler', 'lollipop', 'jackbox', 'ring', 'skull'];
+
+        function openUpgrader() {
+            selectedUserGifts = [];
+            openGame('upgrader', 'Апгрейдер');
+            renderUpgrader();
         }
 
-        // Слоты
-        function spinSlots() {
-            if (state.gems < 50) return alert('Недостаточно алмазов (нужно 50 💎)');
-            state.gems -= 50;
-            updateUI();
-            const syms = ['🐸', '💍', '💀'];
-            const r1 = syms[Math.floor(Math.random() * 3)];
-            const r2 = syms[Math.floor(Math.random() * 3)];
-            const r3 = syms[Math.floor(Math.random() * 3)];
-            document.getElementById('slots-reels').innerText = `${r1} ${r2} ${r3}`;
-            if (r1 === r2 && r2 === r3) {
-                addGift('Jackpot Pepe', 750, r1);
-                alert('ДЖЕКПОТ! Вы выиграли NFT подарок в инвентарь!');
+        function toggleUserGift(idx) {
+            const pos = selectedUserGifts.indexOf(idx);
+            if (pos > -1) selectedUserGifts.splice(pos, 1);
+            else if (selectedUserGifts.length < 6) selectedUserGifts.push(idx);
+            renderUpgrader();
+        }
+
+        function renderUpgrader() {
+            const uGrid = document.getElementById('upg-user-grid');
+            if (state.items.length === 0) {
+                uGrid.innerHTML = `<div class="empty-state">У вас пока нет подарков для апгрейда. Откройте кейс!</div>`;
+            } else {
+                uGrid.innerHTML = state.items.map((item, idx) => {
+                    const isSel = selectedUserGifts.includes(idx) ? 'selected' : '';
+                    return renderGiftCardHTML(item, idx, `class="nft-item ${isSel}" onclick="toggleUserGift(${idx})"`);
+                }).join('');
+            }
+
+            const totalBet = selectedUserGifts.reduce((s, i) => s + GIFT_CATALOG[state.items[i].key].price, 0);
+            document.getElementById('upg-sel-count').innerText = selectedUserGifts.length;
+            document.getElementById('upg-sel-val').innerText = totalBet.toLocaleString('ru-RU');
+
+            const tGrid = document.getElementById('upg-target-grid');
+            tGrid.innerHTML = upgTargetKeys.map((key, idx) => {
+                const meta = GIFT_CATALOG[key];
+                const chance = totalBet > 0 ? Math.min(75, Math.max(1, ((totalBet / meta.price) * 85))).toFixed(1) : '0.0';
+                const isSel = selectedTargetIdx === idx ? 'selected' : '';
+                return renderGiftCardHTML(
+                    { key },
+                    idx,
+                    `class="nft-item ${isSel}" onclick="selectedTargetIdx=${idx}; renderUpgrader();"`,
+                    `${chance}%`
+                );
+            }).join('');
+
+            const targetMeta = GIFT_CATALOG[upgTargetKeys[selectedTargetIdx]];
+            const btn = document.getElementById('btn-do-upgrade');
+            if (totalBet > 0) {
+                const chance = Math.min(75, Math.max(1, ((totalBet / targetMeta.price) * 85))).toFixed(1);
+                btn.disabled = false;
+                btn.innerText = `Апгрейд • шанс ${chance}%`;
+            } else {
+                btn.disabled = true;
+                btn.innerText = 'Апгрейд • выберите подарки';
             }
         }
 
-        // Колесо удачи
+        function runUpgrade() {
+            const totalBet = selectedUserGifts.reduce((s, i) => s + GIFT_CATALOG[state.items[i].key].price, 0);
+            const targetKey = upgTargetKeys[selectedTargetIdx];
+            const targetMeta = GIFT_CATALOG[targetKey];
+            const chance = Math.min(75, Math.max(1, (totalBet / targetMeta.price) * 85));
+
+            selectedUserGifts.sort((a, b) => b - a).forEach(i => state.items.splice(i, 1));
+            selectedUserGifts = [];
+
+            if (Math.random() * 100 <= chance) {
+                addGift(targetKey);
+                alert(`УСПЕХ! Вы получили ${targetMeta.name} (${targetMeta.price} 💎)!`);
+            } else {
+                updateUI();
+                alert('Неудача! Выбранные подарки сгорели.');
+            }
+            renderUpgrader();
+        }
+
+        // СУДОКУ
+        const sudokuPuzzle = [
+            [5,9,0, 2,0,1, 3,0,6],
+            [4,2,0, 0,0,3, 7,0,0],
+            [8,6,3, 0,0,7, 0,0,0],
+            [0,0,9, 0,0,0, 6,0,0],
+            [0,0,0, 4,3,6, 9,0,0],
+            [0,4,0, 0,0,9, 0,0,5],
+            [6,1,0, 0,0,0, 5,0,7],
+            [0,7,5, 0,6,0, 8,9,3],
+            [9,0,0, 7,2,5, 4,0,0]
+        ];
+        let sUserGrid = [], sSelected = [0, 2], sTimer = null, sSec = 0;
+
+        function openSudoku() { openGame('sudoku', 'Судоку'); initSudoku(); }
+        function initSudoku() {
+            sUserGrid = sudokuPuzzle.map(r => [...r]);
+            sSelected = [0, 2]; sSec = 0;
+            clearInterval(sTimer);
+            sTimer = setInterval(() => {
+                sSec++;
+                const m = Math.floor(sSec / 60), s = sSec % 60;
+                document.getElementById('sudoku-timer').innerText = `${m}:${s < 10 ? '0'+s : s}`;
+            }, 1000);
+            renderSudoku();
+        }
+        function renderSudoku() {
+            const board = document.getElementById('sudoku-board');
+            board.innerHTML = '';
+            for (let r = 0; r < 9; r++) {
+                for (let c = 0; c < 9; c++) {
+                    const isFixed = sudokuPuzzle[r][c] !== 0;
+                    const val = sUserGrid[r][c];
+                    const isSel = sSelected[0] === r && sSelected[1] === c;
+                    const bR = (c === 2 || c === 5) ? 'b-right' : '';
+                    const bB = (r === 2 || r === 5) ? 'b-bottom' : '';
+                    board.innerHTML += `<div class="s-cell ${bR} ${bB} ${isFixed?'fixed':'user-num'} ${isSel?'selected':''}" onclick="sSelected=[${r},${c}]; renderSudoku();">${val || ''}</div>`;
+                }
+            }
+            const pad = document.getElementById('sudoku-numpad');
+            pad.innerHTML = '';
+            for (let n = 1; n <= 9; n++) pad.innerHTML += `<div class="num-btn" onclick="inputSudoku(${n})">${n}</div>`;
+        }
+        function inputSudoku(num) {
+            const [r, c] = sSelected;
+            if (sudokuPuzzle[r][c] !== 0) return;
+            sUserGrid[r][c] = num;
+            renderSudoku();
+        }
+        function checkSudokuWin() {
+            for (let r = 0; r < 9; r++) for (let c = 0; c < 9; c++) if (sUserGrid[r][c] === 0) return alert('Заполните все пустые клетки!');
+            for (let i = 0; i < 9; i++) {
+                const rowSet = new Set(sUserGrid[i]), colSet = new Set(sUserGrid.map(r => r[i]));
+                if (rowSet.size !== 9 || colSet.size !== 9) return alert('В решении есть повторы цифр!');
+            }
+            clearInterval(sTimer); state.gems += 500; updateUI();
+            alert('Поздравляем! Судоку решено! Награда: +500 💎');
+            goBack();
+        }
+
+        // КЕЙСЫ И СЛОТЫ
+        function openCase() {
+            if (state.gems < 100) return alert('Недостаточно алмазов (нужно 100 💎)');
+            state.gems -= 100;
+            const pool = ['heart', 'cookie', 'sparkler', 'lollipop', 'jackbox', 'candy_cane', 'ring', 'skull'];
+            const weights = [35, 22, 14, 12, 8, 5, 3, 1];
+            let rnd = Math.random() * 100, acc = 0, chosen = 'heart';
+            for (let i = 0; i < pool.length; i++) { acc += weights[i]; if (rnd <= acc) { chosen = pool[i]; break; } }
+            addGift(chosen);
+            const meta = GIFT_CATALOG[chosen];
+            alert(`Вам выпал подарок: ${meta.name} (${meta.price} 💎)!`);
+        }
+
+        function spinSlots() {
+            if (state.gems < 50) return alert('Недостаточно алмазов (нужно 50 💎)');
+            state.gems -= 50; updateUI();
+            const syms = ['🍭', '💍', '💀'];
+            const r1 = syms[Math.floor(Math.random()*3)], r2 = syms[Math.floor(Math.random()*3)], r3 = syms[Math.floor(Math.random()*3)];
+            document.getElementById('slots-reels').innerText = `${r1} ${r2} ${r3}`;
+            if (r1 === r2 && r2 === r3) {
+                const rewardKey = r1 === '💀' ? 'skull' : (r1 === '💍' ? 'ring' : 'lollipop');
+                addGift(rewardKey);
+                alert(`ДЖЕКПОТ! Вы выиграли ${GIFT_CATALOG[rewardKey].name} в инвентарь!`);
+            }
+        }
+
         function spinWheel() {
             if (state.wheelUsed) return alert('Вы уже крутили колесо сегодня!');
             state.wheelUsed = true;
@@ -495,7 +892,6 @@
             updateUI();
         }
 
-        // Рулетка
         function playRoulette(choice) {
             if (state.gems < 50) return alert('Недостаточно алмазов (50 💎)');
             state.gems -= 50;
@@ -511,16 +907,13 @@
             updateUI();
         }
 
-        // Ракета
         let rocketTimer = null, rocketMult = 1.0, rocketCrash = 1.0;
         function toggleRocket() {
             const btn = document.getElementById('btn-rocket');
             if (!rocketTimer) {
                 if (state.gems < 50) return alert('Нужно 50 💎');
-                state.gems -= 50;
-                updateUI();
-                rocketMult = 1.0;
-                rocketCrash = +(1.1 + Math.random() * 3.5).toFixed(2);
+                state.gems -= 50; updateUI();
+                rocketMult = 1.0; rocketCrash = +(1.1 + Math.random() * 3.5).toFixed(2);
                 btn.innerText = 'Забрать выигрыш';
                 rocketTimer = setInterval(() => {
                     rocketMult = +(rocketMult + 0.07).toFixed(2);
@@ -534,53 +927,41 @@
             } else {
                 clearInterval(rocketTimer); rocketTimer = null;
                 const win = Math.floor(50 * rocketMult);
-                state.gems += win;
-                updateUI();
+                state.gems += win; updateUI();
                 alert(`Вы забрали ${win} 💎!`);
                 btn.innerText = 'Запустить (50 💎)';
             }
         }
 
-        // Сапёр
         let minesActive = false, minesWin = 0, bombIdx = -1;
         function startMines() {
             if (minesActive) {
-                state.gems += minesWin;
-                minesActive = false;
-                updateUI();
+                state.gems += minesWin; minesActive = false; updateUI();
                 alert(`Вы забрали ${minesWin} 💎!`);
                 document.getElementById('btn-mines-action').innerText = 'Начать игру (50 💎)';
                 return;
             }
             if (state.gems < 50) return alert('Нужно 50 💎');
-            state.gems -= 50;
-            updateUI();
-            minesActive = true;
-            minesWin = 50;
-            bombIdx = Math.floor(Math.random() * 15);
+            state.gems -= 50; updateUI();
+            minesActive = true; minesWin = 50; bombIdx = Math.floor(Math.random() * 15);
             document.getElementById('mines-win').innerText = minesWin;
             document.getElementById('btn-mines-action').innerText = `Забрать ${minesWin} 💎`;
-            const grid = document.getElementById('mines-grid');
-            grid.innerHTML = '';
-            for (let i = 0; i < 15; i++) {
-                grid.innerHTML += `<div class="mine-cell" onclick="clickMine(this, ${i})">?</div>`;
-            }
+            const grid = document.getElementById('mines-grid'); grid.innerHTML = '';
+            for (let i = 0; i < 15; i++) grid.innerHTML += `<div class="mine-cell" onclick="clickMine(this, ${i})">?</div>`;
         }
         function clickMine(el, idx) {
             if (!minesActive || el.classList.contains('open')) return;
             if (idx === bombIdx) {
-                el.classList.add('boom'); el.innerText = '💥';
-                minesActive = false;
+                el.classList.add('boom'); el.innerText = '💥'; minesActive = false;
                 document.getElementById('btn-mines-action').innerText = 'Подорвались! Играть снова (50 💎)';
             } else {
-                el.classList.add('open'); el.innerText = '💎';
-                minesWin += 50;
+                el.classList.add('open'); el.innerText = '💎'; minesWin += 50;
                 document.getElementById('mines-win').innerText = minesWin;
                 document.getElementById('btn-mines-action').innerText = `Забрать ${minesWin} 💎`;
             }
         }
 
-        // Blackjack
+        // BLACKJACK
         let deck = [], playerHand = [], dealerHand = [], bet = 50, gameOver = true;
         const suits = ['♠', '♣', '♥', '♦'], values = ['2','3','4','5','6','7','8','9','10','J','Q','K','A'];
         function createDeck() { deck = []; for (let s of suits) for (let v of values) deck.push({ s, v }); deck.sort(() => Math.random() - 0.5); }
@@ -607,6 +988,7 @@
             state.gems -= bet; updateUI(); gameOver = false;
             document.getElementById('bj-status').innerText = '';
             document.getElementById('bet-text').innerText = bet;
+            document.getElementById('center-bet-val').innerText = bet;
             document.getElementById('btn-restart').style.display = 'none';
             toggleBJ(true); createDeck();
             playerHand = [deck.pop(), deck.pop()]; dealerHand = [deck.pop(), deck.pop()];
@@ -615,10 +997,11 @@
         }
         function toggleBJ(on) { ['btn-hit','btn-stand','btn-double'].forEach(id => document.getElementById(id).disabled = !on); }
         function hit() { if (!gameOver) { playerHand.push(deck.pop()); renderCards(true); if (getScore(playerHand) > 21) endBJ('Перебор! Вы проиграли.', 0); } }
-        function doubleBet() { if (state.gems < bet) return alert('Не хватает алмазов'); state.gems -= bet; bet *= 2; updateUI(); document.getElementById('bet-text').innerText = bet; playerHand.push(deck.pop()); renderCards(true); if (getScore(playerHand) > 21) endBJ('Перебор!', 0); else stand(); }
+        function doubleBet() { if (state.gems < bet) return alert('Не хватает алмазов'); state.gems -= bet; bet *= 2; updateUI(); document.getElementById('bet-text').innerText = bet; document.getElementById('center-bet-val').innerText = bet; playerHand.push(deck.pop()); renderCards(true); if (getScore(playerHand) > 21) endBJ('Перебор!', 0); else stand(); }
         function stand() { if (!gameOver) { while (getScore(dealerHand) < 17) dealerHand.push(deck.pop()); renderCards(false); const p = getScore(playerHand), d = getScore(dealerHand); if (d > 21 || p > d) endBJ(`Победа! +${bet * 2} 💎`, bet * 2); else if (p === d) endBJ('Ничья! Возврат ставки.', bet); else endBJ('Дилер выиграл.', 0); } }
         function endBJ(msg, win) { gameOver = true; state.gems += win; updateUI(); renderCards(false); document.getElementById('bj-status').innerText = msg; toggleBJ(false); document.getElementById('btn-restart').style.display = 'block'; }
 
+        tickMiner();
         updateUI();
     </script>
 </body>
