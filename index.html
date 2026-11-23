@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Mini App</title>
+    <title>NERVANA</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         :root {
@@ -20,17 +20,14 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; user-select: none; }
         body { background-color: var(--bg-main); color: var(--text-main); height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
         
-        /* Шапка */
         .header { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; }
         .title-pill { background: var(--bg-card); padding: 8px 24px; border-radius: 20px; font-weight: 600; font-size: 16px; border: 1px solid #2c2c30; }
         .balance-bar { display: flex; gap: 8px; justify-content: flex-end; padding: 0 16px 10px; }
         .bal-badge { background: var(--bg-card); padding: 6px 12px; border-radius: 14px; font-size: 14px; font-weight: 700; display: flex; align-items: center; gap: 6px; border: 1px solid #2c2c30; }
 
-        /* Контент */
         .screen { flex: 1; overflow-y: auto; padding: 0 16px 80px; display: none; }
         .screen.active { display: block; }
 
-        /* Профиль / Инвентарь */
         .inv-card { background: linear-gradient(145deg, #222226, #161618); border-radius: 20px; padding: 20px; text-align: center; border: 1px solid #2e2e34; margin-bottom: 16px; }
         .inv-label { font-size: 11px; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; }
         .inv-value { font-size: 32px; font-weight: 800; margin: 8px 0; }
@@ -40,13 +37,13 @@
         .action-btn { background: var(--bg-pill); border: none; color: #fff; padding: 10px; border-radius: 12px; font-size: 13px; font-weight: 600; cursor: pointer; }
         
         .items-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 12px; }
+        .empty-state { grid-column: span 2; text-align: center; color: var(--text-muted); padding: 32px 16px; font-size: 14px; background: var(--bg-card); border-radius: 16px; border: 1px dashed #2c2c30; }
         .nft-item { background: var(--bg-card); border-radius: 16px; padding: 12px; text-align: center; border: 1px solid #2c2c30; position: relative; }
         .nft-num { position: absolute; top: 8px; right: 8px; background: rgba(0,0,0,0.6); font-size: 11px; padding: 2px 6px; border-radius: 8px; }
         .nft-img { font-size: 48px; margin: 16px 0; }
         .nft-name { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
         .nft-price { font-size: 13px; color: #f43f5e; font-weight: 700; }
 
-        /* Blackjack стол */
         .bj-table { background: radial-gradient(circle, #1d3b29 0%, var(--table-green) 100%); border: 2px solid var(--table-border); border-radius: 24px; padding: 16px; display: flex; flex-direction: column; justify-content: space-between; min-height: 360px; position: relative; }
         .bj-info { text-align: center; font-size: 11px; color: #a3b899; letter-spacing: 1px; }
         .hand-area { display: flex; flex-direction: column; align-items: center; margin: 12px 0; }
@@ -67,7 +64,6 @@
         .btn-bj:disabled { opacity: 0.4; }
         .status-msg { text-align: center; margin-top: 10px; font-weight: 700; color: #fbbf24; min-height: 20px; }
 
-        /* Нижнее меню */
         .bottom-nav { position: fixed; bottom: 12px; left: 16px; right: 16px; background: #18181b; border: 1px solid #27272a; border-radius: 24px; display: flex; justify-content: space-around; padding: 8px 4px; }
         .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--text-muted); font-size: 11px; cursor: pointer; padding: 4px 10px; border-radius: 14px; }
         .nav-item.active { color: #f43f5e; background: rgba(244, 63, 94, 0.1); }
@@ -83,40 +79,27 @@
     </div>
 
     <div class="balance-bar">
-        <div class="bal-badge">💎 <span id="gems-bal">2 015</span></div>
-        <div class="bal-badge">🪙 <span id="chips-bal">6350</span></div>
+        <div class="bal-badge">💎 <span id="gems-bal">300</span></div>
+        <div class="bal-badge">🪙 <span id="chips-bal">0</span></div>
     </div>
 
     <!-- Экран Профиля / Инвентаря -->
     <div id="screen-profile" class="screen active">
         <div class="inv-card">
             <div class="inv-label">Стоимость инвентаря</div>
-            <div class="inv-value">💎 <span id="inv-total">24 941</span></div>
+            <div class="inv-value">💎 <span id="inv-total">0</span></div>
             <div class="inv-stats">
-                <span class="stat-chip" id="items-count">2 подарков</span>
-                <span class="stat-chip">2 NFT</span>
+                <span class="stat-chip" id="items-count">0 подарков</span>
+                <span class="stat-chip" id="nft-count">0 NFT</span>
             </div>
             <div class="action-row">
                 <button class="action-btn" onclick="alert('Раздел Рынок в разработке')">📈 Рынок</button>
                 <button class="action-btn" onclick="switchTab('games', 'Blackjack')">🎰 Игры</button>
-                <button class="action-btn" onclick="openCase()">💼 Кейс (500🪙)</button>
+                <button class="action-btn" onclick="openCase()">💼 Кейс (100💎)</button>
             </div>
         </div>
 
-        <div class="items-grid" id="inventory-grid">
-            <div class="nft-item" onclick="sellItem(this, 21879)">
-                <span class="nft-num">#426</span>
-                <div class="nft-img">💀</div>
-                <div class="nft-name">Electric Skull</div>
-                <div class="nft-price">💎 21 879</div>
-            </div>
-            <div class="nft-item" onclick="sellItem(this, 3062)">
-                <span class="nft-num">#261</span>
-                <div class="nft-img">💍</div>
-                <div class="nft-name">Diamond Ring</div>
-                <div class="nft-price">💎 3 062</div>
-            </div>
-        </div>
+        <div class="items-grid" id="inventory-grid"></div>
     </div>
 
     <!-- Экран Игры Blackjack -->
@@ -129,22 +112,22 @@
                 <div class="cards-row" id="dealer-cards"></div>
             </div>
 
-            <div class="bet-chip" id="current-bet">500</div>
+            <div class="bet-chip" id="current-bet">50</div>
 
             <div class="hand-area">
                 <div class="cards-row" id="player-cards"></div>
-                <div class="hand-header" style="margin-top:8px; margin-bottom:0;"><span>Вы • ставка <span id="bet-text">500</span></span><span class="score-badge" id="player-score">0</span></div>
+                <div class="hand-header" style="margin-top:8px; margin-bottom:0;"><span>Вы • ставка <span id="bet-text">50</span> 💎</span><span class="score-badge" id="player-score">0</span></div>
             </div>
         </div>
 
         <div class="status-msg" id="bj-status"></div>
 
         <div class="bj-controls">
-            <button class="btn-bj btn-hit" id="btn-hit" onclick="hit()">Ещё</button>
-            <button class="btn-bj btn-stand" id="btn-stand" onclick="stand()">Хватит</button>
-            <button class="btn-bj btn-double" id="btn-double" onclick="doubleBet()">Удвоить</button>
+            <button class="btn-bj btn-hit" id="btn-hit" onclick="hit()" disabled>Ещё</button>
+            <button class="btn-bj btn-stand" id="btn-stand" onclick="stand()" disabled>Хватит</button>
+            <button class="btn-bj btn-double" id="btn-double" onclick="doubleBet()" disabled>Удвоить</button>
         </div>
-        <button class="action-btn" id="btn-restart" style="width:100%; margin-top:10px; display:none; background:#2563eb;" onclick="startBJ()">Новая раздача (500 🪙)</button>
+        <button class="action-btn" id="btn-restart" style="width:100%; margin-top:10px; background:#2563eb;" onclick="startBJ()">Играть (50 💎)</button>
     </div>
 
     <!-- Нижняя панель -->
@@ -160,14 +143,39 @@
         const tg = window.Telegram.WebApp;
         tg.expand();
 
-        let chips = 6350;
-        let gems = 2015;
-        let invTotal = 24941;
+        // Новая версия сохранения v2: старт с 300 алмазов, 0 фишек и 0 в инвентаре
+        let state = JSON.parse(localStorage.getItem('nervana_state_v2')) || {
+            chips: 0,
+            gems: 300,
+            items: []
+        };
 
-        function updateBalances() {
-            document.getElementById('chips-bal').innerText = chips;
-            document.getElementById('gems-bal').innerText = gems;
+        function saveState() {
+            localStorage.setItem('nervana_state_v2', JSON.stringify(state));
+        }
+
+        function renderProfile() {
+            const invTotal = state.items.reduce((sum, item) => sum + item.price, 0);
+            document.getElementById('chips-bal').innerText = state.chips;
+            document.getElementById('gems-bal').innerText = state.gems;
             document.getElementById('inv-total').innerText = invTotal;
+            document.getElementById('items-count').innerText = `${state.items.length} подарков`;
+            document.getElementById('nft-count').innerText = `${state.items.length} NFT`;
+
+            const grid = document.getElementById('inventory-grid');
+            if (state.items.length === 0) {
+                grid.innerHTML = `<div class="empty-state">Инвентарь пуст.<br>Откройте кейс за 100 💎 или сыграйте в Blackjack!</div>`;
+            } else {
+                grid.innerHTML = state.items.map((item, idx) => `
+                    <div class="nft-item" onclick="sellItem(${idx})">
+                        <span class="nft-num">#${item.num}</span>
+                        <div class="nft-img">${item.icon}</div>
+                        <div class="nft-name">${item.name}</div>
+                        <div class="nft-price">💎 ${item.price}</div>
+                    </div>
+                `).join('');
+            }
+            saveState();
         }
 
         function switchTab(tab, title) {
@@ -176,41 +184,37 @@
             document.getElementById('screen-' + tab).classList.add('active');
             document.getElementById('nav-' + tab).classList.add('active');
             document.getElementById('page-title').innerText = title;
-            if (tab === 'games' && deck.length === 0) startBJ();
         }
 
-        function sellItem(el, price) {
-            if (confirm(`Продать подарок за ${price} 💎?`)) {
-                gems += price;
-                invTotal -= price;
-                el.remove();
-                updateBalances();
+        function sellItem(idx) {
+            const item = state.items[idx];
+            if (!item) return;
+            if (confirm(`Продать ${item.name} за ${item.price} 💎?`)) {
+                state.gems += item.price;
+                state.items.splice(idx, 1);
+                renderProfile();
             }
         }
 
         function openCase() {
-            if (chips < 500) return alert('Недостаточно фишек!');
-            chips -= 500;
+            if (state.gems < 100) return alert('Недостаточно алмазов! Нужно 100 💎.');
+            state.gems -= 100;
             const gifts = [
-                { name: 'Cyber Cat', price: 1500, icon: '🐱' },
-                { name: 'Golden Watch', price: 4200, icon: '⌚' },
-                { name: 'Neon Plush', price: 850, icon: '🧸' }
+                { name: 'Cyber Cat', price: 150, icon: '🐱' },
+                { name: 'Golden Watch', price: 420, icon: '⌚' },
+                { name: 'Neon Plush', price: 80, icon: '🧸' },
+                { name: 'Diamond Ring', price: 300, icon: '💍' }
             ];
             const won = gifts[Math.floor(Math.random() * gifts.length)];
-            invTotal += won.price;
-            const grid = document.getElementById('inventory-grid');
-            grid.innerHTML += `
-                <div class="nft-item" onclick="sellItem(this, ${won.price})">
-                    <span class="nft-num">#${Math.floor(Math.random()*900+100)}</span>
-                    <div class="nft-img">${won.icon}</div>
-                    <div class="nft-name">${won.name}</div>
-                    <div class="nft-price">💎 ${won.price}</div>
-                </div>`;
-            updateBalances();
+            state.items.push({
+                ...won,
+                num: Math.floor(Math.random() * 900 + 100)
+            });
+            renderProfile();
             alert(`Вы выбили: ${won.name}!`);
         }
 
-        let deck = [], playerHand = [], dealerHand = [], bet = 500, gameOver = false;
+        let deck = [], playerHand = [], dealerHand = [], bet = 50, gameOver = true;
         const suits = ['♠', '♣', '♥', '♦'];
         const values = ['2','3','4','5','6','7','8','9','10','J','Q','K','A'];
 
@@ -255,10 +259,13 @@
         }
 
         function startBJ() {
-            bet = 500;
-            if (chips < bet) { document.getElementById('bj-status').innerText = 'Недостаточно фишек!'; return; }
-            chips -= bet;
-            updateBalances();
+            bet = 50;
+            if (state.gems < bet) {
+                document.getElementById('bj-status').innerText = 'Недостаточно алмазов (нужно 50 💎)!';
+                return;
+            }
+            state.gems -= bet;
+            renderProfile();
             gameOver = false;
             document.getElementById('bj-status').innerText = '';
             document.getElementById('bet-text').innerText = bet;
@@ -288,10 +295,10 @@
         }
 
         function doubleBet() {
-            if (chips < bet) return alert('Не хватает фишек для удвоения');
-            chips -= bet;
+            if (state.gems < bet) return alert('Не хватает алмазов для удвоения');
+            state.gems -= bet;
             bet *= 2;
-            updateBalances();
+            renderProfile();
             document.getElementById('bet-text').innerText = bet;
             document.getElementById('current-bet').innerText = bet;
             playerHand.push(deck.pop());
@@ -305,20 +312,22 @@
             while (getScore(dealerHand) < 17) dealerHand.push(deck.pop());
             renderCards(false);
             const p = getScore(playerHand), d = getScore(dealerHand);
-            if (d > 21 || p > d) endGame(`Победа! +${bet * 2} 🪙`, bet * 2);
+            if (d > 21 || p > d) endGame(`Победа! +${bet * 2} 💎`, bet * 2);
             else if (p === d) endGame('Ничья! Ставка возвращена.', bet);
             else endGame('Дилер выиграл.', 0);
         }
 
         function endGame(msg, winAmount) {
             gameOver = true;
-            chips += winAmount;
-            updateBalances();
+            state.gems += winAmount;
+            renderProfile();
             renderCards(false);
             document.getElementById('bj-status').innerText = msg;
             toggleControls(false);
             document.getElementById('btn-restart').style.display = 'block';
         }
+
+        renderProfile();
     </script>
 </body>
 </html>
