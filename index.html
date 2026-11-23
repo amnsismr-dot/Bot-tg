@@ -12,6 +12,7 @@
             --bg-pill: #222228;
             --text-main: #ffffff;
             --text-muted: #8e8e93;
+            --accent: #f43f5e;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; user-select: none; -webkit-tap-highlight-color: transparent; }
         body { background-color: var(--bg-main); color: var(--text-main); height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
@@ -52,10 +53,8 @@
         .bg-mines { background: linear-gradient(135deg, #132c52 0%, #1d447d 60%, #0b1b33 100%); }
         .bg-sudoku { background: linear-gradient(135deg, #291c52 0%, #3e2a7a 60%, #181033 100%); }
         .bg-miner { background: linear-gradient(135deg, #4d260b 0%, #783b10 60%, #2b1405 100%); }
-        .bg-clan { background: linear-gradient(135deg, #331426 0%, #1d213b 100%); }
-        .bg-boss { background: linear-gradient(135deg, #4f1313 0%, #781c1c 60%, #2e0a0a 100%); }
 
-        /* Карточки NFT и подарков (точный стиль со скриншота) */
+        /* Карточки NFT и наград */
         .inv-card { background: linear-gradient(145deg, #1e1e24, #141418); border-radius: 22px; padding: 20px; text-align: center; border: 1px solid #2c2c34; margin-bottom: 16px; }
         .inv-label { font-size: 11px; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; }
         .inv-value { font-size: 32px; font-weight: 800; margin: 8px 0; }
@@ -65,28 +64,80 @@
         .action-btn { background: var(--bg-pill); border: 1px solid #32323a; color: #fff; padding: 10px; border-radius: 14px; font-size: 13px; font-weight: 600; cursor: pointer; }
         .items-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 10px; }
         .items-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 10px; }
-        .empty-state { grid-column: 1 / -1; text-align: center; color: var(--text-muted); padding: 28px 16px; font-size: 13px; background: var(--bg-card); border-radius: 18px; border: 1px dashed #2c2c34; line-height: 1.45; }
+        .empty-state { grid-column: 1 / -1; text-align: center; color: var(--text-muted); padding: 24px 16px; font-size: 13px; background: var(--bg-card); border-radius: 18px; border: 1px dashed #2c2c34; line-height: 1.45; }
 
-        .nft-item { background: #141418; border-radius: 16px; padding: 7px; text-align: left; border: 1.5px solid #25252d; position: relative; cursor: pointer; transition: border-color 0.15s, box-shadow 0.15s; }
-        .nft-item.selected { border-color: #60a5fa; box-shadow: 0 0 14px rgba(96, 165, 250, 0.35); }
+        .nft-item { background: #141418; border-radius: 16px; padding: 7px; text-align: left; border: 1.5px solid #25252d; position: relative; cursor: pointer; transition: all 0.15s; }
+        .nft-item.selected { border-color: #60a5fa; box-shadow: 0 0 14px rgba(96, 165, 250, 0.45); background: #191d2b; }
+        .nft-item.case-cursor { border-color: #fbbf24; box-shadow: 0 0 18px rgba(251, 191, 36, 0.85); transform: scale(1.04); z-index: 5; background: #262112; }
+        .nft-item.case-won { border-color: #22c55e; box-shadow: 0 0 16px rgba(34, 197, 94, 0.75); background: #11291a; }
+
         .nft-art-box { width: 100%; aspect-ratio: 1; border-radius: 11px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; margin-bottom: 7px; }
         .nft-art-box::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(rgba(255,255,255,0.12) 1px, transparent 1px); background-size: 10px 10px; opacity: 0.45; }
-        .nft-art-box svg { width: 68%; height: 68%; position: relative; z-index: 2; filter: drop-shadow(0 4px 10px rgba(0,0,0,0.45)); }
+        .nft-art-box svg { width: 64%; height: 64%; position: relative; z-index: 2; filter: drop-shadow(0 4px 10px rgba(0,0,0,0.45)); }
         .nft-num { position: absolute; top: 6px; right: 6px; background: rgba(0,0,0,0.55); font-size: 10px; padding: 2px 6px; border-radius: 8px; font-weight: 700; z-index: 3; backdrop-filter: blur(4px); }
         .nft-name { font-weight: 700; font-size: 11.5px; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding: 0 2px; }
         .nft-price { font-size: 11.5px; color: #e2e8f0; font-weight: 700; display: flex; align-items: center; gap: 4px; padding: 0 2px 2px; }
 
-        /* Градиенты фонов для каждого NFT */
-        .theme-blue { background: radial-gradient(circle at 50% 45%, #2563eb 0%, #172554 90%); }
-        .theme-green { background: radial-gradient(circle at 50% 45%, #15803d 0%, #062c16 90%); }
-        .theme-red { background: radial-gradient(circle at 50% 45%, #991b1b 0%, #3b0707 90%); }
-        .theme-purple { background: radial-gradient(circle at 50% 45%, #6b21a8 0%, #270942 90%); }
-        .theme-dark { background: radial-gradient(circle at 50% 45%, #24242c 0%, #15151a 90%); }
+        .theme-steel { background: radial-gradient(circle at 50% 45%, #475569 0%, #1e293b 90%); }
+        .theme-bronze { background: radial-gradient(circle at 50% 45%, #b45309 0%, #451a03 90%); }
+        .theme-silver { background: radial-gradient(circle at 50% 45%, #64748b 0%, #0f172a 90%); }
+        .theme-gold { background: radial-gradient(circle at 50% 45%, #eab308 0%, #713f12 90%); }
+        .theme-diamond { background: radial-gradient(circle at 50% 45%, #0284c7 0%, #082f49 90%); }
+        .theme-master { background: radial-gradient(circle at 50% 45%, #db2777 0%, #500724 90%); }
+        .theme-grand { background: radial-gradient(circle at 50% 45%, #7c3aed 0%, #2e1065 90%); }
+        .theme-heaven { background: radial-gradient(circle at 50% 45%, #059669 0%, #022c22 90%); }
 
-        /* Общие кнопки и блоки */
-        .game-box { background: var(--bg-card); border-radius: 22px; padding: 18px; border: 1px solid #2c2c34; text-align: center; }
+        /* Общие кнопки и поля ввода */
+        .game-box { background: var(--bg-card); border-radius: 22px; padding: 16px; border: 1px solid #2c2c34; text-align: center; }
         .primary-btn { width: 100%; background: linear-gradient(90deg, #e11d48, #be123c); color: #fff; border: none; padding: 14px; border-radius: 14px; font-weight: 700; font-size: 15px; cursor: pointer; margin-top: 12px; }
         .primary-btn:disabled { opacity: 0.4; }
+        .bet-chips-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 10px; }
+        .bet-pill { background: #222228; border: 1px solid #32323c; color: #fff; padding: 8px 4px; border-radius: 10px; font-size: 12px; font-weight: 700; cursor: pointer; }
+        .bet-pill.active { border-color: #f43f5e; background: rgba(244, 63, 94, 0.18); color: #fda4af; }
+
+        .custom-input-box { background: #111115; border: 1px solid #2c2c36; border-radius: 14px; padding: 10px 12px; margin-top: 12px; text-align: left; }
+        .custom-input-header { display: flex; justify-content: space-between; font-size: 11px; color: var(--text-muted); margin-bottom: 6px; font-weight: 700; text-transform: uppercase; }
+        .custom-num-input { width: 100%; background: #1c1c22; border: 1px solid #363642; border-radius: 10px; padding: 10px; color: #fff; font-size: 18px; font-weight: 800; text-align: center; outline: none; }
+        .custom-num-input:focus { border-color: #f43f5e; }
+
+        /* КАРТЫ / СЛОТЫ (Строгие иконки) */
+        .slots-machine { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; background: #0d0d11; padding: 12px; border-radius: 18px; border: 1px solid #2a2a34; margin: 12px 0; }
+        .slot-reel { aspect-ratio: 1; border-radius: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 8px; border: 1px solid rgba(255,255,255,0.1); transition: transform 0.15s; }
+        .slot-reel svg { width: 58%; height: 58%; }
+        .slot-reel span { font-size: 10px; font-weight: 700; margin-top: 4px; color: rgba(255,255,255,0.85); }
+
+        /* РАКЕТА */
+        .rocket-stage { position: relative; width: 100%; height: 220px; background: radial-gradient(circle at 50% 100%, #1e293b 0%, #090d16 85%); border-radius: 18px; overflow: hidden; border: 1px solid #283548; margin-bottom: 12px; }
+        #rocket-canvas { width: 100%; height: 100%; display: block; }
+        .rocket-overlay { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; pointer-events: none; }
+        .rocket-mult-big { font-size: 42px; font-weight: 900; color: #fff; text-shadow: 0 4px 16px rgba(0,0,0,0.8); }
+        .rocket-sub-label { font-size: 12px; font-weight: 700; color: #94a3b8; margin-top: 4px; background: rgba(0,0,0,0.5); padding: 3px 10px; border-radius: 10px; }
+        .history-strip { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 6px; margin-bottom: 8px; }
+        .hist-badge { padding: 3px 8px; border-radius: 8px; font-size: 11px; font-weight: 700; background: #222228; color: #94a3b8; flex-shrink: 0; }
+        .hist-badge.high { background: rgba(34, 197, 94, 0.2); color: #4ade80; }
+
+        /* РУЛЕТКА */
+        .roulette-viewport { position: relative; width: 100%; height: 76px; background: #0d0d11; border-radius: 16px; overflow: hidden; border: 1px solid #2e2e38; margin: 12px 0; }
+        .roulette-pointer { position: absolute; top: 0; bottom: 0; left: 50%; width: 3px; background: #fbbf24; z-index: 5; transform: translateX(-50%); box-shadow: 0 0 10px #fbbf24; }
+        .roulette-track { display: flex; align-items: center; height: 100%; gap: 6px; padding-left: 50%; will-change: transform; }
+        .r-tile { width: 54px; height: 54px; border-radius: 12px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 16px; color: #fff; }
+        .r-red { background: linear-gradient(180deg, #ef4444, #b91c1c); }
+        .r-black { background: linear-gradient(180deg, #3f3f46, #18181b); border: 1px solid #52525b; }
+        .r-green { background: linear-gradient(180deg, #22c55e, #15803d); }
+
+        /* КОЛЕСО УДАЧИ */
+        .wheel-container { position: relative; width: 250px; height: 250px; margin: 10px auto 16px; }
+        .wheel-needle { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 12px solid transparent; border-right: 12px solid transparent; border-top: 22px solid #fbbf24; z-index: 5; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.8)); }
+        #wheel-canvas { width: 100%; height: 100%; border-radius: 50%; box-shadow: 0 0 24px rgba(0,0,0,0.7), 0 0 0 4px #2c2c36; transition: transform 4.2s cubic-bezier(0.15, 0.85, 0.15, 1); }
+
+        /* АПГРЕЙДЕР */
+        .upgrader-radar-box { background: var(--bg-card); border: 1px solid #2c2c34; border-radius: 22px; padding: 14px; margin-bottom: 12px; text-align: center; }
+        .radar-wrap { position: relative; width: 170px; height: 170px; margin: 4px auto 10px; }
+        #upgrader-canvas { width: 100%; height: 100%; }
+        .radar-center-info { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; pointer-events: none; }
+        .upg-banner-btn { width: 100%; background: linear-gradient(90deg, #6366f1, #8b5cf6); color: #fff; border: none; padding: 13px; border-radius: 14px; font-weight: 800; font-size: 14px; cursor: pointer; }
+        .upg-banner-btn:disabled { opacity: 0.4; }
+        .sec-header { font-size: 11px; font-weight: 700; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; margin: 12px 0 6px; }
 
         /* МАЙНЕР АТ-ПОЛЯ */
         .miner-hero { background: radial-gradient(circle at 50% 25%, #5c2d0c 0%, #241205 65%, #140b04 100%); border: 1px solid #4a270d; border-radius: 24px; padding: 22px 18px; text-align: center; margin-bottom: 12px; }
@@ -105,14 +156,8 @@
         .upg-diff { font-size: 12px; color: var(--text-muted); margin-bottom: 12px; }
         .btn-upg-red { background: #9f1239; color: #fff; border: none; padding: 10px; border-radius: 12px; font-weight: 700; font-size: 13px; cursor: pointer; width: 100%; }
         .btn-upg-red:disabled { opacity: 0.45; }
-        .miner-hint { background: var(--bg-card); border: 1px solid #26262e; border-radius: 16px; padding: 12px; font-size: 12px; color: var(--text-muted); text-align: center; line-height: 1.4; }
 
-        /* АПГРЕЙДЕР */
-        .upg-banner-btn { width: 100%; background: linear-gradient(90deg, #6366f1, #8b5cf6); color: #fff; border: none; padding: 14px; border-radius: 16px; font-weight: 800; font-size: 15px; cursor: pointer; margin-bottom: 14px; }
-        .upg-banner-btn:disabled { opacity: 0.4; }
-        .sec-header { font-size: 11px; font-weight: 700; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; margin: 12px 0 6px; }
-
-        /* СУДОКУ */
+        /* СУДОКУ, BLACKJACK, САПЁР */
         .sudoku-top { background: var(--bg-card); border-radius: 18px; padding: 10px 14px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; border: 1px solid #2c2c34; }
         .sudoku-board { display: grid; grid-template-columns: repeat(9, 1fr); background: #2c2c35; border: 2px solid #4b4b59; border-radius: 12px; overflow: hidden; aspect-ratio: 1; }
         .s-cell { background: #16161c; border: 0.5px solid #282832; display: flex; align-items: center; justify-content: center; font-size: 17px; font-weight: 700; color: #fff; cursor: pointer; }
@@ -125,7 +170,6 @@
         .num-btn { background: var(--bg-card); border: 1px solid #2c2c34; border-radius: 10px; padding: 10px 0; text-align: center; font-weight: 800; font-size: 16px; color: #fff; cursor: pointer; }
         .sudoku-actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 10px; }
 
-        /* BLACKJACK */
         .bj-table { background: radial-gradient(circle, #1d3b29 0%, #12261a 100%); border: 2px solid #6b5335; border-radius: 22px; padding: 16px; display: flex; flex-direction: column; justify-content: space-between; min-height: 350px; }
         .hand-area { display: flex; flex-direction: column; align-items: center; margin: 6px 0; }
         .hand-header { width: 100%; display: flex; justify-content: space-between; font-size: 13px; color: #cbd5e1; margin-bottom: 6px; }
@@ -138,9 +182,7 @@
         .chip-dot { width: 18px; height: 18px; border-radius: 50%; background: #dc2626; border: 2px dashed #fff; display: inline-block; }
         .bj-controls { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 12px; }
         .btn-bj { border: none; padding: 13px; border-radius: 14px; font-weight: 700; font-size: 14px; cursor: pointer; }
-        .how-to-box { background: var(--bg-card); border: 1px solid #2c2c34; border-radius: 16px; padding: 12px 16px; margin-top: 10px; text-align: left; font-size: 13px; cursor: pointer; }
 
-        /* Сапёр */
         .mines-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin: 16px 0; }
         .mine-cell { aspect-ratio: 1; background: #262630; border-radius: 12px; border: 1px solid #363642; font-size: 22px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
         .mine-cell.open { background: #163826; border-color: #22c55e; }
@@ -151,9 +193,25 @@
         .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--text-muted); font-size: 11px; cursor: pointer; padding: 5px 12px; border-radius: 16px; }
         .nav-item.active { color: #f43f5e; background: rgba(244, 63, 94, 0.12); font-weight: 600; }
         .nav-icon { font-size: 18px; }
+
+        /* Модальное окно обновления для всех пользователей */
+        #update-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.88); backdrop-filter: blur(10px); display: none; align-items: center; justify-content: center; z-index: 999; padding: 20px; }
+        .update-modal { background: var(--bg-card); border: 1.5px solid #f43f5e; border-radius: 24px; padding: 26px 20px; text-align: center; max-width: 320px; width: 100%; box-shadow: 0 0 36px rgba(244, 63, 94, 0.35); }
     </style>
 </head>
 <body>
+
+    <!-- Окно принудительного обновления при смене APP_VERSION -->
+    <div id="update-overlay">
+        <div class="update-modal">
+            <div style="font-size: 46px; margin-bottom: 10px;">🔄</div>
+            <h3 style="font-size: 20px; font-weight: 800; margin-bottom: 8px;">Вышло обновление!</h3>
+            <p style="font-size: 13px; color: var(--text-muted); line-height: 1.45; margin-bottom: 18px;">
+                Доступна новая версия NERVANA (<span id="new-ver-label"></span>). Все ваши алмазы, фишки и подарки сохранены.
+            </p>
+            <button class="primary-btn" style="margin-top: 0;" onclick="applyAppUpdate()">Перезапустить</button>
+        </div>
+    </div>
 
     <div class="top-bar">
         <div class="icon-circle" id="btn-back" style="visibility: hidden;" onclick="goBack()">‹</div>
@@ -170,31 +228,31 @@
     <div id="screen-games" class="screen active">
         <div class="cat-title">КАЗИНО</div>
 
-        <div class="game-banner bg-roulette" onclick="openGame('roulette', 'Рулетка')">
+        <div class="game-banner bg-roulette" onclick="openRoulette()">
             <div class="gb-content">
                 <div class="gb-sub">NERV CASINO</div>
                 <div class="gb-title">Рулетка</div>
-                <div class="gb-desc">Ставьте алмазы на цвета, пока дилер не запустил шарик</div>
+                <div class="gb-desc">Ставьте алмазы на цвета, пока крутится барабан</div>
                 <div class="gb-pill"><span class="dot-green"></span> Стол открыт</div>
             </div>
             <div class="gb-art">🎡</div>
         </div>
 
-        <div class="game-banner bg-rocket" onclick="openGame('rocket', 'Ракета')">
+        <div class="game-banner bg-rocket" onclick="openRocket()">
             <div class="gb-content">
                 <div class="gb-sub">NERV ROCKET</div>
                 <div class="gb-title">Ракета</div>
-                <div class="gb-desc">Множитель растёт, пока ракета летит. Заберите выигрыш до взрыва</div>
+                <div class="gb-desc">Множитель растёт, пока ракета летит. Заберите до взрыва</div>
                 <div class="gb-pill"><span class="dot-green"></span> Взлёт в любой момент</div>
             </div>
             <div class="gb-art">🚀</div>
         </div>
 
-        <div class="game-banner bg-wheel" onclick="openGame('wheel', 'Колесо удачи')">
+        <div class="game-banner bg-wheel" onclick="openWheel()">
             <div class="gb-content">
                 <div class="gb-sub">NERV WHEEL</div>
                 <div class="gb-title">Колесо удачи</div>
-                <div class="gb-desc">Бесплатный спин каждый день: XP, фишки и гемы</div>
+                <div class="gb-desc">Крути барабан фортуны: выиграй фишки и алмазы</div>
                 <div class="gb-pill"><span class="dot-green"></span> Доступно сейчас</div>
             </div>
             <div class="gb-art">🎯</div>
@@ -204,45 +262,45 @@
             <div class="gb-content">
                 <div class="gb-sub">NERV BLACKJACK</div>
                 <div class="gb-title">Блэкджек</div>
-                <div class="gb-desc">Набери больше дилера, но не больше 21. Блэкджек платит 3 к 2</div>
+                <div class="gb-desc">Набери больше дилера, но не больше 21</div>
                 <div class="gb-pill"><span class="dot-green"></span> Стол открыт</div>
             </div>
             <div class="gb-art">🃏</div>
         </div>
 
-        <div class="cat-title">ПОДАРКИ</div>
+        <div class="cat-title">ПОДАРКИ И МАГАЗИН</div>
 
-        <div class="game-banner bg-slots" onclick="openGame('slots', 'Слоты')">
+        <div class="game-banner bg-cases" onclick="openCases()">
             <div class="gb-content">
-                <div class="gb-sub">GIFT SLOTS</div>
-                <div class="gb-title">Слоты</div>
-                <div class="gb-desc">Крути барабаны: 3 в ряд — выигрыш NFT подарка</div>
-                <div class="gb-pill"><span class="dot-green"></span> NFT и подарки Telegram</div>
+                <div class="gb-sub">NERV STORE</div>
+                <div class="gb-title">Магазин кейсов</div>
+                <div class="gb-desc">Выбирай количество кейсов и лови награды в сетке</div>
+                <div class="gb-pill"><span class="dot-green"></span> От 100 💎 за кейс</div>
             </div>
-            <div class="gb-art">🎰</div>
+            <div class="gb-art">💼</div>
         </div>
 
-        <div class="game-banner bg-cases" onclick="openGame('cases', 'Кейсы')">
+        <div class="game-banner bg-slots" onclick="openSlots()">
             <div class="gb-content">
-                <div class="gb-sub">NFT CASES</div>
-                <div class="gb-title">Кейсы</div>
-                <div class="gb-desc">Чем дороже кейс, тем выше шанс на редкий NFT</div>
-                <div class="gb-pill"><span class="dot-green"></span> до Electric Skull</div>
+                <div class="gb-sub">CARD VAULT</div>
+                <div class="gb-title">Карты наград</div>
+                <div class="gb-desc">Ставка от 50 💎 и выше: 3 артефакта в ряд дарят NFT</div>
+                <div class="gb-pill"><span class="dot-green"></span> Любая ставка от 50 💎</div>
             </div>
-            <div class="gb-art">🎁</div>
+            <div class="gb-art">💠</div>
         </div>
 
         <div class="game-banner bg-upgrader" onclick="openUpgrader()">
             <div class="gb-content">
                 <div class="gb-sub">NFT UPGRADER</div>
                 <div class="gb-title">Апгрейдер</div>
-                <div class="gb-desc">Поставьте подарки и рискните получить NFT дороже</div>
+                <div class="gb-desc">Поставьте награды и рискните получить артефакт дороже</div>
                 <div class="gb-pill"><span class="dot-green"></span> Шанс до 75%</div>
             </div>
             <div class="gb-art">⬆️</div>
         </div>
 
-        <div class="cat-title">МИНИ-ИГРЫ</div>
+        <div class="cat-title">МИНИ-ИГРЫ И МАЙНИНГ</div>
 
         <div class="game-banner bg-mines" onclick="openGame('mines', 'Сапёр')">
             <div class="gb-content">
@@ -264,36 +322,14 @@
             <div class="gb-art">🔢</div>
         </div>
 
-        <div class="cat-title">МАЙНИНГ И КЛАНЫ</div>
-
         <div class="game-banner bg-miner" onclick="openGame('miner', 'Майнер АТ-поля')">
             <div class="gb-content">
                 <div class="gb-sub">AT-FIELD MINER</div>
                 <div class="gb-title">Майнер АТ-поля</div>
-                <div class="gb-desc">Ядро добывает фишки даже когда вы не в игре. Улучшайте мощность и хранилище</div>
+                <div class="gb-desc">Ядро добывает фишки даже когда вы не в игре</div>
                 <div class="gb-pill"><span class="dot-green"></span> Добыча идёт</div>
             </div>
             <div class="gb-art">⚛️</div>
-        </div>
-
-        <div class="game-banner bg-clan" onclick="alert('Клановые войны откроются со следующего сезона!')">
-            <div class="gb-content">
-                <div class="gb-sub">CLAN WAR</div>
-                <div class="gb-title">Клановая война</div>
-                <div class="gb-desc">🌸 Сакура против 🌑 Тени. Неделя битвы за гемы и титул MVP</div>
-                <div class="gb-pill"><span class="dot-green"></span> Выберите сторону</div>
-            </div>
-            <div class="gb-art">⚔️</div>
-        </div>
-
-        <div class="game-banner bg-boss" onclick="alert('Босс недели: следующая атака доступна в 22:00')">
-            <div class="gb-content">
-                <div class="gb-sub">WEEKLY BOSS</div>
-                <div class="gb-title">Босс недели</div>
-                <div class="gb-desc">Бей босса всем кланом, награда делится по вкладу</div>
-                <div class="gb-pill"><span class="dot-green"></span> Атака раз в 2 часа</div>
-            </div>
-            <div class="gb-art">👹</div>
         </div>
     </div>
 
@@ -303,16 +339,149 @@
             <div class="inv-label">Стоимость инвентаря</div>
             <div class="inv-value">💎 <span id="inv-total">0</span></div>
             <div class="inv-stats">
-                <span class="stat-chip" id="items-count">0 подарков</span>
+                <span class="stat-chip" id="items-count">0 наград</span>
                 <span class="stat-chip" id="nft-count">0 NFT</span>
             </div>
             <div class="action-row">
                 <button class="action-btn" onclick="openUpgrader()">⬆️ Апгрейд</button>
-                <button class="action-btn" onclick="openGame('slots', 'Слоты')">🎰 Слоты</button>
-                <button class="action-btn" onclick="openGame('cases', 'Кейсы')">💼 Кейсы</button>
+                <button class="action-btn" onclick="openSlots()">💠 Карты</button>
+                <button class="action-btn" onclick="openCases()">💼 Магазин</button>
             </div>
         </div>
         <div class="items-grid" id="inventory-grid"></div>
+    </div>
+
+    <!-- МАГАЗИН / КЕЙСЫ (СЕТКА ВСЕХ NFT С БЕГАЮЩЕЙ ПОДСВЕТКОЙ И ВЫБОРОМ КОЛИЧЕСТВА) -->
+    <div id="screen-cases" class="screen">
+        <div class="game-box" style="margin-bottom: 12px;">
+            <div style="font-size:12px; color:var(--text-muted); font-weight:700; text-transform:uppercase;">Все доступные награды и NFT</div>
+            <div class="items-grid-3" id="case-board-grid"></div>
+
+            <div class="custom-input-box">
+                <div class="custom-input-header">
+                    <span>Сколько открыть кейсов (1–50)</span>
+                    <span>100 💎 / шт.</span>
+                </div>
+                <input type="number" class="custom-num-input" id="case-qty-input" value="1" min="1" max="50" oninput="updateCaseCostUI()">
+            </div>
+
+            <div id="case-status-msg" style="font-size:13px; font-weight:700; color:#4ade80; margin-top:10px; min-height:18px;"></div>
+            <button class="primary-btn" id="btn-open-case" onclick="openCasesGridAnim()">Открыть 1 кейс за 100 💎</button>
+        </div>
+    </div>
+
+    <!-- КАРТЫ / СЛОТЫ (ПРОИЗВОЛЬНАЯ СТАВКА ОТ 50 И СТРОГИЕ ИКОНКИ) -->
+    <div id="screen-slots" class="screen">
+        <div class="game-box">
+            <h3 style="margin-bottom:4px;">Карты наград</h3>
+            <p style="font-size:12px; color:var(--text-muted);">3 одинаковых артефакта в ряд добавляют NFT в инвентарь и умножают ставку</p>
+
+            <div class="slots-machine" id="slots-reels"></div>
+
+            <div class="custom-input-box">
+                <div class="custom-input-header">
+                    <span>Ваша ставка (минимум 50 💎)</span>
+                    <span style="color:#38bdf8;">Множитель ×<span id="slot-mult-preview">1.0</span></span>
+                </div>
+                <input type="number" class="custom-num-input" id="slot-bet-input" value="50" min="50" step="10" oninput="updateSlotBetUI()">
+                <div class="bet-chips-row">
+                    <button class="bet-pill" onclick="setSlotBet(50)">50 💎</button>
+                    <button class="bet-pill" onclick="setSlotBet(150)">150 💎</button>
+                    <button class="bet-pill" onclick="setSlotBet(500)">500 💎</button>
+                    <button class="bet-pill" onclick="setSlotBet(1000)">1000 💎</button>
+                </div>
+            </div>
+
+            <div id="slots-status-msg" style="font-size:13px; font-weight:700; color:#fbbf24; margin-top:10px; min-height:18px;"></div>
+            <button class="primary-btn" id="btn-spin-slots" onclick="spinSlots()">Открыть карты за 50 💎</button>
+        </div>
+    </div>
+
+    <!-- РАКЕТА -->
+    <div id="screen-rocket" class="screen">
+        <div class="history-strip" id="rocket-history">
+            <div class="hist-badge high">2.45x</div>
+            <div class="hist-badge">1.18x</div>
+            <div class="hist-badge high">4.82x</div>
+            <div class="hist-badge">1.63x</div>
+        </div>
+        <div class="game-box">
+            <div class="rocket-stage">
+                <canvas id="rocket-canvas" width="340" height="220"></canvas>
+                <div class="rocket-overlay">
+                    <div class="rocket-mult-big" id="rocket-mult">1.00x</div>
+                    <div class="rocket-sub-label" id="rocket-status-label">Готова к старту</div>
+                </div>
+            </div>
+            <div class="bet-chips-row" id="rocket-bets">
+                <button class="bet-pill" onclick="setRocketBet(25, this)">25 💎</button>
+                <button class="bet-pill active" onclick="setRocketBet(50, this)">50 💎</button>
+                <button class="bet-pill" onclick="setRocketBet(100, this)">100 💎</button>
+                <button class="bet-pill" onclick="setRocketBet(250, this)">250 💎</button>
+            </div>
+            <button class="primary-btn" id="btn-rocket" onclick="toggleRocket()">Запустить (50 💎)</button>
+        </div>
+    </div>
+
+    <!-- РУЛЕТКА -->
+    <div id="screen-roulette" class="screen">
+        <div class="history-strip" id="roulette-history">
+            <div class="r-tile r-red" style="width:26px; height:26px; font-size:11px; border-radius:7px;">3</div>
+            <div class="r-tile r-black" style="width:26px; height:26px; font-size:11px; border-radius:7px;">11</div>
+            <div class="r-tile r-green" style="width:26px; height:26px; font-size:11px; border-radius:7px;">0</div>
+            <div class="r-tile r-red" style="width:26px; height:26px; font-size:11px; border-radius:7px;">7</div>
+        </div>
+        <div class="game-box">
+            <div class="roulette-viewport">
+                <div class="roulette-pointer"></div>
+                <div class="roulette-track" id="roulette-track"></div>
+            </div>
+            <div id="roulette-res" style="font-weight:700; font-size:14px; min-height:20px; color:#fbbf24;">Выберите цвет и сделайте ставку</div>
+            <div class="bet-chips-row" id="roulette-bets">
+                <button class="bet-pill" onclick="setRouletteBet(25, this)">25 💎</button>
+                <button class="bet-pill active" onclick="setRouletteBet(50, this)">50 💎</button>
+                <button class="bet-pill" onclick="setRouletteBet(100, this)">100 💎</button>
+                <button class="bet-pill" onclick="setRouletteBet(250, this)">250 💎</button>
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-top:12px;">
+                <button class="btn-bj" style="background:#dc2626; color:#fff;" onclick="playRoulette('red')">Красное ×2</button>
+                <button class="btn-bj" style="background:#16a34a; color:#fff;" onclick="playRoulette('green')">Зеро ×14</button>
+                <button class="btn-bj" style="background:#27272a; color:#fff; border:1px solid #3f3f46;" onclick="playRoulette('black')">Чёрное ×2</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- КОЛЕСО УДАЧИ -->
+    <div id="screen-wheel" class="screen">
+        <div class="game-box">
+            <div class="wheel-container">
+                <div class="wheel-needle"></div>
+                <canvas id="wheel-canvas" width="250" height="250"></canvas>
+            </div>
+            <div id="wheel-res" style="font-weight:800; font-size:16px; min-height:22px; color:#4ade80;"></div>
+            <button class="primary-btn" id="btn-spin-wheel" onclick="spinWheel()">Крутить бесплатно</button>
+            <button class="action-btn" style="width:100%; margin-top:8px;" onclick="spinWheelPaid()">Крутить ещё за 100 💎</button>
+        </div>
+    </div>
+
+    <!-- АПГРЕЙДЕР -->
+    <div id="screen-upgrader" class="screen">
+        <div class="upgrader-radar-box">
+            <div class="radar-wrap">
+                <canvas id="upgrader-canvas" width="170" height="170"></canvas>
+                <div class="radar-center-info">
+                    <div style="font-size:22px; font-weight:900;" id="radar-chance-text">0.0%</div>
+                    <div style="font-size:10px; color:var(--text-muted); text-transform:uppercase;">Шанс</div>
+                </div>
+            </div>
+            <button class="upg-banner-btn" id="btn-do-upgrade" onclick="runUpgrade()" disabled>Выберите награды для апгрейда</button>
+        </div>
+        
+        <div class="sec-header">ВАШИ НАГРАДЫ • ВЫБРАНО <span id="upg-sel-count">0</span>/6 (<span id="upg-sel-val">0</span> 💎)</div>
+        <div class="items-grid-3" id="upg-user-grid"></div>
+
+        <div class="sec-header" style="margin-top: 18px;">ЦЕЛЬ АПГРЕЙДА</div>
+        <div class="items-grid-3" id="upg-target-grid"></div>
     </div>
 
     <!-- МАЙНЕР АТ-ПОЛЯ -->
@@ -347,21 +516,6 @@
                 <button class="btn-upg-red" id="btn-upg-storage" onclick="upgradeStorage()">💎 <span id="storage-cost">2 500</span></button>
             </div>
         </div>
-
-        <div class="miner-hint">
-            Ядро копит фишки, пока вы не в игре. Когда хранилище заполнено, добыча останавливается — заходите забирать. При улучшении добытое забирается автоматически
-        </div>
-    </div>
-
-    <!-- АПГРЕЙДЕР -->
-    <div id="screen-upgrader" class="screen">
-        <button class="upg-banner-btn" id="btn-do-upgrade" onclick="runUpgrade()" disabled>Апгрейд • выберите подарки</button>
-        
-        <div class="sec-header">ВАШИ ПОДАРКИ • ВЫБРАНО <span id="upg-sel-count">0</span>/6 (<span id="upg-sel-val">0</span> 💎)</div>
-        <div class="items-grid-3" id="upg-user-grid"></div>
-
-        <div class="sec-header" style="margin-top: 18px;">ЦЕЛЬ АПГРЕЙДА</div>
-        <div class="items-grid-3" id="upg-target-grid"></div>
     </div>
 
     <!-- СУДОКУ -->
@@ -401,41 +555,9 @@
             <button class="btn-bj" style="background:#d97706; color:#fff;" id="btn-double" onclick="doubleBet()" disabled>Удвоить</button>
         </div>
         <button class="primary-btn" id="btn-restart" onclick="startBJ()">Сделать ставку (50 💎)</button>
-        <div class="how-to-box" onclick="const el=this.querySelector('p'); el.style.display=el.style.display==='none'?'block':'none';">
-            <div style="display:flex; justify-content:space-between; font-weight:700;"><span>Как играть</span><span>›</span></div>
-            <p style="display:none; color:var(--text-muted); margin-top:8px; line-height:1.4;">Наберите сумму очков ближе к 21, чем у дилера, но не превышайте 21. Туз даёт 1 или 11, картинки — по 10.</p>
-        </div>
     </div>
 
-    <!-- ОСТАЛЬНЫЕ МИНИ-ИГРЫ -->
-    <div id="screen-wheel" class="screen">
-        <div class="game-box">
-            <div style="font-size: 72px; margin: 16px 0;">🎡</div>
-            <h3>Колесо удачи</h3>
-            <p style="font-size:13px; color:var(--text-muted); margin-top:6px;">Бесплатный спин каждый день: от 100 до 500 💎!</p>
-            <div id="wheel-res" style="margin-top:14px; font-weight:700; color:#22c55e;"></div>
-            <button class="primary-btn" id="btn-spin-wheel" onclick="spinWheel()">Крутить бесплатно</button>
-        </div>
-    </div>
-
-    <div id="screen-cases" class="screen">
-        <div class="game-box">
-            <div style="font-size: 64px; margin: 12px 0;">🎁</div>
-            <h3>Кейс NERV NFT</h3>
-            <p style="font-size:13px; color:var(--text-muted); margin-top:6px;">Внутри: Сердце, Ginger Cookie, Candy Cane, Diamond Ring, Electric Skull</p>
-            <button class="primary-btn" onclick="openCase()">Открыть кейс за 100 💎</button>
-        </div>
-    </div>
-
-    <div id="screen-slots" class="screen">
-        <div class="game-box">
-            <h3>Gift Slots</h3>
-            <div id="slots-reels" style="font-size: 52px; margin: 20px 0; letter-spacing: 12px; background:#0e0e10; padding:16px; border-radius:16px;">🐸 💍 💀</div>
-            <p style="font-size:13px; color:var(--text-muted);">3 одинаковых символа дарят NFT в инвентарь!</p>
-            <button class="primary-btn" onclick="spinSlots()">Крутить за 50 💎</button>
-        </div>
-    </div>
-
+    <!-- САПЁР -->
     <div id="screen-mines" class="screen">
         <div class="game-box">
             <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -447,33 +569,10 @@
         </div>
     </div>
 
-    <div id="screen-roulette" class="screen">
-        <div class="game-box">
-            <div style="font-size: 64px; margin: 12px 0;">🎯</div>
-            <h3>Рулетка (ставка 50 💎)</h3>
-            <p style="font-size:13px; color:var(--text-muted); margin: 6px 0 16px;">Красное (x2), Чёрное (x2) или Зеро (x14)</p>
-            <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px;">
-                <button class="btn-bj" style="background:#dc2626; color:#fff;" onclick="playRoulette('red')">Красное</button>
-                <button class="btn-bj" style="background:#16a34a; color:#fff;" onclick="playRoulette('green')">Зеро</button>
-                <button class="btn-bj" style="background:#27272a; color:#fff;" onclick="playRoulette('black')">Чёрное</button>
-            </div>
-            <div id="roulette-res" style="margin-top:14px; font-weight:700;"></div>
-        </div>
-    </div>
-
-    <div id="screen-rocket" class="screen">
-        <div class="game-box">
-            <div style="font-size: 56px; margin: 10px 0;">🚀</div>
-            <div id="rocket-mult" style="font-size: 36px; font-weight: 800; color: #38bdf8;">1.00x</div>
-            <p style="font-size:13px; color:var(--text-muted); margin-top:6px;">Ставка: 50 💎. Забери до взрыва!</p>
-            <button class="primary-btn" id="btn-rocket" onclick="toggleRocket()">Запустить (50 💎)</button>
-        </div>
-    </div>
-
     <!-- НИЖНЕЕ МЕНЮ -->
     <div class="bottom-nav">
-        <div class="nav-item" onclick="openGame('cases', 'Магазин')"><span class="nav-icon">🛍️</span>Магазин</div>
-        <div class="nav-item" onclick="openGame('slots', 'Карты')"><span class="nav-icon">🃏</span>Карты</div>
+        <div class="nav-item" id="nav-cases" onclick="openCases()"><span class="nav-icon">💼</span>Магазин</div>
+        <div class="nav-item" id="nav-slots" onclick="openSlots()"><span class="nav-icon">💠</span>Карты</div>
         <div class="nav-item active" id="nav-games" onclick="switchTab('games', 'Игры')"><span class="nav-icon">▶️</span>Игры</div>
         <div class="nav-item" onclick="alert('Топ игроков: 1. Shinji (142 000 💎)')"><span class="nav-icon">🏆</span>Рейтинг</div>
         <div class="nav-item" id="nav-profile" onclick="switchTab('profile', 'Inventory')"><span class="nav-icon">👤</span>Профиль</div>
@@ -483,90 +582,85 @@
         const tg = window.Telegram.WebApp;
         tg.expand();
 
-        // База уникальных векторных иконок (SVG) и фонов для каждого подарка/NFT
+        // МЕНЯЙТЕ ЭТОТ НОМЕР ВЕРСИИ (например, "2.2", "2.3") при каждом обновлении кода на GitHub!
+        // У всех 50-100 пользователей сразу появится окно с кнопкой "Перезапустить" без сброса прогресса.
+        const APP_VERSION = "2.1";
+
+        // Строгие и солидные векторные артефакты (без жаб, леденцов и черепов)
         const GIFT_CATALOG = {
-            skull: {
-                name: 'Electric Skull',
-                price: 21879,
-                isNft: true,
-                theme: 'theme-blue',
-                svg: `<svg viewBox="0 0 100 100"><defs><radialGradient id="gSkull" cx="50%" cy="40%" r="50%"><stop offset="0%" stop-color="#e0f2fe"/><stop offset="60%" stop-color="#60a5fa"/><stop offset="100%" stop-color="#1d4ed8"/></radialGradient></defs><circle cx="50" cy="48" r="36" fill="none" stroke="#93c5fd" stroke-width="2" stroke-dasharray="8 5" opacity="0.7"/><path d="M50 18 C32 18 22 30 22 46 C22 57 28 65 34 69 L34 80 L66 80 L66 69 C72 65 78 57 78 46 C78 30 68 18 50 18 Z" fill="url(#gSkull)"/><circle cx="38" cy="46" r="7" fill="#0f172a"/><circle cx="62" cy="46" r="7" fill="#0f172a"/><polygon points="50,53 46,61 54,61" fill="#0f172a"/><path d="M42 71 L42 80 M50 71 L50 80 M58 71 L58 80" stroke="#0f172a" stroke-width="3"/><path d="M25 22 L38 35 L31 39 L44 52 M76 26 L62 38 L69 42 L56 54" stroke="#ffffff" stroke-width="3" fill="none" stroke-linecap="round"/></svg>`
+            steel_ingot: {
+                name: 'Стальной слиток', price: 85, isNft: false, theme: 'theme-steel',
+                svg: `<svg viewBox="0 0 100 100"><polygon points="28,32 72,32 82,68 18,68" fill="#64748b" stroke="#cbd5e1" stroke-width="3"/><polygon points="28,32 72,32 64,46 36,46" fill="#94a3b8"/></svg>`
             },
-            ring: {
-                name: 'Diamond Ring',
-                price: 3062,
-                isNft: true,
-                theme: 'theme-green',
-                svg: `<svg viewBox="0 0 100 100"><path d="M24 38 L46 22 L78 32 L56 52 Z" fill="#f43f5e"/><path d="M24 38 L56 52 L56 76 L24 60 Z" fill="#be123c"/><path d="M56 52 L78 32 L78 56 L56 76 Z" fill="#fb7185"/><ellipse cx="51" cy="41" rx="14" ry="8" fill="#4c0519"/><circle cx="51" cy="43" r="9" fill="none" stroke="#e2e8f0" stroke-width="3.5"/><polygon points="51,28 45,34 51,39 57,34" fill="#38bdf8" stroke="#fff" stroke-width="1"/></svg>`
+            bronze_coin: {
+                name: 'Бронзовый жетон', price: 220, isNft: true, theme: 'theme-bronze',
+                svg: `<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="32" fill="#b45309" stroke="#fbbf24" stroke-width="4"/><circle cx="50" cy="50" r="22" fill="none" stroke="#fde68a" stroke-width="2" stroke-dasharray="6 4"/><polygon points="50,34 62,50 50,66 38,50" fill="#fde68a"/></svg>`
             },
-            candy_cane: {
-                name: 'Candy Cane',
-                price: 1057,
-                isNft: true,
-                theme: 'theme-red',
-                svg: `<svg viewBox="0 0 100 100"><polygon points="50,22 28,48 40,48 22,68 36,68 18,86 82,86 64,68 78,68 60,48 72,48" fill="#16a34a" stroke="#bbf7d0" stroke-width="2" stroke-linejoin="round"/><polygon points="50,10 53,18 61,18 55,23 57,31 50,26 43,31 45,23 39,18 47,18" fill="#facc15"/><path d="M35 55 Q50 62 65 52 M28 74 Q50 82 72 72" stroke="#ffffff" stroke-width="2.5" fill="none" stroke-dasharray="4 3"/></svg>`
+            silver_prism: {
+                name: 'Серебряная призма', price: 480, isNft: true, theme: 'theme-silver',
+                svg: `<svg viewBox="0 0 100 100"><polygon points="50,16 82,50 50,84 18,50" fill="#94a3b8" stroke="#f8fafc" stroke-width="3"/><polygon points="50,16 82,50 50,50" fill="#cbd5e1"/><polygon points="50,50 18,50 50,84" fill="#64748b"/></svg>`
             },
-            cookie: {
-                name: 'Ginger Cookie',
-                price: 876,
-                isNft: true,
-                theme: 'theme-red',
-                svg: `<svg viewBox="0 0 100 100"><circle cx="50" cy="30" r="14" fill="#d97706"/><path d="M24 46 L76 46 C80 46 80 54 76 54 L62 54 L68 80 C69 85 61 87 59 82 L50 66 L41 82 C39 87 31 85 32 80 L38 54 L24 54 C20 54 20 46 24 46 Z" fill="#d97706"/><circle cx="45" cy="27" r="2.2" fill="#fff"/><circle cx="55" cy="27" r="2.2" fill="#fff"/><path d="M44 34 Q50 39 56 34" stroke="#ef4444" stroke-width="2.5" fill="none" stroke-linecap="round"/><polygon points="50,44 43,40 43,48" fill="#22c55e"/><polygon points="50,44 57,40 57,48" fill="#22c55e"/><circle cx="50" cy="53" r="2.5" fill="#38bdf8"/><circle cx="50" cy="60" r="2.5" fill="#facc15"/></svg>`
+            gold_bar: {
+                name: 'Золотой слиток', price: 950, isNft: true, theme: 'theme-gold',
+                svg: `<svg viewBox="0 0 100 100"><polygon points="26,30 74,30 84,70 16,70" fill="#eab308" stroke="#fef08a" stroke-width="3"/><polygon points="26,30 74,30 66,46 34,46" fill="#facc15"/><line x1="38" y1="58" x2="62" y2="58" stroke="#fef08a" stroke-width="3" stroke-linecap="round"/></svg>`
             },
-            heart: {
-                name: 'Сердце',
-                price: 85,
-                isNft: false,
-                theme: 'theme-dark',
-                svg: `<svg viewBox="0 0 100 100"><defs><linearGradient id="gHeart" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#f472b6"/><stop offset="100%" stop-color="#db2777"/></linearGradient></defs><path d="M50 84 C50 84 16 60 16 36 C16 24 25 16 36 16 C43 16 48 20 50 25 C52 20 57 16 64 16 C75 16 84 24 84 36 C84 60 50 84 50 84 Z" fill="url(#gHeart)"/><path d="M14 48 Q50 64 86 44 L84 54 Q50 74 16 58 Z" fill="#facc15" stroke="#ca8a04" stroke-width="1"/></svg>`
+            azure_crystal: {
+                name: 'Сапфировый кристалл', price: 1450, isNft: true, theme: 'theme-diamond',
+                svg: `<svg viewBox="0 0 100 100"><polygon points="50,14 80,38 68,84 32,84 20,38" fill="#0ea5e9" stroke="#bae6fd" stroke-width="3"/><polygon points="50,14 66,38 50,84 34,38" fill="#38bdf8"/></svg>`
             },
-            sparkler: {
-                name: 'Party Sparkler',
-                price: 975,
-                isNft: true,
-                theme: 'theme-blue',
-                svg: `<svg viewBox="0 0 100 100"><polygon points="44,68 72,38 78,44 50,74" fill="#92400e"/><polygon points="34,78 46,66 52,72 40,84" fill="#451a03"/><circle cx="76" cy="36" r="14" fill="#fef08a" opacity="0.5"/><path d="M76 16 L76 56 M56 36 L96 36 M62 22 L90 50 M90 22 L62 50" stroke="#facc15" stroke-width="3" stroke-linecap="round"/><circle cx="76" cy="36" r="5" fill="#fff"/></svg>`
+            master_goblet: {
+                name: 'Кубок Мастера', price: 2400, isNft: true, theme: 'theme-master',
+                svg: `<svg viewBox="0 0 100 100"><path d="M28 24 L72 24 L66 54 C64 64 36 64 34 54 Z" fill="#f472b6" stroke="#fbcfe8" stroke-width="3"/><rect x="46" y="61" width="8" height="16" fill="#fbcfe8"/><rect x="32" y="77" width="36" height="7" rx="3" fill="#f472b6"/></svg>`
             },
-            lollipop: {
-                name: 'Hypno Lollipop',
-                price: 991,
-                isNft: true,
-                theme: 'theme-purple',
-                svg: `<svg viewBox="0 0 100 100"><rect x="47" y="56" width="6" height="32" rx="3" fill="#e2e8f0"/><circle cx="50" cy="40" r="24" fill="#f43f5e" stroke="#fda4af" stroke-width="2"/><path d="M50 40 m0 -18 a18 18 0 1 1 -15 8 a12 12 0 1 1 12 10 a6 6 0 1 1 -4 -6" fill="none" stroke="#ffffff" stroke-width="4.5" stroke-linecap="round"/></svg>`
+            sovereign_crown: {
+                name: 'Корона Суверена', price: 4800, isNft: true, theme: 'theme-grand',
+                svg: `<svg viewBox="0 0 100 100"><polygon points="18,68 24,34 40,52 50,26 60,52 76,34 82,68" fill="#a855f7" stroke="#f3e8ff" stroke-width="3" stroke-linejoin="round"/><rect x="18" y="72" width="64" height="8" rx="3" fill="#e9d5ff"/></svg>`
             },
-            jackbox: {
-                name: 'Jack-in-the-Box',
-                price: 1054,
-                isNft: true,
-                theme: 'theme-blue',
-                svg: `<svg viewBox="0 0 100 100"><rect x="28" y="34" width="44" height="44" rx="4" fill="#d97706" stroke="#78350f" stroke-width="2.5"/><path d="M28 46 L72 46 M34 46 L66 78" stroke="#92400e" stroke-width="3"/><path d="M72 54 L82 54 L82 46" fill="none" stroke="#cbd5e1" stroke-width="3.5" stroke-linecap="round"/><circle cx="82" cy="44" r="3" fill="#ef4444"/><path d="M28 52 L20 48 L22 58 Z" fill="#f43f5e"/></svg>`
+            aegis_core: {
+                name: 'Ядро Эгиды', price: 12500, isNft: true, theme: 'theme-heaven',
+                svg: `<svg viewBox="0 0 100 100"><polygon points="50,14 82,32 82,68 50,86 18,68 18,32" fill="none" stroke="#34d399" stroke-width="4"/><circle cx="50" cy="50" r="18" fill="#10b981" stroke="#ecfdf5" stroke-width="3"/><circle cx="50" cy="50" r="7" fill="#ffffff"/></svg>`
             }
         };
 
-        // Стартовый баланс: 300 алмазов, 0 фишек, 0 инвентарь
-        let state = JSON.parse(localStorage.getItem('nerv_v5')) || {
+        const ALL_KEYS = Object.keys(GIFT_CATALOG);
+
+        // Единый постоянный ключ хранилища (никогда не сбрасывается при обновлении кода)
+        let state = JSON.parse(localStorage.getItem('nervana_persistent_v1')) || {
             chips: 0,
             gems: 300,
             items: [],
-            wheelUsed: false,
-            miner: {
-                coreLv: 1,
-                storageLv: 1,
-                stored: 0,
-                totalMined: 0,
-                lastTick: Date.now()
-            }
+            wheelFreeUsed: false,
+            miner: { coreLv: 1, storageLv: 1, stored: 0, totalMined: 0, lastTick: Date.now() }
         };
 
         function saveState() {
-            localStorage.setItem('nerv_v5', JSON.stringify(state));
+            localStorage.setItem('nervana_persistent_v1', JSON.stringify(state));
         }
 
-        function renderGiftCardHTML(item, idx, extraAttrs = '', topBadge = null) {
-            const meta = GIFT_CATALOG[item.key] || GIFT_CATALOG.heart;
+        // Проверка версии для всех пользователей
+        function checkVersionUpdate() {
+            const seenVersion = localStorage.getItem('nervana_seen_version');
+            if (seenVersion && seenVersion !== APP_VERSION) {
+                document.getElementById('new-ver-label').innerText = 'v' + APP_VERSION;
+                document.getElementById('update-overlay').style.display = 'flex';
+            } else {
+                localStorage.setItem('nervana_seen_version', APP_VERSION);
+            }
+        }
+
+        function applyAppUpdate() {
+            localStorage.setItem('nervana_seen_version', APP_VERSION);
+            saveState();
+            const url = new URL(window.location.href);
+            url.searchParams.set('v', APP_VERSION + '_' + Date.now());
+            window.location.replace(url.toString());
+        }
+
+        function renderGiftCardHTML(item, extraClass = '', clickAttr = '', topBadge = null) {
+            const meta = GIFT_CATALOG[item.key] || GIFT_CATALOG.steel_ingot;
             const badgeText = topBadge !== null ? topBadge : (meta.isNft && item.num ? `#${item.num}` : '');
             return `
-                <div class="nft-item ${extraAttrs.includes('selected') ? 'selected' : ''}" ${extraAttrs}>
+                <div class="nft-item ${extraClass}" ${clickAttr}>
                     <div class="nft-art-box ${meta.theme}">
                         ${badgeText ? `<span class="nft-num">${badgeText}</span>` : ''}
                         ${meta.svg}
@@ -577,7 +671,543 @@
             `;
         }
 
-        // Расчёт параметров майнера
+        // ================= МАГАЗИН КЕЙСОВ (БЕГАЮЩАЯ ПОДСВЕТКА ПО КВАДРАТИКАМ + КОЛИЧЕСТВО) =================
+        let caseOpeningBusy = false;
+
+        function openCases() {
+            openGame('cases', 'Магазин кейсов');
+            renderCaseBoard();
+            updateCaseCostUI();
+        }
+
+        function renderCaseBoard(cursorIdx = -1, wonIndices = []) {
+            const grid = document.getElementById('case-board-grid');
+            grid.innerHTML = ALL_KEYS.map((key, idx) => {
+                let cls = '';
+                if (idx === cursorIdx) cls = 'case-cursor';
+                else if (wonIndices.includes(idx)) cls = 'case-won';
+                return renderGiftCardHTML({ key }, cls, '', `${GIFT_CATALOG[key].price} 💎`);
+            }).join('');
+        }
+
+        function updateCaseCostUI() {
+            const inp = document.getElementById('case-qty-input');
+            let qty = parseInt(inp.value, 10);
+            if (isNaN(qty) || qty < 1) qty = 1;
+            if (qty > 50) qty = 50;
+            const total = qty * 100;
+            const label = qty === 1 ? '1 кейс' : (qty < 5 ? `${qty} кейса` : `${qty} кейсов`);
+            document.getElementById('btn-open-case').innerText = `Открыть ${label} за ${total.toLocaleString('ru-RU')} 💎`;
+        }
+
+        function pickWeightedGiftIndex() {
+            const weights = [32, 22, 16, 12, 8, 5, 3.5, 1.5];
+            let rnd = Math.random() * 100, acc = 0;
+            for (let i = 0; i < ALL_KEYS.length; i++) {
+                acc += weights[i];
+                if (rnd <= acc) return i;
+            }
+            return 0;
+        }
+
+        async function openCasesGridAnim() {
+            if (caseOpeningBusy) return;
+            const inp = document.getElementById('case-qty-input');
+            let qty = parseInt(inp.value, 10);
+            if (isNaN(qty) || qty < 1) qty = 1;
+            if (qty > 50) qty = 50;
+            inp.value = qty;
+
+            const totalCost = qty * 100;
+            if (state.gems < totalCost) return alert(`Недостаточно алмазов (нужно ${totalCost} 💎)`);
+
+            state.gems -= totalCost;
+            updateUI();
+
+            caseOpeningBusy = true;
+            const btn = document.getElementById('btn-open-case');
+            const statusEl = document.getElementById('case-status-msg');
+            btn.disabled = true;
+            inp.disabled = true;
+            statusEl.innerText = 'Выбираем награды...';
+
+            const wonIndices = [];
+            const wonNames = [];
+
+            // Поочерёдный проход подсветки по квадратикам для каждого открываемого кейса
+            const visualSpins = Math.min(qty, 5); // Визуально крутим до 5 раз подряд, остальные начисляем мгновенно
+            for (let c = 0; c < visualSpins; c++) {
+                const targetIdx = pickWeightedGiftIndex();
+                const steps = ALL_KEYS.length * 2 + targetIdx;
+                for (let s = 0; s <= steps; s++) {
+                    const currentSquare = s % ALL_KEYS.length;
+                    renderCaseBoard(currentSquare, wonIndices);
+                    const delay = 35 + Math.floor((s / steps) * 95);
+                    await new Promise(r => setTimeout(r, delay));
+                }
+                wonIndices.push(targetIdx);
+                const key = ALL_KEYS[targetIdx];
+                addGift(key, false);
+                wonNames.push(GIFT_CATALOG[key].name);
+                renderCaseBoard(-1, wonIndices);
+                await new Promise(r => setTimeout(r, 220));
+            }
+
+            // Если открыто больше 5 кейсов за раз, остальные тоже добавляем в инвентарь
+            for (let c = visualSpins; c < qty; c++) {
+                const targetIdx = pickWeightedGiftIndex();
+                const key = ALL_KEYS[targetIdx];
+                addGift(key, false);
+                wonNames.push(GIFT_CATALOG[key].name);
+            }
+
+            updateUI();
+            statusEl.innerText = qty === 1
+                ? `Выпало: ${wonNames[0]}!`
+                : `Открыто ${qty} шт.! Получено: ${wonNames.slice(0, 3).join(', ')}${qty > 3 ? ` и ещё ${qty - 3}` : ''}`;
+
+            caseOpeningBusy = false;
+            btn.disabled = false;
+            inp.disabled = false;
+        }
+
+        // ================= КАРТЫ / СЛОТЫ (ОТ 50 И ЛЮБОЕ ЧИСЛО + СТРОГИЕ ИКОНКИ) =================
+        let slotsBusy = false;
+        const slotPoolKeys = ['steel_ingot', 'bronze_coin', 'silver_prism', 'gold_bar', 'azure_crystal', 'sovereign_crown'];
+
+        function openSlots() {
+            openGame('slots', 'Карты наград');
+            renderSlotReels(['gold_bar', 'azure_crystal', 'sovereign_crown']);
+            updateSlotBetUI();
+        }
+
+        function renderSlotReels(keys) {
+            const container = document.getElementById('slots-reels');
+            container.innerHTML = keys.map(k => {
+                const m = GIFT_CATALOG[k];
+                return `<div class="slot-reel ${m.theme}">${m.svg}<span>${m.name.split(' ')[0]}</span></div>`;
+            }).join('');
+        }
+
+        function setSlotBet(val) {
+            if (slotsBusy) return;
+            document.getElementById('slot-bet-input').value = val;
+            updateSlotBetUI();
+        }
+
+        function updateSlotBetUI() {
+            const inp = document.getElementById('slot-bet-input');
+            let betVal = parseInt(inp.value, 10);
+            if (isNaN(betVal) || betVal < 50) betVal = 50;
+            const mult = (betVal / 50).toFixed(1);
+            document.getElementById('slot-mult-preview').innerText = mult;
+            document.getElementById('btn-spin-slots').innerText = `Открыть карты за ${betVal.toLocaleString('ru-RU')} 💎`;
+        }
+
+        async function spinSlots() {
+            if (slotsBusy) return;
+            const inp = document.getElementById('slot-bet-input');
+            let betVal = parseInt(inp.value, 10);
+            if (isNaN(betVal) || betVal < 50) {
+                betVal = 50;
+                inp.value = 50;
+            }
+            if (state.gems < betVal) return alert(`Недостаточно алмазов (нужно ${betVal} 💎)`);
+
+            state.gems -= betVal;
+            updateUI();
+
+            slotsBusy = true;
+            const btn = document.getElementById('btn-spin-slots');
+            const msgEl = document.getElementById('slots-status-msg');
+            btn.disabled = true;
+            msgEl.innerText = 'Тасуем карты...';
+
+            // Анимация смены карт
+            for (let i = 0; i < 12; i++) {
+                const temp = [
+                    slotPoolKeys[Math.floor(Math.random() * slotPoolKeys.length)],
+                    slotPoolKeys[Math.floor(Math.random() * slotPoolKeys.length)],
+                    slotPoolKeys[Math.floor(Math.random() * slotPoolKeys.length)]
+                ];
+                renderSlotReels(temp);
+                await new Promise(r => setTimeout(r, 70 + i * 10));
+            }
+
+            // Повышаем шанс совпадения пропорционально ставке (от 22% до 45%)
+            const winChance = Math.min(0.45, 0.22 + (betVal / 5000));
+            let r1, r2, r3;
+            if (Math.random() < winChance) {
+                const chosen = slotPoolKeys[Math.floor(Math.random() * slotPoolKeys.length)];
+                r1 = r2 = r3 = chosen;
+            } else {
+                r1 = slotPoolKeys[Math.floor(Math.random() * slotPoolKeys.length)];
+                r2 = slotPoolKeys[Math.floor(Math.random() * slotPoolKeys.length)];
+                r3 = slotPoolKeys[Math.floor(Math.random() * slotPoolKeys.length)];
+                if (r1 === r2 && r2 === r3) {
+                    r3 = slotPoolKeys[(slotPoolKeys.indexOf(r1) + 1) % slotPoolKeys.length];
+                }
+            }
+
+            renderSlotReels([r1, r2, r3]);
+
+            if (r1 === r2 && r2 === r3) {
+                const gemBonus = Math.floor(betVal * 1.5);
+                state.gems += gemBonus;
+                addGift(r1, true);
+                msgEl.style.color = '#4ade80';
+                msgEl.innerText = `ПОБЕДА! Получен ${GIFT_CATALOG[r1].name} и +${gemBonus} 💎!`;
+            } else if (r1 === r2 || r2 === r3 || r1 === r3) {
+                const refund = Math.floor(betVal * 0.5);
+                state.gems += refund;
+                updateUI();
+                msgEl.style.color = '#38bdf8';
+                msgEl.innerText = `2 совпадения! Возврат половины ставки: +${refund} 💎`;
+            } else {
+                msgEl.style.color = '#94a3b8';
+                msgEl.innerText = 'Нет совпадений. Попробуйте ещё раз!';
+            }
+
+            slotsBusy = false;
+            btn.disabled = false;
+        }
+
+        // ================= РАКЕТА =================
+        let rocketAnim = null, rocketRunning = false, rocketMult = 1.0, rocketCrash = 1.0, rocketBet = 50, rocketStartTime = 0;
+        const stars = Array.from({ length: 28 }, () => ({ x: Math.random() * 340, y: Math.random() * 220, r: Math.random() * 1.5 + 0.5 }));
+
+        function setRocketBet(val, btn) {
+            if (rocketRunning) return;
+            rocketBet = val;
+            document.querySelectorAll('#rocket-bets .bet-pill').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            document.getElementById('btn-rocket').innerText = `Запустить (${rocketBet} 💎)`;
+        }
+
+        function drawRocketScene(progress, crashed = false) {
+            const canvas = document.getElementById('rocket-canvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const W = canvas.width, H = canvas.height;
+            ctx.clearRect(0, 0, W, H);
+
+            ctx.fillStyle = 'rgba(255,255,255,0.65)';
+            stars.forEach(s => {
+                if (rocketRunning) { s.x -= 0.6; s.y += 0.4; if (s.x < 0) s.x = W; if (s.y > H) s.y = 0; }
+                ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2); ctx.fill();
+            });
+
+            const t = Math.min(1, progress);
+            const rx = 45 + t * (W - 105);
+            const ry = H - 35 - Math.pow(t, 1.35) * (H - 80);
+
+            const grad = ctx.createLinearGradient(45, H - 35, rx, ry);
+            grad.addColorStop(0, 'rgba(56, 189, 248, 0.1)');
+            grad.addColorStop(1, crashed ? 'rgba(239, 68, 68, 0.8)' : 'rgba(56, 189, 248, 0.9)');
+            ctx.strokeStyle = grad;
+            ctx.lineWidth = 4;
+            ctx.beginPath();
+            ctx.moveTo(45, H - 35);
+            ctx.quadraticCurveTo(45 + t * (W - 105) * 0.5, H - 35, rx, ry);
+            ctx.stroke();
+
+            ctx.save();
+            ctx.translate(rx, ry);
+            if (crashed) {
+                ctx.font = '44px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText('💥', 0, 0);
+            } else {
+                const angle = -Math.atan2(Math.pow(t, 0.35) * (H - 80), W - 105) - 0.15;
+                ctx.rotate(angle);
+                const flameLen = 14 + Math.random() * 10;
+                ctx.fillStyle = '#f97316';
+                ctx.beginPath(); ctx.moveTo(-16, -5); ctx.lineTo(-16 - flameLen, 0); ctx.lineTo(-16, 5); ctx.fill();
+                ctx.fillStyle = '#f8fafc';
+                ctx.beginPath(); ctx.ellipse(0, 0, 20, 9, 0, 0, Math.PI * 2); ctx.fill();
+                ctx.fillStyle = '#ef4444';
+                ctx.beginPath(); ctx.moveTo(14, -6); ctx.lineTo(25, 0); ctx.lineTo(14, 6); ctx.fill();
+                ctx.fillStyle = '#38bdf8';
+                ctx.beginPath(); ctx.arc(4, 0, 4, 0, Math.PI * 2); ctx.fill();
+            }
+            ctx.restore();
+        }
+
+        function openRocket() { openGame('rocket', 'Ракета'); setTimeout(() => drawRocketScene(0, false), 50); }
+
+        function toggleRocket() {
+            const btn = document.getElementById('btn-rocket');
+            const multEl = document.getElementById('rocket-mult');
+            const lblEl = document.getElementById('rocket-status-label');
+
+            if (!rocketRunning) {
+                if (state.gems < rocketBet) return alert(`Недостаточно алмазов (нужно ${rocketBet} 💎)`);
+                state.gems -= rocketBet; updateUI();
+                rocketRunning = true; rocketMult = 1.00;
+                rocketCrash = Math.random() < 0.08 ? 1.02 : +(1.15 + Math.random() * 4.2).toFixed(2);
+                rocketStartTime = performance.now();
+                multEl.style.color = '#ffffff'; lblEl.innerText = 'Ракета набирает высоту...';
+
+                function loop(now) {
+                    if (!rocketRunning) return;
+                    const sec = (now - rocketStartTime) / 1000;
+                    rocketMult = +(1 + Math.pow(sec, 1.45) * 0.45).toFixed(2);
+                    const winNow = Math.floor(rocketBet * rocketMult);
+                    multEl.innerText = rocketMult.toFixed(2) + 'x';
+                    btn.innerText = `Забрать ${winNow} 💎`;
+                    drawRocketScene(sec / 5.5, false);
+
+                    if (rocketMult >= rocketCrash) {
+                        rocketRunning = false;
+                        multEl.style.color = '#ef4444';
+                        lblEl.innerText = `Улетела на ${rocketCrash.toFixed(2)}x`;
+                        btn.innerText = `Запустить (${rocketBet} 💎)`;
+                        drawRocketScene(sec / 5.5, true);
+                        addRocketHistory(rocketCrash);
+                        return;
+                    }
+                    rocketAnim = requestAnimationFrame(loop);
+                }
+                rocketAnim = requestAnimationFrame(loop);
+            } else {
+                rocketRunning = false; cancelAnimationFrame(rocketAnim);
+                const win = Math.floor(rocketBet * rocketMult);
+                state.gems += win; updateUI();
+                multEl.style.color = '#4ade80';
+                lblEl.innerText = `Вы забрали +${win} 💎 на ${rocketMult.toFixed(2)}x!`;
+                btn.innerText = `Запустить (${rocketBet} 💎)`;
+                addRocketHistory(rocketCrash);
+            }
+        }
+
+        function addRocketHistory(val) {
+            const strip = document.getElementById('rocket-history');
+            strip.innerHTML = `<div class="hist-badge ${val >= 2.0 ? 'high' : ''}">${val.toFixed(2)}x</div>` + strip.innerHTML;
+        }
+
+        // ================= РУЛЕТКА =================
+        let rouletteBet = 50, rouletteSpinning = false;
+        const wheelOrder = [
+            { num: 0, color: 'green' }, { num: 1, color: 'red' }, { num: 2, color: 'black' },
+            { num: 3, color: 'red' }, { num: 4, color: 'black' }, { num: 5, color: 'red' },
+            { num: 6, color: 'black' }, { num: 7, color: 'red' }, { num: 8, color: 'black' },
+            { num: 9, color: 'red' }, { num: 10, color: 'black' }, { num: 11, color: 'red' },
+            { num: 12, color: 'black' }, { num: 13, color: 'red' }, { num: 14, color: 'black' }
+        ];
+
+        function setRouletteBet(val, btn) {
+            if (rouletteSpinning) return;
+            rouletteBet = val;
+            document.querySelectorAll('#roulette-bets .bet-pill').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        }
+
+        function buildRouletteTrack() {
+            const track = document.getElementById('roulette-track');
+            track.style.transition = 'none'; track.style.transform = 'translateX(0px)';
+            let html = '';
+            for (let rep = 0; rep < 6; rep++) wheelOrder.forEach(item => { html += `<div class="r-tile r-${item.color}">${item.num}</div>`; });
+            track.innerHTML = html;
+        }
+
+        function openRoulette() { openGame('roulette', 'Рулетка'); buildRouletteTrack(); }
+
+        function playRoulette(choice) {
+            if (rouletteSpinning) return;
+            if (state.gems < rouletteBet) return alert(`Недостаточно алмазов (нужно ${rouletteBet} 💎)`);
+            state.gems -= rouletteBet; updateUI(); rouletteSpinning = true;
+            document.getElementById('roulette-res').innerText = 'Шарик запущен...';
+
+            buildRouletteTrack();
+            const winIdx = Math.floor(Math.random() * wheelOrder.length);
+            const targetTileIndex = 4 * wheelOrder.length + winIdx;
+            const offset = -(targetTileIndex * 60 + 27 + (Math.floor(Math.random() * 24) - 12));
+
+            const track = document.getElementById('roulette-track');
+            requestAnimationFrame(() => {
+                track.style.transition = 'transform 3.8s cubic-bezier(0.12, 0.85, 0.18, 1)';
+                track.style.transform = `translateX(${offset}px)`;
+            });
+
+            setTimeout(() => {
+                rouletteSpinning = false;
+                const landed = wheelOrder[winIdx];
+                const hist = document.getElementById('roulette-history');
+                hist.innerHTML = `<div class="r-tile r-${landed.color}" style="width:26px; height:26px; font-size:11px; border-radius:7px;">${landed.num}</div>` + hist.innerHTML;
+
+                if (landed.color === choice) {
+                    const win = rouletteBet * (landed.color === 'green' ? 14 : 2);
+                    state.gems += win; updateUI();
+                    document.getElementById('roulette-res').innerText = `Выпало ${landed.num}! Выигрыш +${win} 💎`;
+                } else {
+                    document.getElementById('roulette-res').innerText = `Выпало ${landed.num}. Ставка не сыграла.`;
+                }
+            }, 3950);
+        }
+
+        // ================= КОЛЕСО УДАЧИ =================
+        const wheelSectors = [
+            { label: '50 💎', type: 'gems', val: 50, color: '#2563eb' },
+            { label: '150 🪙', type: 'chips', val: 150, color: '#3f3f46' },
+            { label: '150 💎', type: 'gems', val: 150, color: '#9333ea' },
+            { label: '300 🪙', type: 'chips', val: 300, color: '#27272a' },
+            { label: '300 💎', type: 'gems', val: 300, color: '#e11d48' },
+            { label: '500 🪙', type: 'chips', val: 500, color: '#3f3f46' },
+            { label: '100 💎', type: 'gems', val: 100, color: '#059669' },
+            { label: '750 💎', type: 'gems', val: 750, color: '#d97706' }
+        ];
+        let wheelAngle = 0, wheelBusy = false;
+
+        function drawWheelCanvas() {
+            const canvas = document.getElementById('wheel-canvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const cx = 125, cy = 125, r = 122, arc = (Math.PI * 2) / wheelSectors.length;
+            ctx.clearRect(0, 0, 250, 250);
+            wheelSectors.forEach((sec, i) => {
+                const start = i * arc - Math.PI / 2, end = start + arc;
+                ctx.beginPath(); ctx.moveTo(cx, cy); ctx.arc(cx, cy, r, start, end);
+                ctx.fillStyle = sec.color; ctx.fill(); ctx.strokeStyle = '#141418'; ctx.lineWidth = 2; ctx.stroke();
+                ctx.save(); ctx.translate(cx, cy); ctx.rotate(start + arc / 2);
+                ctx.fillStyle = '#ffffff'; ctx.font = 'bold 13px sans-serif'; ctx.textAlign = 'right';
+                ctx.fillText(sec.label, r - 16, 5); ctx.restore();
+            });
+            ctx.beginPath(); ctx.arc(cx, cy, 22, 0, Math.PI * 2); ctx.fillStyle = '#16161a'; ctx.fill();
+            ctx.strokeStyle = '#fbbf24'; ctx.lineWidth = 3; ctx.stroke();
+        }
+
+        function openWheel() { openGame('wheel', 'Колесо удачи'); drawWheelCanvas(); document.getElementById('btn-spin-wheel').disabled = state.wheelFreeUsed; }
+
+        function executeWheelSpin() {
+            if (wheelBusy) return;
+            wheelBusy = true;
+            const winIdx = Math.floor(Math.random() * wheelSectors.length);
+            const sliceDeg = 360 / wheelSectors.length;
+            const stopRotation = (360 - (winIdx * sliceDeg + sliceDeg / 2)) % 360;
+            const delta = 360 * 5 + ((stopRotation - (wheelAngle % 360) + 360) % 360);
+            wheelAngle += delta;
+
+            document.getElementById('wheel-canvas').style.transform = `rotate(${wheelAngle}deg)`;
+            document.getElementById('wheel-res').innerText = 'Барабан крутится...';
+
+            setTimeout(() => {
+                wheelBusy = false;
+                const prize = wheelSectors[winIdx];
+                if (prize.type === 'gems') state.gems += prize.val; else state.chips += prize.val;
+                updateUI();
+                document.getElementById('wheel-res').innerText = `Вы выиграли: ${prize.label}!`;
+            }, 4300);
+        }
+
+        function spinWheel() { if (!state.wheelFreeUsed && !wheelBusy) { state.wheelFreeUsed = true; document.getElementById('btn-spin-wheel').disabled = true; executeWheelSpin(); } }
+        function spinWheelPaid() { if (!wheelBusy) { if (state.gems < 100) return alert('Нужно 100 💎'); state.gems -= 100; updateUI(); executeWheelSpin(); } }
+
+        // ================= АПГРЕЙДЕР =================
+        let selectedUserGifts = [], selectedTargetIdx = 0, upgraderBusy = false;
+        const upgTargetKeys = ['silver_prism', 'gold_bar', 'azure_crystal', 'master_goblet', 'sovereign_crown', 'aegis_core'];
+
+        function drawUpgraderRadar(chancePct, needleDeg = 0) {
+            const canvas = document.getElementById('upgrader-canvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const cx = 85, cy = 85, r = 68;
+            ctx.clearRect(0, 0, 170, 170);
+
+            ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2);
+            ctx.strokeStyle = '#272730'; ctx.lineWidth = 14; ctx.stroke();
+
+            if (chancePct > 0) {
+                const start = -Math.PI / 2;
+                ctx.beginPath(); ctx.arc(cx, cy, r, start, start + (Math.PI * 2) * (chancePct / 100));
+                ctx.strokeStyle = '#22c55e'; ctx.lineWidth = 14; ctx.lineCap = 'round'; ctx.stroke();
+            }
+
+            ctx.save(); ctx.translate(cx, cy); ctx.rotate((needleDeg - 90) * Math.PI / 180);
+            ctx.fillStyle = '#ffffff';
+            ctx.beginPath(); ctx.moveTo(r + 12, 0); ctx.lineTo(r + 2, -6); ctx.lineTo(r + 2, 6); ctx.fill();
+            ctx.restore();
+        }
+
+        function openUpgrader() { selectedUserGifts = []; openGame('upgrader', 'Апгрейдер'); renderUpgrader(); }
+
+        function toggleUserGift(idx) {
+            if (upgraderBusy) return;
+            const pos = selectedUserGifts.indexOf(idx);
+            if (pos > -1) selectedUserGifts.splice(pos, 1);
+            else if (selectedUserGifts.length < 6) selectedUserGifts.push(idx);
+            renderUpgrader();
+        }
+
+        function renderUpgrader() {
+            const uGrid = document.getElementById('upg-user-grid');
+            if (state.items.length === 0) {
+                uGrid.innerHTML = `<div class="empty-state">У вас пока нет наград для апгрейда. Откройте кейс в магазине!</div>`;
+            } else {
+                uGrid.innerHTML = state.items.map((item, idx) =>
+                    renderGiftCardHTML(item, selectedUserGifts.includes(idx) ? 'selected' : '', `onclick="toggleUserGift(${idx})"`)
+                ).join('');
+            }
+
+            const totalBet = selectedUserGifts.reduce((s, i) => s + (GIFT_CATALOG[state.items[i]?.key]?.price || 0), 0);
+            document.getElementById('upg-sel-count').innerText = selectedUserGifts.length;
+            document.getElementById('upg-sel-val').innerText = totalBet.toLocaleString('ru-RU');
+
+            const tGrid = document.getElementById('upg-target-grid');
+            tGrid.innerHTML = upgTargetKeys.map((key, idx) => {
+                const meta = GIFT_CATALOG[key];
+                const chance = totalBet > 0 ? Math.min(75, Math.max(1, ((totalBet / meta.price) * 85))).toFixed(1) : '0.0';
+                return renderGiftCardHTML({ key }, selectedTargetIdx === idx ? 'selected' : '', `onclick="if(!upgraderBusy){selectedTargetIdx=${idx}; renderUpgrader();}"`, `${chance}%`);
+            }).join('');
+
+            const targetMeta = GIFT_CATALOG[upgTargetKeys[selectedTargetIdx]];
+            const btn = document.getElementById('btn-do-upgrade');
+            const radarText = document.getElementById('radar-chance-text');
+
+            if (totalBet > 0) {
+                const chanceNum = Math.min(75, Math.max(1, (totalBet / targetMeta.price) * 85));
+                radarText.innerText = chanceNum.toFixed(1) + '%';
+                drawUpgraderRadar(chanceNum, 0);
+                btn.disabled = false;
+                btn.innerText = `Апгрейд на ${targetMeta.name} (${chanceNum.toFixed(1)}%)`;
+            } else {
+                radarText.innerText = '0.0%';
+                drawUpgraderRadar(0, 0);
+                btn.disabled = true;
+                btn.innerText = 'Выберите награды для апгрейда';
+            }
+        }
+
+        function runUpgrade() {
+            if (upgraderBusy || selectedUserGifts.length === 0) return;
+            upgraderBusy = true;
+            document.getElementById('btn-do-upgrade').disabled = true;
+
+            const totalBet = selectedUserGifts.reduce((s, i) => s + GIFT_CATALOG[state.items[i].key].price, 0);
+            const targetKey = upgTargetKeys[selectedTargetIdx];
+            const targetMeta = GIFT_CATALOG[targetKey];
+            const chance = Math.min(75, Math.max(1, (totalBet / targetMeta.price) * 85));
+
+            const rollPct = Math.random() * 100;
+            const isWin = rollPct <= chance;
+            const totalSpin = 360 * 4 + (rollPct / 100) * 360;
+            const start = performance.now();
+
+            function animRadar(now) {
+                const t = Math.min(1, (now - start) / 2600);
+                const ease = 1 - Math.pow(1 - t, 3);
+                drawUpgraderRadar(chance, totalSpin * ease);
+                if (t < 1) requestAnimationFrame(animRadar);
+                else {
+                    upgraderBusy = false;
+                    selectedUserGifts.sort((a, b) => b - a).forEach(i => state.items.splice(i, 1));
+                    selectedUserGifts = [];
+                    if (isWin) { addGift(targetKey, true); alert(`УСПЕХ! Вы получили ${targetMeta.name} (${targetMeta.price} 💎)!`); }
+                    else { updateUI(); alert('Неудача! Стрелка остановилась мимо зелёной зоны.'); }
+                    renderUpgrader();
+                }
+            }
+            requestAnimationFrame(animRadar);
+        }
+
+        // ================= МАЙНЕР, СУДОКУ, БЛЭКДЖЕК, САПЁР =================
         function getMinerRate() { return 60 + (state.miner.coreLv - 1) * 19; }
         function getMinerHours() { return 4 + (state.miner.storageLv - 1) * 2; }
         function getMinerMaxCap() { return getMinerRate() * getMinerHours(); }
@@ -586,8 +1216,7 @@
             const now = Date.now();
             const elapsedSec = Math.floor((now - state.miner.lastTick) / 1000);
             if (elapsedSec > 0) {
-                const perSec = getMinerRate() / 3600;
-                const earned = elapsedSec * perSec;
+                const earned = elapsedSec * (getMinerRate() / 3600);
                 const cap = getMinerMaxCap();
                 if (state.miner.stored < cap) {
                     const add = Math.min(cap - state.miner.stored, earned);
@@ -602,21 +1231,15 @@
         setInterval(tickMiner, 1000);
 
         function renderMinerUI() {
-            const rate = getMinerRate();
-            const hours = getMinerHours();
-            const cap = getMinerMaxCap();
-            const storedFloor = Math.floor(state.miner.stored);
-            const pct = Math.min(100, (state.miner.stored / cap) * 100);
-
+            const rate = getMinerRate(), hours = getMinerHours(), cap = getMinerMaxCap();
             document.getElementById('miner-main-lv').innerText = state.miner.coreLv;
-            document.getElementById('mined-chips').innerText = storedFloor;
-            document.getElementById('miner-bar').style.width = pct + '%';
+            document.getElementById('mined-chips').innerText = Math.floor(state.miner.stored);
+            document.getElementById('miner-bar').style.width = Math.min(100, (state.miner.stored / cap) * 100) + '%';
             document.getElementById('miner-rate-text').innerText = rate;
             document.getElementById('miner-cap-hours').innerText = hours;
             document.getElementById('miner-total-all').innerText = Math.floor(state.miner.totalMined);
 
-            const coreCost = state.miner.coreLv * 1500;
-            const storCost = state.miner.storageLv * 2500;
+            const coreCost = state.miner.coreLv * 1500, storCost = state.miner.storageLv * 2500;
             document.getElementById('core-lv').innerText = state.miner.coreLv;
             document.getElementById('core-diff').innerText = state.miner.coreLv < 25 ? `${rate} → ${rate + 19} фишек/час` : 'Макс. уровень';
             document.getElementById('core-cost').innerText = coreCost.toLocaleString('ru-RU');
@@ -631,50 +1254,36 @@
         function claimMiner() {
             const amt = Math.floor(state.miner.stored);
             if (amt <= 0) return alert('Пока нечего забирать!');
-            state.chips += amt;
-            state.miner.stored -= amt;
-            updateUI();
-            alert(`Забрано ${amt} 🪙!`);
+            state.chips += amt; state.miner.stored -= amt; updateUI(); alert(`Забрано ${amt} 🪙!`);
         }
 
         function upgradeCore() {
             const cost = state.miner.coreLv * 1500;
             if (state.gems < cost) return alert(`Недостаточно алмазов (нужно ${cost} 💎)`);
-            const autoClaim = Math.floor(state.miner.stored);
-            state.chips += autoClaim;
-            state.miner.stored = 0;
-            state.gems -= cost;
-            state.miner.coreLv++;
-            updateUI();
+            state.chips += Math.floor(state.miner.stored); state.miner.stored = 0; state.gems -= cost; state.miner.coreLv++; updateUI();
         }
 
         function upgradeStorage() {
             const cost = state.miner.storageLv * 2500;
             if (state.gems < cost) return alert(`Недостаточно алмазов (нужно ${cost} 💎)`);
-            const autoClaim = Math.floor(state.miner.stored);
-            state.chips += autoClaim;
-            state.miner.stored = 0;
-            state.gems -= cost;
-            state.miner.storageLv++;
-            updateUI();
+            state.chips += Math.floor(state.miner.stored); state.miner.stored = 0; state.gems -= cost; state.miner.storageLv++; updateUI();
         }
 
         function updateUI() {
             const invTotal = state.items.reduce((sum, item) => sum + (GIFT_CATALOG[item.key]?.price || 0), 0);
             const nftOnlyCount = state.items.filter(item => GIFT_CATALOG[item.key]?.isNft).length;
-
             document.getElementById('chips-bal').innerText = state.chips.toLocaleString('ru-RU');
             document.getElementById('gems-bal').innerText = state.gems.toLocaleString('ru-RU');
             document.getElementById('inv-total').innerText = invTotal.toLocaleString('ru-RU');
-            document.getElementById('items-count').innerText = `${state.items.length} подарков`;
+            document.getElementById('items-count').innerText = `${state.items.length} наград`;
             document.getElementById('nft-count').innerText = `${nftOnlyCount} NFT`;
 
             const grid = document.getElementById('inventory-grid');
             if (state.items.length === 0) {
-                grid.innerHTML = `<div class="empty-state">Инвентарь пуст.<br>Откройте кейс за 100 💎 или выиграйте NFT в слотах!</div>`;
+                grid.innerHTML = `<div class="empty-state">Инвентарь пуст.<br>Откройте кейсы в магазине или испытайте удачу в картах!</div>`;
             } else {
                 grid.innerHTML = state.items.map((item, idx) =>
-                    renderGiftCardHTML(item, idx, `onclick="sellItem(${idx})"`)
+                    renderGiftCardHTML(item, '', `onclick="sellItem(${idx})"`)
                 ).join('');
             }
             renderMinerUI();
@@ -693,275 +1302,77 @@
 
         function openGame(gameId, title) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
             document.getElementById('screen-' + gameId).classList.add('active');
+            const navEl = document.getElementById('nav-' + gameId);
+            if (navEl) navEl.classList.add('active');
             document.getElementById('page-title').innerText = title;
             document.getElementById('btn-back').style.visibility = 'visible';
         }
 
         function goBack() { switchTab('games', 'Игры'); }
 
-        function addGift(key) {
-            const meta = GIFT_CATALOG[key];
-            state.items.push({
-                key,
-                num: meta.isNft ? Math.floor(Math.random() * 899 + 100) : null
-            });
-            updateUI();
+        function addGift(key, doUpdate = true) {
+            const meta = GIFT_CATALOG[key] || GIFT_CATALOG.steel_ingot;
+            state.items.push({ key, num: meta.isNft ? Math.floor(Math.random() * 899 + 100) : null });
+            if (doUpdate) updateUI();
         }
 
         function sellItem(idx) {
             const item = state.items[idx];
             if (!item) return;
-            const meta = GIFT_CATALOG[item.key];
+            const meta = GIFT_CATALOG[item.key] || GIFT_CATALOG.steel_ingot;
             if (confirm(`Продать ${meta.name} за ${meta.price} 💎?`)) {
-                state.gems += meta.price;
-                state.items.splice(idx, 1);
-                updateUI();
+                state.gems += meta.price; state.items.splice(idx, 1); updateUI();
             }
-        }
-
-        // АПГРЕЙДЕР
-        let selectedUserGifts = [], selectedTargetIdx = 0;
-        const upgTargetKeys = ['sparkler', 'lollipop', 'jackbox', 'ring', 'skull'];
-
-        function openUpgrader() {
-            selectedUserGifts = [];
-            openGame('upgrader', 'Апгрейдер');
-            renderUpgrader();
-        }
-
-        function toggleUserGift(idx) {
-            const pos = selectedUserGifts.indexOf(idx);
-            if (pos > -1) selectedUserGifts.splice(pos, 1);
-            else if (selectedUserGifts.length < 6) selectedUserGifts.push(idx);
-            renderUpgrader();
-        }
-
-        function renderUpgrader() {
-            const uGrid = document.getElementById('upg-user-grid');
-            if (state.items.length === 0) {
-                uGrid.innerHTML = `<div class="empty-state">У вас пока нет подарков для апгрейда. Откройте кейс!</div>`;
-            } else {
-                uGrid.innerHTML = state.items.map((item, idx) => {
-                    const isSel = selectedUserGifts.includes(idx) ? 'selected' : '';
-                    return renderGiftCardHTML(item, idx, `class="nft-item ${isSel}" onclick="toggleUserGift(${idx})"`);
-                }).join('');
-            }
-
-            const totalBet = selectedUserGifts.reduce((s, i) => s + GIFT_CATALOG[state.items[i].key].price, 0);
-            document.getElementById('upg-sel-count').innerText = selectedUserGifts.length;
-            document.getElementById('upg-sel-val').innerText = totalBet.toLocaleString('ru-RU');
-
-            const tGrid = document.getElementById('upg-target-grid');
-            tGrid.innerHTML = upgTargetKeys.map((key, idx) => {
-                const meta = GIFT_CATALOG[key];
-                const chance = totalBet > 0 ? Math.min(75, Math.max(1, ((totalBet / meta.price) * 85))).toFixed(1) : '0.0';
-                const isSel = selectedTargetIdx === idx ? 'selected' : '';
-                return renderGiftCardHTML(
-                    { key },
-                    idx,
-                    `class="nft-item ${isSel}" onclick="selectedTargetIdx=${idx}; renderUpgrader();"`,
-                    `${chance}%`
-                );
-            }).join('');
-
-            const targetMeta = GIFT_CATALOG[upgTargetKeys[selectedTargetIdx]];
-            const btn = document.getElementById('btn-do-upgrade');
-            if (totalBet > 0) {
-                const chance = Math.min(75, Math.max(1, ((totalBet / targetMeta.price) * 85))).toFixed(1);
-                btn.disabled = false;
-                btn.innerText = `Апгрейд • шанс ${chance}%`;
-            } else {
-                btn.disabled = true;
-                btn.innerText = 'Апгрейд • выберите подарки';
-            }
-        }
-
-        function runUpgrade() {
-            const totalBet = selectedUserGifts.reduce((s, i) => s + GIFT_CATALOG[state.items[i].key].price, 0);
-            const targetKey = upgTargetKeys[selectedTargetIdx];
-            const targetMeta = GIFT_CATALOG[targetKey];
-            const chance = Math.min(75, Math.max(1, (totalBet / targetMeta.price) * 85));
-
-            selectedUserGifts.sort((a, b) => b - a).forEach(i => state.items.splice(i, 1));
-            selectedUserGifts = [];
-
-            if (Math.random() * 100 <= chance) {
-                addGift(targetKey);
-                alert(`УСПЕХ! Вы получили ${targetMeta.name} (${targetMeta.price} 💎)!`);
-            } else {
-                updateUI();
-                alert('Неудача! Выбранные подарки сгорели.');
-            }
-            renderUpgrader();
         }
 
         // СУДОКУ
         const sudokuPuzzle = [
-            [5,9,0, 2,0,1, 3,0,6],
-            [4,2,0, 0,0,3, 7,0,0],
-            [8,6,3, 0,0,7, 0,0,0],
-            [0,0,9, 0,0,0, 6,0,0],
-            [0,0,0, 4,3,6, 9,0,0],
-            [0,4,0, 0,0,9, 0,0,5],
-            [6,1,0, 0,0,0, 5,0,7],
-            [0,7,5, 0,6,0, 8,9,3],
-            [9,0,0, 7,2,5, 4,0,0]
+            [5,9,0, 2,0,1, 3,0,6], [4,2,0, 0,0,3, 7,0,0], [8,6,3, 0,0,7, 0,0,0],
+            [0,0,9, 0,0,0, 6,0,0], [0,0,0, 4,3,6, 9,0,0], [0,4,0, 0,0,9, 0,0,5],
+            [6,1,0, 0,0,0, 5,0,7], [0,7,5, 0,6,0, 8,9,3], [9,0,0, 7,2,5, 4,0,0]
         ];
         let sUserGrid = [], sSelected = [0, 2], sTimer = null, sSec = 0;
-
         function openSudoku() { openGame('sudoku', 'Судоку'); initSudoku(); }
         function initSudoku() {
-            sUserGrid = sudokuPuzzle.map(r => [...r]);
-            sSelected = [0, 2]; sSec = 0;
-            clearInterval(sTimer);
-            sTimer = setInterval(() => {
-                sSec++;
-                const m = Math.floor(sSec / 60), s = sSec % 60;
-                document.getElementById('sudoku-timer').innerText = `${m}:${s < 10 ? '0'+s : s}`;
-            }, 1000);
+            sUserGrid = sudokuPuzzle.map(r => [...r]); sSelected = [0, 2]; sSec = 0; clearInterval(sTimer);
+            sTimer = setInterval(() => { sSec++; const m = Math.floor(sSec / 60), s = sSec % 60; document.getElementById('sudoku-timer').innerText = `${m}:${s < 10 ? '0'+s : s}`; }, 1000);
             renderSudoku();
         }
         function renderSudoku() {
-            const board = document.getElementById('sudoku-board');
-            board.innerHTML = '';
-            for (let r = 0; r < 9; r++) {
-                for (let c = 0; c < 9; c++) {
-                    const isFixed = sudokuPuzzle[r][c] !== 0;
-                    const val = sUserGrid[r][c];
-                    const isSel = sSelected[0] === r && sSelected[1] === c;
-                    const bR = (c === 2 || c === 5) ? 'b-right' : '';
-                    const bB = (r === 2 || r === 5) ? 'b-bottom' : '';
-                    board.innerHTML += `<div class="s-cell ${bR} ${bB} ${isFixed?'fixed':'user-num'} ${isSel?'selected':''}" onclick="sSelected=[${r},${c}]; renderSudoku();">${val || ''}</div>`;
-                }
+            const board = document.getElementById('sudoku-board'); board.innerHTML = '';
+            for (let r = 0; r < 9; r++) for (let c = 0; c < 9; c++) {
+                const isFixed = sudokuPuzzle[r][c] !== 0, val = sUserGrid[r][c], isSel = sSelected[0] === r && sSelected[1] === c;
+                board.innerHTML += `<div class="s-cell ${(c===2||c===5)?'b-right':''} ${(r===2||r===5)?'b-bottom':''} ${isFixed?'fixed':'user-num'} ${isSel?'selected':''}" onclick="sSelected=[${r},${c}]; renderSudoku();">${val || ''}</div>`;
             }
-            const pad = document.getElementById('sudoku-numpad');
-            pad.innerHTML = '';
+            const pad = document.getElementById('sudoku-numpad'); pad.innerHTML = '';
             for (let n = 1; n <= 9; n++) pad.innerHTML += `<div class="num-btn" onclick="inputSudoku(${n})">${n}</div>`;
         }
-        function inputSudoku(num) {
-            const [r, c] = sSelected;
-            if (sudokuPuzzle[r][c] !== 0) return;
-            sUserGrid[r][c] = num;
-            renderSudoku();
-        }
+        function inputSudoku(num) { const [r, c] = sSelected; if (sudokuPuzzle[r][c] === 0) { sUserGrid[r][c] = num; renderSudoku(); } }
         function checkSudokuWin() {
-            for (let r = 0; r < 9; r++) for (let c = 0; c < 9; c++) if (sUserGrid[r][c] === 0) return alert('Заполните все пустые клетки!');
-            for (let i = 0; i < 9; i++) {
-                const rowSet = new Set(sUserGrid[i]), colSet = new Set(sUserGrid.map(r => r[i]));
-                if (rowSet.size !== 9 || colSet.size !== 9) return alert('В решении есть повторы цифр!');
-            }
-            clearInterval(sTimer); state.gems += 500; updateUI();
-            alert('Поздравляем! Судоку решено! Награда: +500 💎');
-            goBack();
+            for (let r = 0; r < 9; r++) for (let c = 0; c < 9; c++) if (sUserGrid[r][c] === 0) return alert('Заполните все клетки!');
+            for (let i = 0; i < 9; i++) if (new Set(sUserGrid[i]).size !== 9 || new Set(sUserGrid.map(r => r[i])).size !== 9) return alert('Есть повторы цифр!');
+            clearInterval(sTimer); state.gems += 500; updateUI(); alert('Победа! +500 💎'); goBack();
         }
 
-        // КЕЙСЫ И СЛОТЫ
-        function openCase() {
-            if (state.gems < 100) return alert('Недостаточно алмазов (нужно 100 💎)');
-            state.gems -= 100;
-            const pool = ['heart', 'cookie', 'sparkler', 'lollipop', 'jackbox', 'candy_cane', 'ring', 'skull'];
-            const weights = [35, 22, 14, 12, 8, 5, 3, 1];
-            let rnd = Math.random() * 100, acc = 0, chosen = 'heart';
-            for (let i = 0; i < pool.length; i++) { acc += weights[i]; if (rnd <= acc) { chosen = pool[i]; break; } }
-            addGift(chosen);
-            const meta = GIFT_CATALOG[chosen];
-            alert(`Вам выпал подарок: ${meta.name} (${meta.price} 💎)!`);
-        }
-
-        function spinSlots() {
-            if (state.gems < 50) return alert('Недостаточно алмазов (нужно 50 💎)');
-            state.gems -= 50; updateUI();
-            const syms = ['🍭', '💍', '💀'];
-            const r1 = syms[Math.floor(Math.random()*3)], r2 = syms[Math.floor(Math.random()*3)], r3 = syms[Math.floor(Math.random()*3)];
-            document.getElementById('slots-reels').innerText = `${r1} ${r2} ${r3}`;
-            if (r1 === r2 && r2 === r3) {
-                const rewardKey = r1 === '💀' ? 'skull' : (r1 === '💍' ? 'ring' : 'lollipop');
-                addGift(rewardKey);
-                alert(`ДЖЕКПОТ! Вы выиграли ${GIFT_CATALOG[rewardKey].name} в инвентарь!`);
-            }
-        }
-
-        function spinWheel() {
-            if (state.wheelUsed) return alert('Вы уже крутили колесо сегодня!');
-            state.wheelUsed = true;
-            const prize = [100, 150, 250, 500][Math.floor(Math.random() * 4)];
-            state.gems += prize;
-            document.getElementById('wheel-res').innerText = `Выигрыш: +${prize} 💎!`;
-            document.getElementById('btn-spin-wheel').disabled = true;
-            updateUI();
-        }
-
-        function playRoulette(choice) {
-            if (state.gems < 50) return alert('Недостаточно алмазов (50 💎)');
-            state.gems -= 50;
-            const roll = Math.random();
-            const res = roll < 0.05 ? 'green' : (roll < 0.525 ? 'red' : 'black');
-            if (choice === res) {
-                const mult = res === 'green' ? 14 : 2;
-                state.gems += 50 * mult;
-                document.getElementById('roulette-res').innerText = `Выпало ${res.toUpperCase()}! Победа +${50 * mult} 💎`;
-            } else {
-                document.getElementById('roulette-res').innerText = `Выпало ${res.toUpperCase()}. Вы проиграли.`;
-            }
-            updateUI();
-        }
-
-        let rocketTimer = null, rocketMult = 1.0, rocketCrash = 1.0;
-        function toggleRocket() {
-            const btn = document.getElementById('btn-rocket');
-            if (!rocketTimer) {
-                if (state.gems < 50) return alert('Нужно 50 💎');
-                state.gems -= 50; updateUI();
-                rocketMult = 1.0; rocketCrash = +(1.1 + Math.random() * 3.5).toFixed(2);
-                btn.innerText = 'Забрать выигрыш';
-                rocketTimer = setInterval(() => {
-                    rocketMult = +(rocketMult + 0.07).toFixed(2);
-                    document.getElementById('rocket-mult').innerText = rocketMult.toFixed(2) + 'x';
-                    if (rocketMult >= rocketCrash) {
-                        clearInterval(rocketTimer); rocketTimer = null;
-                        document.getElementById('rocket-mult').innerText = `ВЗРЫВ на ${rocketCrash}x 💥`;
-                        btn.innerText = 'Запустить (50 💎)';
-                    }
-                }, 120);
-            } else {
-                clearInterval(rocketTimer); rocketTimer = null;
-                const win = Math.floor(50 * rocketMult);
-                state.gems += win; updateUI();
-                alert(`Вы забрали ${win} 💎!`);
-                btn.innerText = 'Запустить (50 💎)';
-            }
-        }
-
+        // САПЁР
         let minesActive = false, minesWin = 0, bombIdx = -1;
         function startMines() {
-            if (minesActive) {
-                state.gems += minesWin; minesActive = false; updateUI();
-                alert(`Вы забрали ${minesWin} 💎!`);
-                document.getElementById('btn-mines-action').innerText = 'Начать игру (50 💎)';
-                return;
-            }
+            if (minesActive) { state.gems += minesWin; minesActive = false; updateUI(); alert(`Забрано ${minesWin} 💎!`); document.getElementById('btn-mines-action').innerText = 'Начать игру (50 💎)'; return; }
             if (state.gems < 50) return alert('Нужно 50 💎');
-            state.gems -= 50; updateUI();
-            minesActive = true; minesWin = 50; bombIdx = Math.floor(Math.random() * 15);
-            document.getElementById('mines-win').innerText = minesWin;
-            document.getElementById('btn-mines-action').innerText = `Забрать ${minesWin} 💎`;
+            state.gems -= 50; updateUI(); minesActive = true; minesWin = 50; bombIdx = Math.floor(Math.random() * 15);
+            document.getElementById('mines-win').innerText = minesWin; document.getElementById('btn-mines-action').innerText = `Забрать ${minesWin} 💎`;
             const grid = document.getElementById('mines-grid'); grid.innerHTML = '';
             for (let i = 0; i < 15; i++) grid.innerHTML += `<div class="mine-cell" onclick="clickMine(this, ${i})">?</div>`;
         }
         function clickMine(el, idx) {
             if (!minesActive || el.classList.contains('open')) return;
-            if (idx === bombIdx) {
-                el.classList.add('boom'); el.innerText = '💥'; minesActive = false;
-                document.getElementById('btn-mines-action').innerText = 'Подорвались! Играть снова (50 💎)';
-            } else {
-                el.classList.add('open'); el.innerText = '💎'; minesWin += 50;
-                document.getElementById('mines-win').innerText = minesWin;
-                document.getElementById('btn-mines-action').innerText = `Забрать ${minesWin} 💎`;
-            }
+            if (idx === bombIdx) { el.classList.add('boom'); el.innerText = '💥'; minesActive = false; document.getElementById('btn-mines-action').innerText = 'Подорвались! Играть снова (50 💎)'; }
+            else { el.classList.add('open'); el.innerText = '💎'; minesWin += 50; document.getElementById('mines-win').innerText = minesWin; document.getElementById('btn-mines-action').innerText = `Забрать ${minesWin} 💎`; }
         }
 
-        // BLACKJACK
+        // БЛЭКДЖЕК
         let deck = [], playerHand = [], dealerHand = [], bet = 50, gameOver = true;
         const suits = ['♠', '♣', '♥', '♦'], values = ['2','3','4','5','6','7','8','9','10','J','Q','K','A'];
         function createDeck() { deck = []; for (let s of suits) for (let v of values) deck.push({ s, v }); deck.sort(() => Math.random() - 0.5); }
@@ -983,16 +1394,11 @@
             document.getElementById('dealer-score').innerText = hideDealer ? getScore([dealerHand[0]]) : getScore(dealerHand);
         }
         function startBJ() {
-            bet = 50;
-            if (state.gems < bet) return alert('Недостаточно алмазов (50 💎)');
+            bet = 50; if (state.gems < bet) return alert('Недостаточно алмазов (50 💎)');
             state.gems -= bet; updateUI(); gameOver = false;
-            document.getElementById('bj-status').innerText = '';
-            document.getElementById('bet-text').innerText = bet;
-            document.getElementById('center-bet-val').innerText = bet;
-            document.getElementById('btn-restart').style.display = 'none';
-            toggleBJ(true); createDeck();
-            playerHand = [deck.pop(), deck.pop()]; dealerHand = [deck.pop(), deck.pop()];
-            renderCards(true);
+            document.getElementById('bj-status').innerText = ''; document.getElementById('bet-text').innerText = bet; document.getElementById('center-bet-val').innerText = bet;
+            document.getElementById('btn-restart').style.display = 'none'; toggleBJ(true); createDeck();
+            playerHand = [deck.pop(), deck.pop()]; dealerHand = [deck.pop(), deck.pop()]; renderCards(true);
             if (getScore(playerHand) === 21) stand();
         }
         function toggleBJ(on) { ['btn-hit','btn-stand','btn-double'].forEach(id => document.getElementById(id).disabled = !on); }
@@ -1001,6 +1407,7 @@
         function stand() { if (!gameOver) { while (getScore(dealerHand) < 17) dealerHand.push(deck.pop()); renderCards(false); const p = getScore(playerHand), d = getScore(dealerHand); if (d > 21 || p > d) endBJ(`Победа! +${bet * 2} 💎`, bet * 2); else if (p === d) endBJ('Ничья! Возврат ставки.', bet); else endBJ('Дилер выиграл.', 0); } }
         function endBJ(msg, win) { gameOver = true; state.gems += win; updateUI(); renderCards(false); document.getElementById('bj-status').innerText = msg; toggleBJ(false); document.getElementById('btn-restart').style.display = 'block'; }
 
+        checkVersionUpdate();
         tickMiner();
         updateUI();
     </script>
