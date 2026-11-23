@@ -117,6 +117,23 @@
         .gift-detail-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
         .gift-detail-actions[hidden] { display: none; }
         .gift-detail-actions .upg-banner-btn { padding: 10px; min-height: 42px; }
+        .nft-art-box > .market-gift-image { z-index: 2; width: 74%; height: 74%; object-fit: contain; filter: drop-shadow(0 7px 5px #09091d88); }
+        .market-gift-image + .market-gift-placeholder { display: none; }
+        .market-gift-placeholder { z-index: 1; color: #e4f1ff; font-size: 28px; }
+        .gift-market-header { background: radial-gradient(ellipse at top, #273957, #151922 78%); text-align: left; }
+        .gift-market-header p, .market-credit { color: #b1bdce; font-size: 12px; line-height: 1.5; margin-bottom: 9px; }
+        .market-credit { margin: 12px 2px 0; }
+        .market-credit a { color: #a9e8db; }
+        .market-search, .market-model-select { width: 100%; border: 1px solid #394453; border-radius: 9px; padding: 10px; color: #fff; background: #1b2230; font-size: 14px; user-select: text; }
+        .market-search { margin: 0 0 8px; }
+        .market-count { color: #b1bdce; font-size: 12px; margin-top: 7px; }
+        .market-model-field { color: #c1cbd9; display: grid; gap: 5px; margin: 0 0 10px; font-size: 12px; }
+        .market-model-field[hidden], .market-buy-field[hidden] { display: none; }
+        .market-buy-field { display: grid; gap: 7px; }
+        .market-buy-field .upg-banner-btn { min-height: 42px; }
+        .market-buy-status { font-size: 12px; color: #f1d493; }
+        .market-buy-status:empty { display: none; }
+        .market-catalog > * { max-width: 700px; margin-inline: auto; }
 
         .game-box { background: var(--bg-card); border-radius: 22px; padding: 16px; border: 1px solid #2c2c34; text-align: center; }
         .primary-btn { width: 100%; background: linear-gradient(90deg, #e11d48, #be123c); color: #fff; border: none; padding: 14px; border-radius: 14px; font-weight: 700; font-size: 15px; cursor: pointer; margin-top: 12px; }
@@ -416,6 +433,7 @@
 
     <!-- МАГАЗИН / КЕЙСЫ -->
     <div id="screen-cases" class="screen">
+        <button type="button" class="action-btn" onclick="openGiftMarket()" style="width:100%; margin-bottom:12px;">Каталог подарков Telegram</button>
         <div class="game-box" style="margin-bottom: 12px;">
             <div style="font-size:12px; color:var(--text-muted); font-weight:700; text-transform:uppercase;">Все доступные награды и NFT</div>
             <div class="items-grid-3" id="case-board-grid"></div>
@@ -431,6 +449,22 @@
             <div id="case-status-msg" style="font-size:13px; font-weight:700; color:#4ade80; margin-top:10px; min-height:18px;"></div>
             <button class="primary-btn" id="btn-open-case" onclick="openCasesGridAnim()">Открыть 1 кейс за 100 💎</button>
         </div>
+    </div>
+
+    <div id="screen-gift-market" class="screen market-catalog">
+        <div class="game-box gift-market-header">
+            <p>Покупка игровых копий за алмазы NERVANA.</p>
+            <input type="search" class="market-search" id="market-gift-search" placeholder="Название подарка" aria-label="Поиск подарков" oninput="resetGiftMarket()">
+            <div class="gift-filters" aria-label="Категории каталога">
+                <button type="button" class="gift-filter" data-market-filter="all" aria-pressed="true" onclick="setMarketFilter('all')">Все</button>
+                <button type="button" class="gift-filter" data-market-filter="gift" aria-pressed="false" onclick="setMarketFilter('gift')">Подарки</button>
+                <button type="button" class="gift-filter" data-market-filter="nft" aria-pressed="false" onclick="setMarketFilter('nft')">NFT</button>
+            </div>
+            <div class="market-count" id="market-count" role="status"></div>
+        </div>
+        <div class="items-grid-3" id="market-gift-grid"></div>
+        <button type="button" class="primary-btn" id="market-more-btn" onclick="showMoreMarketGifts()">Показать ещё</button>
+        <p class="market-credit">Каталог и иллюстрации от <a href="https://t.me/GiftChanges" target="_blank" rel="noopener noreferrer">@GiftChanges</a> · <a href="https://t.me/portals/market" target="_blank" rel="noopener noreferrer">Открыть Portals</a></p>
     </div>
 
     <!-- КАРТЫ / СЛОТЫ -->
@@ -665,6 +699,15 @@
             <button type="button" class="upg-banner-btn" id="gift-sell-btn" onclick="sellViewedGift()"></button>
             <button type="button" class="action-btn" onclick="upgradeViewedGift()">В апгрейдер</button>
         </div>
+        <label class="market-model-field" id="market-model-field" hidden>
+            Модель NFT
+            <select class="market-model-select" id="market-model-select" onchange="previewMarketModel(this.value)"></select>
+        </label>
+        <div class="market-buy-field" id="market-buy-field" hidden>
+            <button type="button" class="upg-banner-btn" id="market-buy-btn" onclick="buyMarketGift()"></button>
+            <button type="button" class="action-btn" id="market-target-btn" onclick="targetMarketGift()">В цель апгрейда</button>
+            <div class="market-buy-status" id="market-buy-status" role="status"></div>
+        </div>
     </dialog>
 
     <!-- НИЖНЕЕ МЕНЮ -->
@@ -680,7 +723,7 @@
         const tg = window.Telegram.WebApp;
         tg.expand();
 
-        const APP_VERSION = "2.6";
+        const APP_VERSION = "2.7";
 
         // Подключение к вашей облачной базе Supabase
         const SUPABASE_URL = "https://kcycpjrriegjfbzddbos.supabase.co";
@@ -731,6 +774,173 @@
         };
 
         const ALL_KEYS = Object.keys(GIFT_CATALOG);
+
+        // Снимок каталога @GiftChanges от 23.11.2026. Идентификаторы Telegram хранятся как строки.
+        const telegramGiftCollections = [
+            ["6050827940390765935","Algorithm Cup",true],
+            ["6005797617768858105","Artisan Brick",true],
+            ["5933629604416717361","Astral Shard",true],
+            ["5782984811920491178","B-Day Candle",true],
+            ["5882252952218894938","Berry Box",true],
+            ["6028283532500009446","Big Year",true],
+            ["5902339509239940491","Bling Binky",true],
+            ["5870661333703197240","Bonded Ring",true],
+            ["5895544372761461960","Bow Tie",true],
+            ["5935936766358847989","Bunny Muffin",true],
+            ["6003373314888696650","Candy Cane",true],
+            ["5999277561060787166","Chill Flame",true],
+            ["5960747083030856414","Clover Pin",true],
+            ["6001538689543439169","Cookie Heart",true],
+            ["5841336413697606412","Crystal Ball",true],
+            ["5868561433997870501","Cupid Charm",true],
+            ["5782988952268964995","Desk Calendar",true],
+            ["5868503709637411929","Diamond Ring",true],
+            ["5915521180483191380","Durov's Cap",true],
+            ["5834651202612102354","Durov's Glasses",true],
+            ["5773668482394620318","Easter Egg",true],
+            ["5846192273657692751","Electric Skull",true],
+            ["5821205665758053411","Eternal Candle",true],
+            ["5882125812596999035","Eternal Rose",true],
+            ["5825480571261813595","Evil Eye",true],
+            ["6003456431095808759","Faith Amulet",true],
+            ["5882129648002794519","Fine Pen",true],
+            ["5837063436634161765","Flying Broom",true],
+            ["5895603153683874485","Fresh Socks",true],
+            ["5859442703032386168","Gem Signet",true],
+            ["5933531623327795414","Genie Lamp",true],
+            ["5983484377902875708","Ginger Cookie",true],
+            ["5915733223018594841","Hanging Star",true],
+            ["6006064678835323371","Happy Brownie",true],
+            ["5868455043362980631","Heart Locket",true],
+            ["5895328365971244193","Heroic Helmet",true],
+            ["5825801628657124140","Hex Pot",true],
+            ["6003735372041814769","Holiday Drink",true],
+            ["5783075783622787539","Homemade Cake",true],
+            ["5825895989088617224","Hypno Lollipop",true],
+            ["5900177027566142759","Ice Cream",true],
+            ["5870972044522291836","Input Key",true],
+            ["6005564615793050414","Instant Ramen",true],
+            ["6046499901846586791","Intelligence Cup",true],
+            ["5843762284240831056","Ion Gem",true],
+            ["5933937398953018107","Ionic Dryer",true],
+            ["6005659564635063386","Jack-in-the-Box",true],
+            ["5915502858152706668","Jelly Bunny",true],
+            ["5933590374185435592","Jester Hat",true],
+            ["6001473264306619020","Jingle Bells",true],
+            ["6005880141270483700","Jolly Chimp",true],
+            ["5870862540036113469","Joyful Bundle",true],
+            ["5839094187366024301","Khabib's Papakha",true],
+            ["5845776576658015084","Kissed Frog",true],
+            ["5999298447486747746","Liberty Figure",true],
+            ["5897581235231785485","Light Sword",true],
+            ["5170594532177215681","Lol Pop",true],
+            ["5868659926187901653","Loot Bag",true],
+            ["5915550639663874519","Love Candle",true],
+            ["5868348541058942091","Love Potion",true],
+            ["6014675319464657779","Low Rider",true],
+            ["5872744075014177223","Lucky Locket",true],
+            ["6028426950047957932","Lunar Snake",true],
+            ["5871002671934079382","Lush Bouquet",true],
+            ["5841632504448025405","Mad Pumpkin",true],
+            ["5846226946928673709","Magic Potion",true],
+            ["5895518353849582541","Mighty Arm",true],
+            ["5879737836550226478","Mini Oscar",true],
+            ["5913351908466098791","Mirage Lamp",true],
+            ["5963238670868677492","Money Pot",true],
+            ["5886756255493523118","Mood Pack",true],
+            ["5998981470310368313","Moon Pendant",true],
+            ["5935877878062253519","Mousse Cake",true],
+            ["5775966332847654507","Myth Mask",true],
+            ["5870720080265871962","Nail Bracelet",true],
+            ["5933793770951673155","Neko Helmet",true],
+            ["6003643167683903930","Party Sparkler",true],
+            ["5913517067138499193","Perfume Bottle",true],
+            ["6023917088358269866","Pet Snake",true],
+            ["5936013938331222567","Plush Pepe",true],
+            ["5832644211639321671","Pool Float",true],
+            ["5933671725160989227","Precious Peach",true],
+            ["5933737850477478635","Pretty Posy",true],
+            ["5999116401002939514","Rare Bird",true],
+            ["5856973938650776169","Record Player",true],
+            ["5832279504491381684","Resistance Dog",true],
+            ["5870784783948186838","Restless Jar",true],
+            ["5167939598143193218","Sakura Flower",true],
+            ["5983471780763796287","Santa Hat",true],
+            ["5837059369300132790","Scared Cat",true],
+            ["5841689550203650524","Sharp Tongue",true],
+            ["5936085638515261992","Signet Ring",true],
+            ["5839038009193792264","Skull Flower",true],
+            ["5870947077877400011","Sky Stilettos",true],
+            ["5981026247860290310","Sleigh Bell",true],
+            ["6023679164349940429","Snake Box",true],
+            ["6012435906336654262","Snoop Cigar",true],
+            ["6014591077976114307","Snoop Dogg",true],
+            ["5981132629905245483","Snow Globe",true],
+            ["5980789805615678057","Snow Mittens",true],
+            ["5913442287462908725","Spiced Wine",true],
+            ["5773725897517433693","Spring Basket",true],
+            ["5821261908354794038","Spy Agaric",true],
+            ["5936017773737018241","Star Notepad",true],
+            ["6042113507581755979","Stellar Rocket",true],
+            ["5832497899283415733","Surge Board",true],
+            ["6012607142387778152","Swag Bag",true],
+            ["5936043693864651359","Swiss Watch",true],
+            ["6023752243218481939","Tama Gadget",true],
+            ["5886387158889005864","Timeless Book",true],
+            ["5897593557492957738","Top Hat",true],
+            ["5868220813026526561","Toy Bear",true],
+            ["5841391256135008713","Trapped Heart",true],
+            ["5882260270843168924","UFC Strike",true],
+            ["5868595669182186720","Valentine Box",true],
+            ["5898012527257715797","Vice Cream",true],
+            ["5830340739074097859","Victory Medal",true],
+            ["5857140566201991735","Vintage Cigar",true],
+            ["5836780359634649414","Voodoo Doll",true],
+            ["6014697240977737490","Westside Sign",true],
+            ["5933543975653737112","Whip Cupcake",true],
+            ["5983259145522906006","Winter Wreath",true],
+            ["5821384757304362229","Witch Hat",true],
+            ["6003767644426076664","Xmas Stocking",true],
+            ["5168043875654172773",null,false],
+            ["5168103777563050263",null,false],
+            ["5170144170496491616",null,false],
+            ["5170145012310081615",null,false],
+            ["5170233102089322756",null,false],
+            ["5170250947678437525",null,false],
+            ["5170314324215857265",null,false],
+            ["5170521118301225164",null,false],
+            ["5170564780938756245",null,false],
+            ["5170690322832818290",null,false],
+            ["5773791997064119815",null,false],
+            ["5775955135867913556",null,false],
+            ["5776227780391864916",null,false],
+            ["5807641025165919973",null,false],
+            ["5818708013426410448",null,false],
+            ["5830323722413671504",null,false],
+            ["5832325860073407546",null,false],
+            ["5832371318007268701",null,false],
+            ["5834918435477259676",null,false],
+            ["5884080014126745057",null,false],
+            ["5897607679345427347",null,false],
+            ["5933770397739647689",null,false],
+            ["5956308547863052791",null,false],
+            ["5992502615223568003",null,false],
+            ["6001229799790478558",null,false],
+            ["6001425315291727333",null,false],
+            ["6003477390536213997",null,false],
+            ["6028601630662853006",null,false]
+        ];
+
+        const giftAssetsUrl = 'https://api.changes.tg';
+        const marketGiftCatalog = Object.fromEntries(telegramGiftCollections.flatMap(([id, name, hasCollectible]) => {
+            const title = name || `Подарок №${id.slice(-6)}`;
+            const standard = { id, name: title, price: 250, isNft: false, theme: 'theme-steel', model: 'Оригинал' };
+            const entries = [[`telegram_gift_${id}`, standard]];
+            if (hasCollectible) {
+                entries.push([`telegram_nft_${id}`, { ...standard, price: 800, isNft: true, theme: 'gift-night', model: 'Коллекционный' }]);
+            }
+            return entries;
+        }));
 
         function readBalance(value) {
             const amount = Number(value);
@@ -863,9 +1073,17 @@
         const giftSymbols = [['✦', 'Искра'], ['☾', 'Месяц'], ['✧', 'Созвездие'], ['◇', 'Кристалл'], ['❋', 'Розетка']];
         let giftFilter = 'all';
         let viewedGift = null;
+        let marketFilter = 'all';
+        let marketLimit = 18;
+        let marketPreview = null;
 
         function getGiftMeta(item) {
+            if (Object.hasOwn(marketGiftCatalog, item?.key)) return marketGiftCatalog[item.key];
             return Object.hasOwn(GIFT_CATALOG, item?.key) ? GIFT_CATALOG[item.key] : GIFT_CATALOG.steel_ingot;
+        }
+
+        function escapeGiftText(value) {
+            return String(value).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
         }
 
         function getGiftTraits(item, meta) {
@@ -879,13 +1097,26 @@
             const meta = getGiftMeta(item);
             const traits = getGiftTraits(item, meta);
             const label = badge ?? (traits.serial ? `№${traits.serial}` : '');
+            const picture = meta.id ? renderMarketGiftImage(item, meta) : meta.svg;
             return `
                 <span class="nft-art-box ${traits.theme}">
                     ${meta.isNft ? `<span class="gift-symbol" aria-hidden="true">${traits.symbol}</span><span class="gift-symbol" aria-hidden="true">${traits.symbol}</span>` : ''}
                     ${label ? `<span class="nft-num">${label}</span>` : ''}
-                    ${meta.svg}
+                    ${picture}
                 </span>
             `;
+        }
+
+        function renderMarketGiftImage(item, meta) {
+            const original = `${giftAssetsUrl}/original/${meta.id}.svg`;
+            const model = typeof item.model === 'string' && item.model.length <= 150 ? item.model : '';
+            const url = model && meta.isNft ? `${giftAssetsUrl}/model/${meta.id}/${encodeURIComponent(model)}.svg` : original;
+            return `<img class="market-gift-image" src="${url}" data-original="${original}" loading="lazy" decoding="async" alt="" onerror="fallbackGiftImage(this)"><span class="market-gift-placeholder" aria-hidden="true">◇</span>`;
+        }
+
+        function fallbackGiftImage(image) {
+            if (image.getAttribute('src') === image.dataset.original) image.remove();
+            else image.src = image.dataset.original;
         }
 
         function renderGiftCardHTML(item, { styleClass = '', action = '', pressed, disabled = false, badge } = {}) {
@@ -896,7 +1127,7 @@
             return `
                 <${tag} class="nft-item ${styleClass} ${pressed ? 'selected' : ''}" ${controls} ${selected}>
                     ${renderGiftArt(item, badge)}
-                    <span class="nft-name">${meta.name}</span>
+                    <span class="nft-name">${escapeGiftText(meta.name)}</span>
                     <span class="nft-price"><span>💎 ${meta.price.toLocaleString('ru-RU')}</span>
                         <span class="gift-kind ${meta.isNft ? 'collectible' : ''}">${meta.isNft ? 'NFT' : 'Подарок'}</span>
                     </span>
@@ -928,18 +1159,118 @@
             const meta = getGiftMeta(item);
             const traits = getGiftTraits(item, meta);
             viewedGift = owned ? item : null;
+            marketPreview = null;
+            document.getElementById('market-buy-field').hidden = true;
+            document.getElementById('market-model-field').hidden = true;
             document.getElementById('gift-detail-art').innerHTML = renderGiftArt(item, traits.serial ? '' : undefined);
             document.getElementById('gift-detail-title').textContent = meta.name;
             document.getElementById('gift-detail-type').textContent = meta.isNft
                 ? `Коллекционный подарок${traits.serial ? ` · №${traits.serial}` : ''}` : 'Обычный подарок';
-            const attributes = [['Модель', meta.model]];
+            const attributes = [['Модель', item.model || meta.model]];
             if (meta.isNft) attributes.push(['Фон', traits.backdrop], ['Символ', `${traits.symbol} ${traits.symbolName}`]);
             attributes.push(['Стоимость', `${meta.price.toLocaleString('ru-RU')} 💎`]);
             document.getElementById('gift-detail-traits').innerHTML = attributes.map(([key, value]) =>
-                `<div><dt>${key}</dt><dd>${value}</dd></div>`).join('');
+                `<div><dt>${key}</dt><dd>${escapeGiftText(value)}</dd></div>`).join('');
             document.getElementById('gift-detail-actions').hidden = !owned;
             document.getElementById('gift-sell-btn').textContent = `Продать за ${meta.price.toLocaleString('ru-RU')} 💎`;
             if (!dialog.open) dialog.showModal();
+        }
+
+        function openGiftMarket() {
+            openGame('gift-market', 'Каталог подарков');
+            renderGiftMarket();
+        }
+
+        function resetGiftMarket() {
+            marketLimit = 18;
+            renderGiftMarket();
+        }
+
+        function setMarketFilter(filter) {
+            marketFilter = filter;
+            document.querySelectorAll('[data-market-filter]').forEach(button => {
+                button.setAttribute('aria-pressed', String(button.dataset.marketFilter === filter));
+            });
+            resetGiftMarket();
+        }
+
+        function showMoreMarketGifts() {
+            marketLimit += 18;
+            renderGiftMarket();
+        }
+
+        function renderGiftMarket() {
+            const search = document.getElementById('market-gift-search').value.trim().toLowerCase();
+            const matches = Object.entries(marketGiftCatalog).filter(([, meta]) => {
+                const categoryMatches = marketFilter === 'all' || (marketFilter === 'nft') === meta.isNft;
+                return categoryMatches && (meta.name.toLowerCase().includes(search) || meta.id.includes(search));
+            });
+            const visible = matches.slice(0, marketLimit);
+            const grid = document.getElementById('market-gift-grid');
+            grid.innerHTML = visible.map(([key]) => renderGiftCardHTML({ key }, { action: `openMarketGift('${key}')` })).join('')
+                || '<div class="empty-state">Подарки не найдены.</div>';
+            document.getElementById('market-count').textContent = `Показано ${visible.length} из ${matches.length}`;
+            const more = document.getElementById('market-more-btn');
+            more.hidden = visible.length === matches.length;
+        }
+
+        async function openMarketGift(key) {
+            if (!Object.hasOwn(marketGiftCatalog, key)) return;
+            const preview = { key };
+            const meta = marketGiftCatalog[key];
+            showGiftDetails(preview);
+            marketPreview = preview;
+            document.getElementById('market-buy-field').hidden = false;
+            document.getElementById('market-buy-btn').textContent = `Купить за ${meta.price.toLocaleString('ru-RU')} 💎`;
+            document.getElementById('market-target-btn').hidden = !meta.isNft;
+            document.getElementById('market-buy-status').textContent = '';
+            if (!meta.isNft) return;
+            const select = document.getElementById('market-model-select');
+            select.replaceChildren(new Option('Оригинальный образ', ''));
+            try {
+                const result = await fetch(`${giftAssetsUrl}/models/${meta.id}`, { signal: AbortSignal.timeout(6000) });
+                if (!result.ok) return;
+                const models = await result.json();
+                if (marketPreview !== preview || !document.getElementById('gift-sheet').open || !Array.isArray(models)) return;
+                for (const model of models) {
+                    if (typeof model?.name === 'string' && model.name.length <= 150) select.add(new Option(model.telegramName || model.name, model.name));
+                }
+                document.getElementById('market-model-field').hidden = select.options.length < 2;
+            } catch (error) {
+                console.warn('Не удалось загрузить модели подарка', error);
+            }
+        }
+
+        function previewMarketModel(model) {
+            if (!marketPreview) return;
+            marketPreview.model = model;
+            document.getElementById('gift-detail-art').innerHTML = renderGiftArt(marketPreview);
+            document.querySelector('#gift-detail-traits dd').textContent = model || 'Коллекционный';
+        }
+
+        function buyMarketGift() {
+            const dialog = document.getElementById('gift-sheet');
+            if (!dialog.open || !marketPreview) return;
+            const { key, model } = marketPreview;
+            const meta = marketGiftCatalog[key];
+            const status = document.getElementById('market-buy-status');
+            if (state.gems < meta.price) {
+                status.textContent = `Нужно ${meta.price.toLocaleString('ru-RU')} 💎.`;
+                return;
+            }
+            marketPreview = null;
+            dialog.close();
+            state.gems -= meta.price;
+            addGift(key, true, model);
+            document.getElementById('market-count').textContent = `Добавлено в инвентарь · ${meta.name}`;
+        }
+
+        function targetMarketGift() {
+            const key = marketPreview?.key;
+            if (!key || !marketGiftCatalog[key].isNft) return;
+            marketPreview = null;
+            document.getElementById('gift-sheet').close();
+            openUpgrader(null, key);
         }
 
         function sellViewedGift() {
@@ -963,7 +1294,8 @@
         function applyCloudInventory(items) {
             if (viewedGift && document.getElementById('gift-sheet').open) {
                 const selected = viewedGift;
-                const matches = item => item?.key === selected.key && (item?.num ?? null) === (selected.num ?? null);
+                const matches = item => item?.key === selected.key && (item?.num ?? null) === (selected.num ?? null)
+                    && (item?.model ?? '') === (selected.model ?? '');
                 const occurrence = state.items.filter(matches).indexOf(selected);
                 viewedGift = items.filter(matches)[occurrence] ?? null;
                 if (!viewedGift) {
@@ -1305,11 +1637,11 @@
             return Math.round(Math.min(75, Math.max(1, stake / targetPrice * 85)) * 10) / 10;
         }
 
-        function openUpgrader(source = null) {
+        function openUpgrader(source = null, target = null) {
             openGame('upgrader', 'Апгрейдер');
             if (upgraderBusy) return;
             selectedUserGifts = source ? [source] : [];
-            selectedUpgradeKey = null;
+            selectedUpgradeKey = target;
             lastUpgrade = null;
             renderUpgrader();
         }
@@ -1328,7 +1660,8 @@
         }
 
         function chooseUpgradeTarget(key) {
-            if (upgraderBusy || !upgTargetKeys.includes(key) || GIFT_CATALOG[key].price <= upgradeStake()) return;
+            const meta = getGiftMeta({ key });
+            if (upgraderBusy || !meta.isNft || meta.price <= upgradeStake()) return;
             selectedUpgradeKey = key;
             lastUpgrade = null;
             renderUpgrader();
@@ -1359,18 +1692,20 @@
             document.querySelectorAll('.upgrade-options button').forEach(button => {
                 button.disabled = !stake || stake * Number(button.dataset.ratio) > GIFT_CATALOG[finalKey].price;
             });
-            if (selectedUpgradeKey && GIFT_CATALOG[selectedUpgradeKey].price <= stake) selectedUpgradeKey = null;
-            document.getElementById('upg-target-grid').innerHTML = upgTargetKeys.map(key => {
-                const target = GIFT_CATALOG[key];
+            if (selectedUpgradeKey && getGiftMeta({ key: selectedUpgradeKey }).price <= stake) selectedUpgradeKey = null;
+            const choices = [...upgTargetKeys];
+            if (selectedUpgradeKey && !choices.includes(selectedUpgradeKey)) choices.push(selectedUpgradeKey);
+            document.getElementById('upg-target-grid').innerHTML = choices.map(key => {
+                const target = getGiftMeta({ key });
                 const chance = upgradeChance(stake, target.price);
                 return renderGiftCardHTML({ key }, { action: `chooseUpgradeTarget('${key}')`, pressed: selectedUpgradeKey === key,
                     disabled: target.price <= stake, badge: chance ? `${chance.toLocaleString('ru-RU')}%` : '' });
             }).join('');
 
-            const targetMeta = GIFT_CATALOG[selectedUpgradeKey];
+            const targetMeta = selectedUpgradeKey ? getGiftMeta({ key: selectedUpgradeKey }) : null;
             const previewKey = selectedUpgradeKey || lastUpgrade?.target;
             document.getElementById('upg-target-art').innerHTML = previewKey ? renderGiftArt({ key: previewKey }) : '+';
-            document.getElementById('upg-target-name').textContent = previewKey ? GIFT_CATALOG[previewKey].name : 'Не выбрана';
+            document.getElementById('upg-target-name').textContent = previewKey ? getGiftMeta({ key: previewKey }).name : 'Не выбрана';
             const chance = targetMeta ? upgradeChance(stake, targetMeta.price) : 0;
             const displayedChance = lastUpgrade?.chance ?? chance;
             document.getElementById('radar-chance-text').textContent = displayedChance
@@ -1381,7 +1716,7 @@
             status.dataset.outcome = lastUpgrade?.outcome ?? '';
             if (lastUpgrade) {
                 status.textContent = lastUpgrade.outcome === 'win'
-                    ? `Улучшение удалось · получен ${GIFT_CATALOG[lastUpgrade.target].name}.`
+                    ? `Улучшение удалось · получен ${getGiftMeta({ key: lastUpgrade.target }).name}.`
                     : 'Улучшение не удалось · подарки потрачены.';
             } else if (chance) {
                 status.textContent = `Ставка: ${stake.toLocaleString('ru-RU')} 💎 · цель: ${targetMeta.price.toLocaleString('ru-RU')} 💎`;
@@ -1396,7 +1731,7 @@
         function runUpgrade() {
             if (upgraderBusy || !selectedUpgradeKey) return;
             const target = selectedUpgradeKey;
-            const chance = upgradeChance(upgradeStake(), GIFT_CATALOG[target].price);
+            const chance = upgradeChance(upgradeStake(), getGiftMeta({ key: target }).price);
             if (!chance) return;
 
             upgraderBusy = true;
@@ -1459,8 +1794,8 @@
         function upgradeStorage() { const cost = state.miner.storageLv * 2500; if (state.gems < cost) return alert(`Недостаточно алмазов (нужно ${cost} 💎)`); state.chips += Math.floor(state.miner.stored); state.miner.stored = 0; state.gems -= cost; state.miner.storageLv++; updateUI(); }
 
         function updateUI(doCloudPush = true) {
-            const invTotal = state.items.reduce((sum, item) => sum + (GIFT_CATALOG[item.key]?.price || 0), 0);
-            const nftOnlyCount = state.items.filter(item => GIFT_CATALOG[item.key]?.isNft).length;
+            const invTotal = state.items.reduce((sum, item) => sum + getGiftMeta(item).price, 0);
+            const nftOnlyCount = state.items.filter(item => getGiftMeta(item).isNft).length;
             document.getElementById('chips-bal').innerText = state.chips.toLocaleString('ru-RU');
             document.getElementById('gems-bal').innerText = state.gems.toLocaleString('ru-RU');
             document.getElementById('inv-total').innerText = invTotal.toLocaleString('ru-RU');
@@ -1487,8 +1822,19 @@
             const navEl = document.getElementById('nav-' + gameId); if (navEl) navEl.classList.add('active');
             document.getElementById('page-title').innerText = title; document.getElementById('btn-back').style.visibility = 'visible';
         }
-        function goBack() { switchTab('games', 'Игры'); }
-        function addGift(key, doUpdate = true) { const meta = GIFT_CATALOG[key] || GIFT_CATALOG.steel_ingot; state.items.push({ key, num: meta.isNft ? Math.floor(Math.random() * 899 + 100) : null }); if (doUpdate) updateUI(); }
+        function goBack() {
+            if (document.getElementById('screen-gift-market').classList.contains('active')) openCases();
+            else switchTab('games', 'Игры');
+        }
+
+        function addGift(key, doUpdate = true, model = '') {
+            const meta = getGiftMeta({ key });
+            const num = meta.isNft
+                ? (meta.id ? 1000 + Math.floor(Math.random() * 999000) : 100 + Math.floor(Math.random() * 899))
+                : null;
+            state.items.push(model ? { key, num, model } : { key, num });
+            if (doUpdate) updateUI();
+        }
 
         const sudokuPuzzle = [[5,9,0,2,0,1,3,0,6],[4,2,0,0,0,3,7,0,0],[8,6,3,0,0,7,0,0,0],[0,0,9,0,0,0,6,0,0],[0,0,0,4,3,6,9,0,0],[0,4,0,0,0,9,0,0,5],[6,1,0,0,0,0,5,0,7],[0,7,5,0,6,0,8,9,3],[9,0,0,7,2,5,4,0,0]];
         let sUserGrid = [], sSelected = [0, 2], sTimer = null, sSec = 0;
