@@ -99,6 +99,8 @@
         .gift-filters, .upgrade-options { display: flex; gap: 6px; }
         .gift-filter, .upgrade-options button { min-height: 36px; padding: 6px 12px; background: #171b22; color: #c7cedb; font-size: 12px; font-weight: 700; border: 1px solid #2e3744; border-radius: 9px; cursor: pointer; }
         .gift-filter[aria-pressed="true"], .upgrade-options button:not(:disabled):hover { color: #aaf6e4; background: #1a302d; border-color: #4a8c7e; }
+        .gift-sale-status { margin-top: 8px; color: #a8f0dc; font-size: 12px; line-height: 1.4; }
+        .gift-sale-status:empty { display: none; }
         .upgrade-options button:disabled { opacity: .4; cursor: default; }
         .gift-sheet { width: min(calc(100% - 28px), 390px); max-height: calc(100% - 32px); padding: 14px; border-radius: 22px; margin: auto; border: 1px solid #343a4a; color: #f6f7fc; background: #161922; box-shadow: 0 18px 60px #0009; overflow: auto; }
         .gift-sheet::backdrop { background: #080a14b3; backdrop-filter: blur(5px); }
@@ -408,6 +410,7 @@
             <button class="gift-filter" type="button" data-filter="gift" aria-pressed="false" onclick="setGiftFilter('gift')">Подарки</button>
             <button class="gift-filter" type="button" data-filter="collectible" aria-pressed="false" onclick="setGiftFilter('collectible')">NFT</button>
         </div>
+        <p class="gift-sale-status" id="gift-sale-status" role="status"></p>
         <div class="items-grid" id="inventory-grid"></div>
     </div>
 
@@ -677,7 +680,7 @@
         const tg = window.Telegram.WebApp;
         tg.expand();
 
-        const APP_VERSION = "2.5";
+        const APP_VERSION = "2.6";
 
         // Подключение к вашей облачной базе Supabase
         const SUPABASE_URL = "https://kcycpjrriegjfbzddbos.supabase.co";
@@ -745,11 +748,29 @@
         state.chips = readBalance(state.chips);
 
         let syncTimeout = null;
+        let cloudSave = Promise.resolve(true);
+        let localRevision = 0;
+        let savedRevision = 0;
 
         function saveState() {
             localStorage.setItem('nervana_persistent_v1', JSON.stringify(state));
+            localRevision++;
             clearTimeout(syncTimeout);
-            syncTimeout = setTimeout(pushToCloud, 600);
+            syncTimeout = setTimeout(() => {
+                syncTimeout = null;
+                queueCloudSave();
+            }, 600);
+        }
+
+        function queueCloudSave(force = false) {
+            cloudSave = cloudSave.then(async () => {
+                const revision = localRevision;
+                if (!force && revision === savedRevision) return true;
+                const saved = await pushToCloud();
+                if (saved) savedRevision = revision;
+                return saved;
+            });
+            return cloudSave;
         }
 
         // Отправка баланса и инвентаря в Supabase
@@ -780,6 +801,10 @@
         // Загрузка изменений из Supabase
         async function syncFromCloud(showAlert = false) {
             try {
+                clearTimeout(syncTimeout);
+                syncTimeout = null;
+                const revision = localRevision;
+                if (!await queueCloudSave()) throw new Error('Локальные изменения ещё не сохранены');
                 const res = await fetch(`${SUPABASE_URL}/rest/v1/nervana_users?tg_id=eq.${CURRENT_TG_ID}&select=*`, {
                     headers: SB_HEADERS,
                     cache: "no-store"
@@ -791,15 +816,16 @@
                 if (!Array.isArray(rows)) {
                     throw new Error('Supabase вернул ответ в неожиданном формате');
                 }
+                if (revision !== localRevision) return;
                 if (rows.length === 0) {
-                    const saved = await pushToCloud();
+                    const saved = await queueCloudSave(true);
                     if (showAlert) alert(saved ? 'Профиль игрока сохранён в облаке!' : 'Не удалось сохранить профиль игрока в облаке.');
                     return;
                 }
                 const remote = rows[0];
                 state.gems = readBalance(remote.gems);
                 state.chips = readBalance(remote.chips);
-                state.items = Array.isArray(remote.items) ? remote.items : [];
+                applyCloudInventory(Array.isArray(remote.items) ? remote.items : []);
                 localStorage.setItem('nervana_persistent_v1', JSON.stringify(state));
                 updateUI(false);
                 if (showAlert) alert('Баланс и инвентарь синхронизированы!');
@@ -917,7 +943,35 @@
         }
 
         function sellViewedGift() {
-            if (sellItem(state.items.indexOf(viewedGift))) document.getElementById('gift-sheet').close();
+            const dialog = document.getElementById('gift-sheet');
+            if (!dialog.open || !viewedGift) return;
+            const index = state.items.indexOf(viewedGift);
+            viewedGift = null;
+            dialog.close();
+            const status = document.getElementById('gift-sale-status');
+            if (index < 0) {
+                status.textContent = 'Этот предмет уже недоступен.';
+                return;
+            }
+            const [item] = state.items.splice(index, 1);
+            const { name, price } = getGiftMeta(item);
+            state.gems += price;
+            updateUI();
+            status.textContent = `${name} · продано за ${price.toLocaleString('ru-RU')} 💎`;
+        }
+
+        function applyCloudInventory(items) {
+            if (viewedGift && document.getElementById('gift-sheet').open) {
+                const selected = viewedGift;
+                const matches = item => item?.key === selected.key && (item?.num ?? null) === (selected.num ?? null);
+                const occurrence = state.items.filter(matches).indexOf(selected);
+                viewedGift = items.filter(matches)[occurrence] ?? null;
+                if (!viewedGift) {
+                    document.getElementById('gift-sheet').close();
+                    document.getElementById('gift-sale-status').textContent = 'Этот предмет уже недоступен.';
+                }
+            }
+            state.items = items;
         }
 
         function upgradeViewedGift() {
@@ -1435,16 +1489,6 @@
         }
         function goBack() { switchTab('games', 'Игры'); }
         function addGift(key, doUpdate = true) { const meta = GIFT_CATALOG[key] || GIFT_CATALOG.steel_ingot; state.items.push({ key, num: meta.isNft ? Math.floor(Math.random() * 899 + 100) : null }); if (doUpdate) updateUI(); }
-        function sellItem(idx) {
-            const item = state.items[idx];
-            if (!item) return false;
-            const meta = getGiftMeta(item);
-            if (!confirm(`Продать ${meta.name} за ${meta.price} 💎?`)) return false;
-            state.gems += meta.price;
-            state.items.splice(idx, 1);
-            updateUI();
-            return true;
-        }
 
         const sudokuPuzzle = [[5,9,0,2,0,1,3,0,6],[4,2,0,0,0,3,7,0,0],[8,6,3,0,0,7,0,0,0],[0,0,9,0,0,0,6,0,0],[0,0,0,4,3,6,9,0,0],[0,4,0,0,0,9,0,0,5],[6,1,0,0,0,0,5,0,7],[0,7,5,0,6,0,8,9,3],[9,0,0,7,2,5,4,0,0]];
         let sUserGrid = [], sSelected = [0, 2], sTimer = null, sSec = 0;
