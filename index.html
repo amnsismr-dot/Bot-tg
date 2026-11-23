@@ -126,6 +126,8 @@
         .market-credit a { color: #a9e8db; }
         .market-search, .market-model-select { width: 100%; border: 1px solid #394453; border-radius: 9px; padding: 10px; color: #fff; background: #1b2230; font-size: 14px; user-select: text; }
         .market-search { margin: 0 0 8px; }
+        .market-controls { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; }
+        .market-sort { min-width: 160px; max-width: 100%; min-height: 36px; padding: 5px 8px; border: 1px solid #394453; border-radius: 9px; background: #1b2230; color: #f5f7fb; font-size: 12px; }
         .market-count { color: #b1bdce; font-size: 12px; margin-top: 7px; }
         .market-model-field { color: #c1cbd9; display: grid; gap: 5px; margin: 0 0 10px; font-size: 12px; }
         .market-model-field[hidden], .market-buy-field[hidden] { display: none; }
@@ -455,10 +457,18 @@
         <div class="game-box gift-market-header">
             <p>Покупка игровых копий за алмазы NERVANA.</p>
             <input type="search" class="market-search" id="market-gift-search" placeholder="Название подарка" aria-label="Поиск подарков" oninput="resetGiftMarket()">
-            <div class="gift-filters" aria-label="Категории каталога">
-                <button type="button" class="gift-filter" data-market-filter="all" aria-pressed="true" onclick="setMarketFilter('all')">Все</button>
-                <button type="button" class="gift-filter" data-market-filter="gift" aria-pressed="false" onclick="setMarketFilter('gift')">Подарки</button>
-                <button type="button" class="gift-filter" data-market-filter="nft" aria-pressed="false" onclick="setMarketFilter('nft')">NFT</button>
+            <div class="market-controls">
+                <div class="gift-filters" aria-label="Категории каталога">
+                    <button type="button" class="gift-filter" data-market-filter="all" aria-pressed="true" onclick="setMarketFilter('all')">Все</button>
+                    <button type="button" class="gift-filter" data-market-filter="gift" aria-pressed="false" onclick="setMarketFilter('gift')">Подарки</button>
+                    <button type="button" class="gift-filter" data-market-filter="nft" aria-pressed="false" onclick="setMarketFilter('nft')">NFT</button>
+                </div>
+                <select class="market-sort" id="market-gift-sort" aria-label="Сортировка каталога" onchange="resetGiftMarket()">
+                    <option value="name-up">Название А → Я</option>
+                    <option value="name-down">Название Я → А</option>
+                    <option value="price-up">Цена: сначала низкая</option>
+                    <option value="price-down">Цена: сначала высокая</option>
+                </select>
             </div>
             <div class="market-count" id="market-count" role="status"></div>
         </div>
@@ -723,7 +733,7 @@
         const tg = window.Telegram.WebApp;
         tg.expand();
 
-        const APP_VERSION = "2.8";
+        const APP_VERSION = "2.9";
 
         // Подключение к вашей облачной базе Supabase
         const SUPABASE_URL = "https://kcycpjrriegjfbzddbos.supabase.co";
@@ -1082,6 +1092,7 @@
         let marketFilter = 'all';
         let marketLimit = 18;
         let marketPreview = null;
+        const marketNameOrder = new Intl.Collator('ru', { numeric: true, sensitivity: 'base' });
 
         function getGiftMeta(item) {
             if (Object.hasOwn(marketGiftCatalog, item?.key)) return marketGiftCatalog[item.key];
@@ -1209,9 +1220,16 @@
 
         function renderGiftMarket() {
             const search = document.getElementById('market-gift-search').value.trim().toLowerCase();
+            const order = document.getElementById('market-gift-sort').value;
             const matches = Object.entries(marketGiftCatalog).filter(([, meta]) => {
                 const categoryMatches = marketFilter === 'all' || (marketFilter === 'nft') === meta.isNft;
                 return categoryMatches && (meta.name.toLowerCase().includes(search) || meta.id.includes(search));
+            });
+            matches.sort(([keyA, a], [keyB, b]) => {
+                const byName = marketNameOrder.compare(a.name, b.name) || keyA.localeCompare(keyB);
+                if (order === 'price-up') return a.price - b.price || byName;
+                if (order === 'price-down') return b.price - a.price || byName;
+                return order === 'name-down' ? -byName : byName;
             });
             const visible = matches.slice(0, marketLimit);
             const grid = document.getElementById('market-gift-grid');
