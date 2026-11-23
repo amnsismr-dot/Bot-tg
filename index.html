@@ -62,17 +62,26 @@
         .items-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 10px; }
         .empty-state { grid-column: 1 / -1; text-align: center; color: var(--text-muted); padding: 24px 16px; font-size: 13px; background: var(--bg-card); border-radius: 18px; border: 1px dashed #2c2c34; line-height: 1.45; }
 
-        .nft-item { background: #141418; border-radius: 16px; padding: 7px; text-align: left; border: 1.5px solid #25252d; position: relative; cursor: pointer; transition: all 0.15s; }
-        .nft-item.selected { border-color: #60a5fa; box-shadow: 0 0 14px rgba(96, 165, 250, 0.45); background: #191d2b; }
+        .nft-item { min-width: 0; width: 100%; background: #14171c; color: #f5f7fb; border-radius: 16px; padding: 6px; text-align: left; border: 1px solid #292e39; position: relative; font: inherit; transition: border-color .18s, background .18s, transform .18s; }
+        button.nft-item { cursor: pointer; }
+        button.nft-item:not(:disabled):hover { transform: translateY(-2px); border-color: #79e3cc; }
+        .nft-item.selected { border-color: #81ebd6; box-shadow: inset 0 0 0 1px #81ebd6, 0 0 16px #65edc62b; background: #142822; }
+        .nft-item:disabled { opacity: .48; cursor: default; }
+        .nft-item:focus-visible, .gift-filter:focus-visible, .upgrade-options button:focus-visible { outline: 2px solid #a5f9ed; outline-offset: 2px; }
         .nft-item.case-cursor { border-color: #fbbf24; box-shadow: 0 0 18px rgba(251, 191, 36, 0.85); transform: scale(1.04); z-index: 5; background: #262112; }
         .nft-item.case-won { border-color: #22c55e; box-shadow: 0 0 16px rgba(34, 197, 94, 0.75); background: #11291a; }
 
-        .nft-art-box { width: 100%; aspect-ratio: 1; border-radius: 11px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; margin-bottom: 7px; }
-        .nft-art-box::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(rgba(255,255,255,0.12) 1px, transparent 1px); background-size: 10px 10px; opacity: 0.45; }
-        .nft-art-box svg { width: 64%; height: 64%; position: relative; z-index: 2; filter: drop-shadow(0 4px 10px rgba(0,0,0,0.45)); }
-        .nft-num { position: absolute; top: 6px; right: 6px; background: rgba(0,0,0,0.55); font-size: 10px; padding: 2px 6px; border-radius: 8px; font-weight: 700; z-index: 3; backdrop-filter: blur(4px); }
-        .nft-name { font-weight: 700; font-size: 11.5px; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding: 0 2px; }
-        .nft-price { font-size: 11.5px; color: #e2e8f0; font-weight: 700; display: flex; align-items: center; gap: 4px; padding: 0 2px 2px; }
+        .nft-art-box { width: 100%; aspect-ratio: 1; border-radius: 11px; display: grid; place-items: center; position: relative; isolation: isolate; overflow: hidden; margin-bottom: 7px; }
+        .nft-art-box::before { content: ''; position: absolute; inset: 9%; border-radius: 50%; border: 1px solid #ffffff29; box-shadow: 0 0 0 13px #ffffff0f, 0 0 0 27px #ffffff08; transform: rotate(-28deg) scaleY(.72); }
+        .nft-art-box::after { content: ''; position: absolute; width: 82%; height: 30%; bottom: 1%; border-radius: 50%; background: radial-gradient(ellipse, #08081788, transparent 68%); }
+        .nft-art-box > svg { width: 69%; height: 69%; position: relative; z-index: 2; filter: drop-shadow(0 7px 5px #09091d88); }
+        .gift-symbol { position: absolute; color: #ffffff8c; font-size: clamp(11px, 3vw, 17px); top: 17%; left: 12%; }
+        .gift-symbol + .gift-symbol { top: auto; left: auto; bottom: 13%; right: 11%; font-size: .76em; opacity: .7; }
+        .nft-num { position: absolute; top: 5px; right: 5px; background: #080b1aa8; color: #fff; font-size: 10px; padding: 3px 5px; border-radius: 6px; font-weight: 750; z-index: 3; }
+        .nft-name { display: block; font-weight: 750; font-size: 12px; line-height: 1.2; margin: 1px 2px 5px; overflow-wrap: anywhere; }
+        .nft-price { font-size: 11px; color: #c8d2e0; font-weight: 720; display: flex; justify-content: space-between; gap: 4px; padding: 0 2px 3px; }
+        .gift-kind { color: #a5acba; font-size: 9px; font-weight: 700; }
+        .gift-kind.collectible { color: #f1d493; }
 
         .theme-steel { background: radial-gradient(circle at 50% 45%, #475569 0%, #1e293b 90%); }
         .theme-bronze { background: radial-gradient(circle at 50% 45%, #b45309 0%, #451a03 90%); }
@@ -82,6 +91,30 @@
         .theme-master { background: radial-gradient(circle at 50% 45%, #db2777 0%, #500724 90%); }
         .theme-grand { background: radial-gradient(circle at 50% 45%, #7c3aed 0%, #2e1065 90%); }
         .theme-heaven { background: radial-gradient(circle at 50% 45%, #059669 0%, #022c22 90%); }
+        .gift-aurora { background: radial-gradient(ellipse at 48% 38%, #49b7b5, #2e537d 54%, #252145 100%); }
+        .gift-amber { background: radial-gradient(ellipse at 48% 39%, #db9d41, #925037 61%, #362341 100%); }
+        .gift-orchid { background: radial-gradient(ellipse at 43% 42%, #b56cd8, #663394 60%, #321c51 100%); }
+        .gift-night { background: radial-gradient(ellipse at 48% 38%, #6a88c8, #393b78 60%, #201b40 100%); }
+        .gift-rose { background: radial-gradient(ellipse at 48% 39%, #df8b9d, #9f436a 61%, #4c254c 100%); }
+        .gift-filters, .upgrade-options { display: flex; gap: 6px; }
+        .gift-filter, .upgrade-options button { min-height: 36px; padding: 6px 12px; background: #171b22; color: #c7cedb; font-size: 12px; font-weight: 700; border: 1px solid #2e3744; border-radius: 9px; cursor: pointer; }
+        .gift-filter[aria-pressed="true"], .upgrade-options button:not(:disabled):hover { color: #aaf6e4; background: #1a302d; border-color: #4a8c7e; }
+        .upgrade-options button:disabled { opacity: .4; cursor: default; }
+        .gift-sheet { width: min(calc(100% - 28px), 390px); max-height: calc(100% - 32px); padding: 14px; border-radius: 22px; margin: auto; border: 1px solid #343a4a; color: #f6f7fc; background: #161922; box-shadow: 0 18px 60px #0009; overflow: auto; }
+        .gift-sheet::backdrop { background: #080a14b3; backdrop-filter: blur(5px); }
+        .gift-sheet .nft-art-box { aspect-ratio: 5 / 4; margin: 0 0 14px; }
+        .gift-sheet[open] .nft-art-box > svg { animation: gift-float 3.6s ease-in-out infinite; }
+        @keyframes gift-float { 50% { transform: translateY(-6px) rotate(3deg); } }
+        .gift-sheet-close { position: absolute; z-index: 4; top: 22px; right: 22px; border: 0; border-radius: 50%; width: 36px; height: 36px; font-size: 20px; cursor: pointer; background: #101423c9; color: #fff; }
+        .gift-detail-title { font-size: 21px; margin: 0 0 4px; }
+        .gift-detail-type { color: #bfccdd; margin: 0 0 12px; font-size: 13px; }
+        .gift-traits { margin: 0 0 14px; display: grid; gap: 4px; }
+        .gift-traits div { display: flex; justify-content: space-between; gap: 12px; background: #1d222e; padding: 8px 10px; border-radius: 7px; font-size: 12px; }
+        .gift-traits dt { color: #aab6c9; }
+        .gift-traits dd { margin: 0; font-weight: 700; text-align: right; }
+        .gift-detail-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        .gift-detail-actions[hidden] { display: none; }
+        .gift-detail-actions .upg-banner-btn { padding: 10px; min-height: 42px; }
 
         .game-box { background: var(--bg-card); border-radius: 22px; padding: 16px; border: 1px solid #2c2c34; text-align: center; }
         .primary-btn { width: 100%; background: linear-gradient(90deg, #e11d48, #be123c); color: #fff; border: none; padding: 14px; border-radius: 14px; font-weight: 700; font-size: 15px; cursor: pointer; margin-top: 12px; }
@@ -95,10 +128,25 @@
         .custom-num-input { width: 100%; background: #1c1c22; border: 1px solid #363642; border-radius: 10px; padding: 10px; color: #fff; font-size: 18px; font-weight: 800; text-align: center; outline: none; }
         .custom-num-input:focus { border-color: #f43f5e; }
 
-        .slots-machine { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; background: #0d0d11; padding: 12px; border-radius: 18px; border: 1px solid #2a2a34; margin: 12px 0; }
-        .slot-reel { aspect-ratio: 1; border-radius: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 8px; border: 1px solid rgba(255,255,255,0.1); transition: transform 0.15s; }
-        .slot-reel svg { width: 58%; height: 58%; }
-        .slot-reel span { font-size: 10px; font-weight: 700; margin-top: 4px; color: rgba(255,255,255,0.85); }
+        .reward-panel { max-width: 620px; margin-inline: auto; background: radial-gradient(ellipse at 50% 0, #26263e 0%, #171922 53%); text-align: left; }
+        .reward-panel > p { color: #b6bfd1; margin: 0; font-size: 12px; line-height: 1.4; }
+        .slots-machine { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; background: #0e121b; padding: 8px; border-radius: 15px; border: 1px solid #36394e; margin: 14px 0 10px; }
+        .slot-reel { min-width: 0; padding: 4px; border: 1px solid transparent; border-radius: 14px; }
+        .slot-reel .nft-art-box { margin: 0 0 5px; }
+        .slot-reel span.slot-name { display: block; font-size: 10px; text-align: center; font-weight: 700; line-height: 1.2; }
+        .slots-machine[data-outcome="win"] .slot-reel { border-color: #81ebd6; }
+        .slots-machine[data-outcome="refund"] .slot-reel.match { border-color: #e7bf7a; }
+        .reward-odds { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 5px; margin: 0 0 12px; }
+        .reward-odds div { min-width: 0; padding: 8px 4px; text-align: center; border-radius: 9px; background: #232635; }
+        .reward-odds strong { display: block; font-size: 16px; margin-bottom: 3px; color: #a8f0dc; }
+        .reward-odds div:nth-child(2) strong { color: #f1d493; }
+        .reward-odds div:nth-child(3) strong { color: #d3d8e4; }
+        .reward-odds span { display: block; color: #c7cfdd; font-size: 10px; line-height: 1.2; }
+        .reward-result { margin: 9px 0 0; color: #c0cadb; font-size: 13px; line-height: 1.35; }
+        .reward-result:empty { display: none; }
+        .reward-result[data-outcome="win"] { color: #97f0d4; }
+        .reward-result[data-outcome="refund"] { color: #f1d493; }
+        .reward-panel .primary-btn:disabled { opacity: .55; cursor: default; }
 
         .rocket-stage { position: relative; width: 100%; height: 220px; background: radial-gradient(circle at 50% 100%, #1e293b 0%, #090d16 85%); border-radius: 18px; overflow: hidden; border: 1px solid #283548; margin-bottom: 12px; }
         #rocket-canvas { width: 100%; height: 100%; display: block; }
@@ -121,13 +169,35 @@
         .wheel-needle { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 12px solid transparent; border-right: 12px solid transparent; border-top: 22px solid #fbbf24; z-index: 5; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.8)); }
         #wheel-canvas { width: 100%; height: 100%; border-radius: 50%; box-shadow: 0 0 24px rgba(0,0,0,0.7), 0 0 0 4px #2c2c36; transition: transform 4.2s cubic-bezier(0.15, 0.85, 0.15, 1); }
 
-        .upgrader-radar-box { background: var(--bg-card); border: 1px solid #2c2c34; border-radius: 22px; padding: 14px; margin-bottom: 12px; text-align: center; }
-        .radar-wrap { position: relative; width: 170px; height: 170px; margin: 4px auto 10px; }
+        #screen-upgrader > * { max-width: 680px; margin-inline: auto; }
+        .upgrader-radar-box { background: radial-gradient(ellipse at 50% 0%, #20383a, #111921 65%); border: 1px solid #30494a; border-radius: 22px; padding: 12px; margin-bottom: 12px; }
+        .upgrade-stage { display: grid; grid-template-columns: minmax(0, 1fr) minmax(100px, 1.25fr) minmax(0, 1fr); align-items: start; gap: 7px; max-width: 520px; margin: auto; }
+        .upgrade-preview { min-width: 0; text-align: center; }
+        .upgrade-preview-label { color: #c7d0dc; font-size: 11px; font-weight: 700; display: block; margin: 4px 0 7px; }
+        .upgrade-preview-art { aspect-ratio: 1; display: grid; place-items: center; border: 1px dashed #3d5962; border-radius: 12px; background: #141d25; color: #96abb7; font-size: 22px; overflow: hidden; }
+        .upgrade-preview-art .nft-art-box { margin: 0; }
+        .upgrade-preview-name { margin-top: 4px; color: #cbd6e1; font-size: 10px; line-height: 1.2; overflow-wrap: anywhere; }
+        .radar-wrap { position: relative; width: 100%; max-width: 180px; aspect-ratio: 1; margin: 7px auto 0; }
         #upgrader-canvas { width: 100%; height: 100%; }
         .radar-center-info { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; pointer-events: none; }
-        .upg-banner-btn { width: 100%; background: linear-gradient(90deg, #6366f1, #8b5cf6); color: #fff; border: none; padding: 13px; border-radius: 14px; font-weight: 800; font-size: 14px; cursor: pointer; }
+        #radar-chance-text { font-size: clamp(18px, 6vw, 28px); font-weight: 870; color: #e5fff6; }
+        .radar-caption { color: #b2c5cc; font-size: 10px; }
+        .upg-banner-btn { width: 100%; background: linear-gradient(115deg, #a0f1da, #50baa8); color: #122822; border: none; padding: 13px; border-radius: 12px; font-weight: 850; font-size: 14px; cursor: pointer; }
         .upg-banner-btn:disabled { opacity: 0.4; }
-        .sec-header { font-size: 11px; font-weight: 700; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; margin: 12px 0 6px; }
+        .upgrade-result { color: #c7d5dc; text-align: center; min-height: 32px; line-height: 1.35; font-size: 12px; margin: 9px 0 6px; }
+        .upgrade-result[data-outcome="win"] { color: #a4f4d8; }
+        .upgrade-result[data-outcome="loss"] { color: #ffc1c5; }
+        .upgrade-section-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 5px; margin: 14px 0 6px; }
+        .upgrade-section-head h3 { margin: 0; font-size: 14px; }
+        .upgrade-section-head > span { color: #b9c5d1; font-size: 11px; }
+        @media (min-height: 630px) {
+            #screen-upgrader { scroll-padding-top: 228px; }
+            .upgrader-radar-box { position: sticky; top: 0; z-index: 8; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .gift-sheet[open] .nft-art-box > svg { animation: none; }
+            .nft-item { transition: none; }
+        }
 
         .miner-hero { background: radial-gradient(circle at 50% 25%, #5c2d0c 0%, #241205 65%, #140b04 100%); border: 1px solid #4a270d; border-radius: 24px; padding: 22px 18px; text-align: center; margin-bottom: 12px; }
         .hex-cluster { font-size: 58px; margin: 4px 0 14px; filter: drop-shadow(0 0 18px #f59e0b); }
@@ -333,6 +403,11 @@
                 <button class="action-btn" onclick="openCases()">💼 Магазин</button>
             </div>
         </div>
+        <div class="gift-filters" aria-label="Фильтр инвентаря">
+            <button class="gift-filter" type="button" data-filter="all" aria-pressed="true" onclick="setGiftFilter('all')">Все</button>
+            <button class="gift-filter" type="button" data-filter="gift" aria-pressed="false" onclick="setGiftFilter('gift')">Подарки</button>
+            <button class="gift-filter" type="button" data-filter="collectible" aria-pressed="false" onclick="setGiftFilter('collectible')">NFT</button>
+        </div>
         <div class="items-grid" id="inventory-grid"></div>
     </div>
 
@@ -357,18 +432,22 @@
 
     <!-- КАРТЫ / СЛОТЫ -->
     <div id="screen-slots" class="screen">
-        <div class="game-box">
-            <h3 style="margin-bottom:4px;">Карты наград</h3>
-            <p style="font-size:12px; color:var(--text-muted);">3 одинаковых артефакта в ряд добавляют NFT в инвентарь и умножают ставку</p>
+        <div class="game-box reward-panel">
+            <p>Три одинаковые карты дают NFT и выплату ×1,5 от ставки.</p>
 
             <div class="slots-machine" id="slots-reels"></div>
 
+            <div class="reward-odds" aria-label="Вероятности исходов">
+                <div><strong id="slot-win-odds">35%</strong><span>Три совпадения</span></div>
+                <div><strong id="slot-refund-odds">30%</strong><span>Возврат ½ ставки</span></div>
+                <div><strong id="slot-loss-odds">35%</strong><span>Без выплаты</span></div>
+            </div>
             <div class="custom-input-box">
                 <div class="custom-input-header">
-                    <span>Ваша ставка (минимум 50 💎)</span>
-                    <span style="color:#38bdf8;">Множитель ×<span id="slot-mult-preview">1.0</span></span>
+                    <label for="slot-bet-input">Ставка от 50 💎</label>
+                    <span>Выплата <b id="slot-payout-preview">75</b> 💎</span>
                 </div>
-                <input type="number" class="custom-num-input" id="slot-bet-input" value="50" min="50" step="10" oninput="updateSlotBetUI()">
+                <input type="number" class="custom-num-input" id="slot-bet-input" value="50" min="50" step="1" inputmode="numeric" oninput="updateSlotBetUI()">
                 <div class="bet-chips-row">
                     <button class="bet-pill" onclick="setSlotBet(50)">50 💎</button>
                     <button class="bet-pill" onclick="setSlotBet(150)">150 💎</button>
@@ -377,8 +456,8 @@
                 </div>
             </div>
 
-            <div id="slots-status-msg" style="font-size:13px; font-weight:700; color:#fbbf24; margin-top:10px; min-height:18px;"></div>
             <button class="primary-btn" id="btn-spin-slots" onclick="spinSlots()">Открыть карты за 50 💎</button>
+            <p class="reward-result" id="slots-status-msg" role="status"></p>
         </div>
     </div>
 
@@ -452,20 +531,39 @@
     <!-- АПГРЕЙДЕР -->
     <div id="screen-upgrader" class="screen">
         <div class="upgrader-radar-box">
-            <div class="radar-wrap">
-                <canvas id="upgrader-canvas" width="170" height="170"></canvas>
-                <div class="radar-center-info">
-                    <div style="font-size:22px; font-weight:900;" id="radar-chance-text">0.0%</div>
-                    <div style="font-size:10px; color:var(--text-muted); text-transform:uppercase;">Шанс</div>
+            <div class="upgrade-stage">
+                <div class="upgrade-preview">
+                    <span class="upgrade-preview-label">Ваши подарки</span>
+                    <div class="upgrade-preview-art" id="upg-source-art" aria-hidden="true">+</div>
+                    <div class="upgrade-preview-name" id="upg-source-value">Не выбраны</div>
+                </div>
+                <div class="radar-wrap">
+                    <canvas id="upgrader-canvas" width="340" height="340" aria-hidden="true"></canvas>
+                    <div class="radar-center-info">
+                        <div id="radar-chance-text">—</div>
+                        <div class="radar-caption">Шанс успеха</div>
+                    </div>
+                </div>
+                <div class="upgrade-preview">
+                    <span class="upgrade-preview-label">Цель</span>
+                    <div class="upgrade-preview-art" id="upg-target-art" aria-hidden="true">+</div>
+                    <div class="upgrade-preview-name" id="upg-target-name">Не выбрана</div>
                 </div>
             </div>
-            <button class="upg-banner-btn" id="btn-do-upgrade" onclick="runUpgrade()" disabled>Выберите награды для апгрейда</button>
+            <p class="upgrade-result" id="upgrade-result" role="status">Выберите свои подарки и цель.</p>
+            <button class="upg-banner-btn" id="btn-do-upgrade" onclick="runUpgrade()" disabled>Улучшить</button>
         </div>
-        
-        <div class="sec-header">ВАШИ НАГРАДЫ • ВЫБРАНО <span id="upg-sel-count">0</span>/6 (<span id="upg-sel-val">0</span> 💎)</div>
-        <div class="items-grid-3" id="upg-user-grid"></div>
 
-        <div class="sec-header" style="margin-top: 18px;">ЦЕЛЬ АПГРЕЙДА</div>
+        <div class="upgrade-section-head"><h3>Ваши подарки</h3><span>Выбрано <span id="upg-sel-count">0</span> из 6</span></div>
+        <div class="items-grid-3" id="upg-user-grid"></div>
+        <div class="upgrade-section-head">
+            <h3>Цель апгрейда</h3>
+            <div class="upgrade-options" aria-label="Быстрый выбор цели">
+                <button type="button" data-ratio="2" onclick="pickUpgradeRatio(2)">×2</button>
+                <button type="button" data-ratio="3" onclick="pickUpgradeRatio(3)">×3</button>
+                <button type="button" data-ratio="5" onclick="pickUpgradeRatio(5)">×5</button>
+            </div>
+        </div>
         <div class="items-grid-3" id="upg-target-grid"></div>
     </div>
 
@@ -554,20 +652,32 @@
         </div>
     </div>
 
+    <dialog class="gift-sheet" id="gift-sheet" aria-labelledby="gift-detail-title" onclick="if(event.target === this) this.close()">
+        <button type="button" class="gift-sheet-close" onclick="this.closest('dialog').close()" aria-label="Закрыть">×</button>
+        <div id="gift-detail-art"></div>
+        <h2 class="gift-detail-title" id="gift-detail-title"></h2>
+        <p class="gift-detail-type" id="gift-detail-type"></p>
+        <dl class="gift-traits" id="gift-detail-traits"></dl>
+        <div class="gift-detail-actions" id="gift-detail-actions">
+            <button type="button" class="upg-banner-btn" id="gift-sell-btn" onclick="sellViewedGift()"></button>
+            <button type="button" class="action-btn" onclick="upgradeViewedGift()">В апгрейдер</button>
+        </div>
+    </dialog>
+
     <!-- НИЖНЕЕ МЕНЮ -->
     <div class="bottom-nav">
         <div class="nav-item" id="nav-cases" onclick="openCases()"><span class="nav-icon">💼</span>Магазин</div>
         <div class="nav-item" id="nav-slots" onclick="openSlots()"><span class="nav-icon">💠</span>Карты</div>
         <div class="nav-item active" id="nav-games" onclick="switchTab('games', 'Игры')"><span class="nav-icon">▶️</span>Игры</div>
         <div class="nav-item" onclick="syncFromCloud(true)"><span class="nav-icon">🔄</span>Обновить</div>
-        <div class="nav-item" id="nav-profile" onclick="switchTab('profile', 'Inventory')"><span class="nav-icon">👤</span>Профиль</div>
+        <div class="nav-item" id="nav-profile" onclick="switchTab('profile', 'Инвентарь')"><span class="nav-icon">👤</span>Профиль</div>
     </div>
 
     <script>
         const tg = window.Telegram.WebApp;
         tg.expand();
 
-        const APP_VERSION = "2.4";
+        const APP_VERSION = "2.5";
 
         // Подключение к вашей облачной базе Supabase
         const SUPABASE_URL = "https://kcycpjrriegjfbzddbos.supabase.co";
@@ -584,36 +694,36 @@
 
         const GIFT_CATALOG = {
             steel_ingot: {
-                name: 'Стальной слиток', price: 85, isNft: false, theme: 'theme-steel',
-                svg: `<svg viewBox="0 0 100 100"><polygon points="28,32 72,32 82,68 18,68" fill="#64748b" stroke="#cbd5e1" stroke-width="3"/><polygon points="28,32 72,32 64,46 36,46" fill="#94a3b8"/></svg>`
+                name: 'Стальной слиток', price: 85, isNft: false, theme: 'theme-steel', model: "Холодная ковка",
+                svg: `<svg viewBox="0 0 100 100" aria-hidden="true"><path d="M28 32 67 24 85 46 78 68 35 81 15 62Z" fill="#43566e" stroke="#e3f0ff" stroke-width="3" stroke-linejoin="round"/><path d="M28 32 67 24 85 46 43 58 15 62Z" fill="#c1d9eb"/><path d="m15 62 28-4 35 10-43 13Z" fill="#758ea6"/><path d="m36 38 27-7 12 13-31 9Z" fill="#849fb7"/><path d="m38 46 20-6m-19 32 26-8" stroke="#f6fcff" stroke-width="2.5" stroke-linecap="round"/></svg>`
             },
             bronze_coin: {
-                name: 'Бронзовый жетон', price: 220, isNft: true, theme: 'theme-bronze',
-                svg: `<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="32" fill="#b45309" stroke="#fbbf24" stroke-width="4"/><circle cx="50" cy="50" r="22" fill="none" stroke="#fde68a" stroke-width="2" stroke-dasharray="6 4"/><polygon points="50,34 62,50 50,66 38,50" fill="#fde68a"/></svg>`
+                name: 'Бронзовый жетон', price: 220, isNft: true, theme: 'theme-bronze', model: "Чеканка рассвета",
+                svg: `<svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="53" cy="54" r="33" fill="#8d4727" stroke="#5c2930" stroke-width="3"/><circle cx="48" cy="47" r="33" fill="#de9250" stroke="#ffdeb0" stroke-width="3"/><circle cx="48" cy="47" r="25" fill="#a75a35" stroke="#ffc482" stroke-width="2" stroke-dasharray="3 3"/><path d="m48 26 6 13 14 8-14 7-6 14-6-14-14-7 14-8Z" fill="#ffcf8e"/><path d="m48 36 11 11-11 11-11-11Z" fill="#ffeac8"/><path d="M23 40a25 25 0 0 1 18-18" fill="none" stroke="#fff1cc" stroke-width="3" stroke-linecap="round"/></svg>`
             },
             silver_prism: {
-                name: 'Серебряная призма', price: 480, isNft: true, theme: 'theme-silver',
-                svg: `<svg viewBox="0 0 100 100"><polygon points="50,16 82,50 50,84 18,50" fill="#94a3b8" stroke="#f8fafc" stroke-width="3"/><polygon points="50,16 82,50 50,50" fill="#cbd5e1"/><polygon points="50,50 18,50 50,84" fill="#64748b"/></svg>`
+                name: 'Серебряная призма', price: 480, isNft: true, theme: 'theme-silver', model: "Лунный срез",
+                svg: `<svg viewBox="0 0 100 100" aria-hidden="true"><path d="M51 12 83 39 69 73 48 89 20 67 17 41Z" fill="#758dbd" stroke="#f3fbff" stroke-width="3" stroke-linejoin="round"/><path d="m51 12 9 35 23-8ZM17 41l43 6-12 42Z" fill="#b7dbf6"/><path d="m51 12 9 35-43-6Z" fill="#edf6ff"/><path d="m60 47 23-8-14 34-21 16Z" fill="#547094"/><path d="m25 43 35 4-11 35" stroke="#e7f4ff" stroke-width="2" fill="none"/></svg>`
             },
             gold_bar: {
-                name: 'Золотой слиток', price: 950, isNft: true, theme: 'theme-gold',
-                svg: `<svg viewBox="0 0 100 100"><polygon points="26,30 74,30 84,70 16,70" fill="#eab308" stroke="#fef08a" stroke-width="3"/><polygon points="26,30 74,30 66,46 34,46" fill="#facc15"/><line x1="38" y1="58" x2="62" y2="58" stroke="#fef08a" stroke-width="3" stroke-linecap="round"/></svg>`
+                name: 'Золотой слиток', price: 950, isNft: true, theme: 'theme-gold', model: "Солнечный сплав",
+                svg: `<svg viewBox="0 0 100 100" aria-hidden="true"><path d="m29 30 44-8 15 27-9 24-46 12-19-22Z" fill="#a8552a" stroke="#ffedab" stroke-width="3" stroke-linejoin="round"/><path d="m29 30 44-8 15 27-44 12-30 2Z" fill="#ffd96d"/><path d="m44 61 44-12-9 24-46 12Z" fill="#df9239"/><path d="m36 35 33-6 9 15-35 10-18 3Z" fill="#f5b54b"/><path d="m49 43 8-9 9 5-8 9Z" fill="#ffefbc"/><path d="m47 67 27-8" stroke="#ffe892" stroke-width="2" stroke-linecap="round"/></svg>`
             },
             azure_crystal: {
-                name: 'Сапфировый кристалл', price: 1450, isNft: true, theme: 'theme-diamond',
-                svg: `<svg viewBox="0 0 100 100"><polygon points="50,14 80,38 68,84 32,84 20,38" fill="#0ea5e9" stroke="#bae6fd" stroke-width="3"/><polygon points="50,14 66,38 50,84 34,38" fill="#38bdf8"/></svg>`
+                name: 'Сапфировый кристалл', price: 1450, isNft: true, theme: 'theme-diamond', model: "Полярное сияние",
+                svg: `<svg viewBox="0 0 100 100" aria-hidden="true"><path d="m51 10 29 29-11 31-20 19-23-14-9-30Z" fill="#247cba" stroke="#c5f8ff" stroke-width="3" stroke-linejoin="round"/><path d="m51 10 4 43 25-14Z" fill="#98f4ff"/><path d="m51 10 4 43-38-8Z" fill="#66d5f1"/><path d="m55 53-6 36 20-19 11-31Z" fill="#337caa"/><path d="m55 53-6 36-23-14-9-30Z" fill="#54abd9"/><path d="m51 14 4 39-30-6m30 6-6 29" fill="none" stroke="#d0fbff" stroke-width="2.5" stroke-linecap="round"/></svg>`
             },
             master_goblet: {
-                name: 'Кубок Мастера', price: 2400, isNft: true, theme: 'theme-master',
-                svg: `<svg viewBox="0 0 100 100"><path d="M28 24 L72 24 L66 54 C64 64 36 64 34 54 Z" fill="#f472b6" stroke="#fbcfe8" stroke-width="3"/><rect x="46" y="61" width="8" height="16" fill="#fbcfe8"/><rect x="32" y="77" width="36" height="7" rx="3" fill="#f472b6"/></svg>`
+                name: 'Кубок Мастера', price: 2400, isNft: true, theme: 'theme-master', model: "Роза мастера",
+                svg: `<svg viewBox="0 0 100 100" aria-hidden="true"><path d="M25 29H14v12c0 12 8 19 22 20m39-32h11v12c0 12-8 19-22 20" stroke="#ffc0bf" stroke-width="5" fill="none"/><path d="M27 24h46l-6 26c-2 12-9 18-17 18s-15-6-17-18Z" fill="#be547c" stroke="#ffe4d8" stroke-width="3"/><ellipse cx="50" cy="24" rx="23" ry="7" fill="#ffd3cc" stroke="#ffe4d8" stroke-width="3"/><path d="M46 65h8l2 12 13 4v6H31v-6l13-4Z" fill="#f398a5" stroke="#ffe4d8" stroke-width="3" stroke-linejoin="round"/><path d="m50 36 7 8-7 9-7-9Z" fill="#ffe6a8"/><path d="M36 36l3 13" stroke="#ffd5d4" stroke-width="3" stroke-linecap="round"/></svg>`
             },
             sovereign_crown: {
-                name: 'Корона Суверена', price: 4800, isNft: true, theme: 'theme-grand',
-                svg: `<svg viewBox="0 0 100 100"><polygon points="18,68 24,34 40,52 50,26 60,52 76,34 82,68" fill="#a855f7" stroke="#f3e8ff" stroke-width="3" stroke-linejoin="round"/><rect x="18" y="72" width="64" height="8" rx="3" fill="#e9d5ff"/></svg>`
+                name: 'Корона Суверена', price: 4800, isNft: true, theme: 'theme-grand', model: "Королевский аметист",
+                svg: `<svg viewBox="0 0 100 100" aria-hidden="true"><path d="m19 34 16 12L50 21l15 25 16-12-7 36H26Z" fill="#a368dc" stroke="#f3dbff" stroke-width="3" stroke-linejoin="round"/><path d="m50 21 9 38-9 11-10-11Z" fill="#d7a6f8"/><path d="m19 34 20 23-13 13ZM81 34 62 57l12 13Z" fill="#7e50b6"/><rect x="25" y="68" width="50" height="12" rx="4" fill="#e5ad7a" stroke="#ffe9be" stroke-width="2"/><path d="m50 46 7 8-7 8-7-8Z" fill="#f9ebe2"/><circle cx="19" cy="32" r="5" fill="#f9deac"/><circle cx="50" cy="19" r="5" fill="#f9deac"/><circle cx="81" cy="32" r="5" fill="#f9deac"/></svg>`
             },
             aegis_core: {
-                name: 'Ядро Эгиды', price: 12500, isNft: true, theme: 'theme-heaven',
-                svg: `<svg viewBox="0 0 100 100"><polygon points="50,14 82,32 82,68 50,86 18,68 18,32" fill="none" stroke="#34d399" stroke-width="4"/><circle cx="50" cy="50" r="18" fill="#10b981" stroke="#ecfdf5" stroke-width="3"/><circle cx="50" cy="50" r="7" fill="#ffffff"/></svg>`
+                name: 'Ядро Эгиды', price: 12500, isNft: true, theme: 'theme-heaven', model: "Изумрудный реактор",
+                svg: `<svg viewBox="0 0 100 100" aria-hidden="true"><path d="M50 14 82 32v36L50 86 18 68V32Z" fill="#116f70" stroke="#d5fff1" stroke-width="3"/><path d="m50 21 25 15v28L50 79 25 64V36Z" fill="#184f58" stroke="#54dabc" stroke-width="2"/><path d="M50 14v19m32-1L64 43m18 25L64 57M50 86V67M18 68l18-11M18 32l18 11" stroke="#81efd7" stroke-width="2.5"/><circle cx="50" cy="50" r="18" fill="#36d9af" stroke="#bbffeb" stroke-width="2"/><path d="m50 38 10 12-10 12-10-12Z" fill="#f4fff7"/><circle cx="50" cy="50" r="25" fill="none" stroke="#8cf8e4" stroke-width="2" stroke-dasharray="2 5"/></svg>`
             }
         };
 
@@ -717,19 +827,103 @@
             window.location.replace(url.toString());
         }
 
-        function renderGiftCardHTML(item, extraClass = '', clickAttr = '', topBadge = null) {
-            const meta = GIFT_CATALOG[item.key] || GIFT_CATALOG.steel_ingot;
-            const badgeText = topBadge !== null ? topBadge : (meta.isNft && item.num ? `#${item.num}` : '');
+        const giftBackdrops = [
+            ['gift-aurora', 'Северное сияние'],
+            ['gift-amber', 'Медовый закат'],
+            ['gift-orchid', 'Лиловый туман'],
+            ['gift-night', 'Звёздная ночь'],
+            ['gift-rose', 'Розовый кварц']
+        ];
+        const giftSymbols = [['✦', 'Искра'], ['☾', 'Месяц'], ['✧', 'Созвездие'], ['◇', 'Кристалл'], ['❋', 'Розетка']];
+        let giftFilter = 'all';
+        let viewedGift = null;
+
+        function getGiftMeta(item) {
+            return Object.hasOwn(GIFT_CATALOG, item?.key) ? GIFT_CATALOG[item.key] : GIFT_CATALOG.steel_ingot;
+        }
+
+        function getGiftTraits(item, meta) {
+            const serial = meta.isNft ? readBalance(item.num) : 0;
+            const [theme, backdrop] = serial ? giftBackdrops[serial % giftBackdrops.length] : [meta.theme, 'Классический'];
+            const [symbol, symbolName] = giftSymbols[Math.floor(serial / giftBackdrops.length) % giftSymbols.length];
+            return { serial, theme, backdrop, symbol, symbolName };
+        }
+
+        function renderGiftArt(item, badge) {
+            const meta = getGiftMeta(item);
+            const traits = getGiftTraits(item, meta);
+            const label = badge ?? (traits.serial ? `№${traits.serial}` : '');
             return `
-                <div class="nft-item ${extraClass}" ${clickAttr}>
-                    <div class="nft-art-box ${meta.theme}">
-                        ${badgeText ? `<span class="nft-num">${badgeText}</span>` : ''}
-                        ${meta.svg}
-                    </div>
-                    <div class="nft-name">${meta.name}</div>
-                    <div class="nft-price">💎 ${meta.price.toLocaleString('ru-RU')}</div>
-                </div>
+                <span class="nft-art-box ${traits.theme}">
+                    ${meta.isNft ? `<span class="gift-symbol" aria-hidden="true">${traits.symbol}</span><span class="gift-symbol" aria-hidden="true">${traits.symbol}</span>` : ''}
+                    ${label ? `<span class="nft-num">${label}</span>` : ''}
+                    ${meta.svg}
+                </span>
             `;
+        }
+
+        function renderGiftCardHTML(item, { styleClass = '', action = '', pressed, disabled = false, badge } = {}) {
+            const meta = getGiftMeta(item);
+            const tag = action ? 'button' : 'div';
+            const controls = action ? `type="button" onclick="${action}" ${disabled ? 'disabled' : ''}` : '';
+            const selected = pressed === undefined ? '' : `aria-pressed="${pressed}"`;
+            return `
+                <${tag} class="nft-item ${styleClass} ${pressed ? 'selected' : ''}" ${controls} ${selected}>
+                    ${renderGiftArt(item, badge)}
+                    <span class="nft-name">${meta.name}</span>
+                    <span class="nft-price"><span>💎 ${meta.price.toLocaleString('ru-RU')}</span>
+                        <span class="gift-kind ${meta.isNft ? 'collectible' : ''}">${meta.isNft ? 'NFT' : 'Подарок'}</span>
+                    </span>
+                </${tag}>
+            `;
+        }
+
+        function setGiftFilter(filter) {
+            giftFilter = filter;
+            document.querySelectorAll('.gift-filter').forEach(button => {
+                button.setAttribute('aria-pressed', String(button.dataset.filter === filter));
+            });
+            renderInventory();
+        }
+
+        function renderInventory() {
+            const grid = document.getElementById('inventory-grid');
+            const cards = state.items.map((item, index) => {
+                const isCollectible = getGiftMeta(item).isNft;
+                if (giftFilter !== 'all' && (giftFilter === 'collectible') !== isCollectible) return '';
+                return renderGiftCardHTML(item, { action: `showGiftDetails(state.items[${index}], true)` });
+            }).join('');
+            grid.innerHTML = cards || '<div class="empty-state">В этой категории пока нет подарков.</div>';
+        }
+
+        function showGiftDetails(item, owned = false) {
+            if (!item) return;
+            const dialog = document.getElementById('gift-sheet');
+            const meta = getGiftMeta(item);
+            const traits = getGiftTraits(item, meta);
+            viewedGift = owned ? item : null;
+            document.getElementById('gift-detail-art').innerHTML = renderGiftArt(item, traits.serial ? '' : undefined);
+            document.getElementById('gift-detail-title').textContent = meta.name;
+            document.getElementById('gift-detail-type').textContent = meta.isNft
+                ? `Коллекционный подарок${traits.serial ? ` · №${traits.serial}` : ''}` : 'Обычный подарок';
+            const attributes = [['Модель', meta.model]];
+            if (meta.isNft) attributes.push(['Фон', traits.backdrop], ['Символ', `${traits.symbol} ${traits.symbolName}`]);
+            attributes.push(['Стоимость', `${meta.price.toLocaleString('ru-RU')} 💎`]);
+            document.getElementById('gift-detail-traits').innerHTML = attributes.map(([key, value]) =>
+                `<div><dt>${key}</dt><dd>${value}</dd></div>`).join('');
+            document.getElementById('gift-detail-actions').hidden = !owned;
+            document.getElementById('gift-sell-btn').textContent = `Продать за ${meta.price.toLocaleString('ru-RU')} 💎`;
+            if (!dialog.open) dialog.showModal();
+        }
+
+        function sellViewedGift() {
+            if (sellItem(state.items.indexOf(viewedGift))) document.getElementById('gift-sheet').close();
+        }
+
+        function upgradeViewedGift() {
+            const item = viewedGift;
+            document.getElementById('gift-sheet').close();
+            openUpgrader(state.items.includes(item) ? item : null);
         }
 
         // МАГАЗИН КЕЙСОВ
@@ -739,7 +933,7 @@
             const grid = document.getElementById('case-board-grid');
             grid.innerHTML = ALL_KEYS.map((key, idx) => {
                 let cls = idx === cursorIdx ? 'case-cursor' : (wonIndices.includes(idx) ? 'case-won' : '');
-                return renderGiftCardHTML({ key }, cls, '', `${GIFT_CATALOG[key].price} 💎`);
+                return renderGiftCardHTML({ key }, { styleClass: cls, action: caseOpeningBusy ? '' : `showGiftDetails({key:'${key}'})` });
             }).join('');
         }
         function updateCaseCostUI() {
@@ -790,61 +984,120 @@
             updateUI();
             statusEl.innerText = qty === 1 ? `Выпало: ${wonNames[0]}!` : `Открыто ${qty} шт.! Получено: ${wonNames.slice(0, 3).join(', ')}${qty > 3 ? ` и ещё ${qty - 3}` : ''}`;
             caseOpeningBusy = false; btn.disabled = false; inp.disabled = false;
+            renderCaseBoard(-1, wonIndices);
         }
 
         // КАРТЫ / СЛОТЫ
-        let slotsBusy = false;
         const slotPoolKeys = ['steel_ingot', 'bronze_coin', 'silver_prism', 'gold_bar', 'azure_crystal', 'sovereign_crown'];
-        function openSlots() { openGame('slots', 'Карты наград'); renderSlotReels(['gold_bar', 'azure_crystal', 'sovereign_crown']); updateSlotBetUI(); }
-        function renderSlotReels(keys) {
-            document.getElementById('slots-reels').innerHTML = keys.map(k => {
-                const m = GIFT_CATALOG[k];
-                return `<div class="slot-reel ${m.theme}">${m.svg}<span>${m.name.split(' ')[0]}</span></div>`;
+        const slotPrizeKeys = slotPoolKeys.filter(key => GIFT_CATALOG[key].isNft);
+        const slotOdds = { win: 35, refund: 30, loss: 35 };
+        const slotWinMultiplier = 1.5;
+        let slotsBusy = false;
+
+        function openSlots() {
+            openGame('slots', 'Карты наград');
+            if (!document.getElementById('slots-reels').childElementCount) {
+                renderSlotReels(['gold_bar', 'azure_crystal', 'sovereign_crown']);
+            }
+            for (const [outcome, chance] of Object.entries(slotOdds)) {
+                document.getElementById(`slot-${outcome}-odds`).textContent = `${chance}%`;
+            }
+            updateSlotBetUI();
+        }
+
+        function renderSlotReels(keys, outcome = '') {
+            const reels = document.getElementById('slots-reels');
+            reels.dataset.outcome = outcome;
+            reels.innerHTML = keys.map(key => {
+                const match = outcome === 'win' || (outcome === 'refund' && keys.filter(item => item === key).length === 2);
+                return `<div class="slot-reel ${match ? 'match' : ''}">${renderGiftArt({ key })}<span class="slot-name">${GIFT_CATALOG[key].name}</span></div>`;
             }).join('');
         }
-        function setSlotBet(val) { if (!slotsBusy) { document.getElementById('slot-bet-input').value = val; updateSlotBetUI(); } }
-        function updateSlotBetUI() {
-            let betVal = Math.max(50, parseInt(document.getElementById('slot-bet-input').value, 10) || 50);
-            document.getElementById('slot-mult-preview').innerText = (betVal / 50).toFixed(1);
-            document.getElementById('btn-spin-slots').innerText = `Открыть карты за ${betVal.toLocaleString('ru-RU')} 💎`;
+
+        function readSlotBet() {
+            const value = readBalance(document.getElementById('slot-bet-input').value);
+            return Math.max(50, value);
         }
+
+        function setSlotBet(value) {
+            if (slotsBusy) return;
+            document.getElementById('slot-bet-input').value = value;
+            updateSlotBetUI();
+        }
+
+        function updateSlotBetUI() {
+            const bet = readSlotBet();
+            document.getElementById('slot-payout-preview').textContent = Math.floor(bet * slotWinMultiplier).toLocaleString('ru-RU');
+            if (!slotsBusy) document.getElementById('btn-spin-slots').textContent = `Открыть карты за ${bet.toLocaleString('ru-RU')} 💎`;
+        }
+
+        function drawSlotSymbols(count) {
+            const remaining = [...slotPoolKeys];
+            return Array.from({ length: count }, () => remaining.splice(Math.floor(Math.random() * remaining.length), 1)[0]);
+        }
+
+        function rollSlotCards(bet) {
+            const roll = Math.random() * 100;
+            if (roll < slotOdds.win) {
+                const prize = slotPrizeKeys[Math.floor(Math.random() * slotPrizeKeys.length)];
+                return { outcome: 'win', cards: [prize, prize, prize], payout: Math.floor(bet * slotWinMultiplier), prize };
+            }
+            if (roll < slotOdds.win + slotOdds.refund) {
+                const [pair, other] = drawSlotSymbols(2);
+                const cards = [pair, pair, pair];
+                cards[Math.floor(Math.random() * cards.length)] = other;
+                return { outcome: 'refund', cards, payout: Math.floor(bet / 2) };
+            }
+            return { outcome: 'loss', cards: drawSlotSymbols(3), payout: 0 };
+        }
+
         async function spinSlots() {
             if (slotsBusy) return;
-            const inp = document.getElementById('slot-bet-input');
-            let betVal = Math.max(50, parseInt(inp.value, 10) || 50); inp.value = betVal;
-            if (state.gems < betVal) return alert(`Недостаточно алмазов (нужно ${betVal} 💎)`);
-
-            state.gems -= betVal; updateUI(); slotsBusy = true;
-            const btn = document.getElementById('btn-spin-slots'), msgEl = document.getElementById('slots-status-msg');
-            btn.disabled = true; msgEl.innerText = 'Тасуем карты...';
-
-            for (let i = 0; i < 12; i++) {
-                renderSlotReels([0,1,2].map(() => slotPoolKeys[Math.floor(Math.random() * slotPoolKeys.length)]));
-                await new Promise(r => setTimeout(r, 70 + i * 10));
+            const input = document.getElementById('slot-bet-input');
+            const button = document.getElementById('btn-spin-slots');
+            const status = document.getElementById('slots-status-msg');
+            const bet = readSlotBet();
+            input.value = bet;
+            if (state.gems < bet) {
+                status.dataset.outcome = '';
+                status.textContent = `Для этой ставки нужно ${bet.toLocaleString('ru-RU')} 💎.`;
+                return;
             }
-            const winChance = Math.min(0.45, 0.22 + (betVal / 5000));
-            let r1, r2, r3;
-            if (Math.random() < winChance) { r1 = r2 = r3 = slotPoolKeys[Math.floor(Math.random() * slotPoolKeys.length)]; }
-            else {
-                r1 = slotPoolKeys[Math.floor(Math.random() * slotPoolKeys.length)];
-                r2 = slotPoolKeys[Math.floor(Math.random() * slotPoolKeys.length)];
-                r3 = slotPoolKeys[Math.floor(Math.random() * slotPoolKeys.length)];
-                if (r1 === r2 && r2 === r3) r3 = slotPoolKeys[(slotPoolKeys.indexOf(r1) + 1) % slotPoolKeys.length];
-            }
-            renderSlotReels([r1, r2, r3]);
 
-            if (r1 === r2 && r2 === r3) {
-                const gemBonus = Math.floor(betVal * 1.5);
-                state.gems += gemBonus; addGift(r1, true);
-                msgEl.style.color = '#4ade80'; msgEl.innerText = `ПОБЕДА! Получен ${GIFT_CATALOG[r1].name} и +${gemBonus} 💎!`;
-            } else if (r1 === r2 || r2 === r3 || r1 === r3) {
-                const refund = Math.floor(betVal * 0.5);
-                state.gems += refund; updateUI();
-                msgEl.style.color = '#38bdf8'; msgEl.innerText = `2 совпадения! Возврат половины ставки: +${refund} 💎`;
+            slotsBusy = true;
+            button.disabled = true;
+            input.disabled = true;
+            button.textContent = 'Открываем карты…';
+            status.dataset.outcome = '';
+            status.textContent = 'Тасуем карты…';
+            const balanceAfterBet = state.gems - bet;
+            const { outcome, cards, payout, prize } = rollSlotCards(bet);
+            state.gems = balanceAfterBet + payout;
+            if (prize) addGift(prize, false);
+            saveState();
+            document.getElementById('gems-bal').textContent = balanceAfterBet.toLocaleString('ru-RU');
+
+            if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                for (let i = 0; i < 9; i++) {
+                    renderSlotReels(drawSlotSymbols(3));
+                    await new Promise(resolve => setTimeout(resolve, 65 + i * 13));
+                }
+            }
+            renderSlotReels(cards, outcome);
+            status.dataset.outcome = outcome;
+            const formattedPayout = payout.toLocaleString('ru-RU');
+            if (outcome === 'win') {
+                status.textContent = `Три совпадения · ${formattedPayout} 💎 и ${GIFT_CATALOG[prize].name}.`;
+            } else if (outcome === 'refund') {
+                status.textContent = `Два совпадения · возвращено ${formattedPayout} 💎.`;
             } else {
-                msgEl.style.color = '#94a3b8'; msgEl.innerText = 'Нет совпадений. Попробуйте ещё раз!';
+                status.textContent = 'Три разные карты · без выплаты.';
             }
-            slotsBusy = false; btn.disabled = false;
+            slotsBusy = false;
+            button.disabled = false;
+            input.disabled = false;
+            updateSlotBetUI();
+            updateUI(false);
         }
 
         // РАКЕТА
@@ -951,42 +1204,175 @@
         function spinWheelPaid() { if (!wheelBusy) { if (state.gems < 100) return alert('Нужно 100 💎'); state.gems -= 100; updateUI(); executeWheelSpin(); } }
 
         // АПГРЕЙДЕР
-        let selectedUserGifts = [], selectedTargetIdx = 0, upgraderBusy = false;
-        const upgTargetKeys = ['silver_prism', 'gold_bar', 'azure_crystal', 'master_goblet', 'sovereign_crown', 'aegis_core'];
-        function drawUpgraderRadar(chancePct, needleDeg = 0) {
-            const canvas = document.getElementById('upgrader-canvas'); if (!canvas) return;
-            const ctx = canvas.getContext('2d'), cx = 85, cy = 85, r = 68;
-            ctx.clearRect(0, 0, 170, 170); ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.strokeStyle = '#272730'; ctx.lineWidth = 14; ctx.stroke();
-            if (chancePct > 0) { const start = -Math.PI / 2; ctx.beginPath(); ctx.arc(cx, cy, r, start, start + (Math.PI * 2) * (chancePct / 100)); ctx.strokeStyle = '#22c55e'; ctx.lineWidth = 14; ctx.lineCap = 'round'; ctx.stroke(); }
-            ctx.save(); ctx.translate(cx, cy); ctx.rotate((needleDeg - 90) * Math.PI / 180); ctx.fillStyle = '#ffffff'; ctx.beginPath(); ctx.moveTo(r + 12, 0); ctx.lineTo(r + 2, -6); ctx.lineTo(r + 2, 6); ctx.fill(); ctx.restore();
-        }
-        function openUpgrader() { selectedUserGifts = []; openGame('upgrader', 'Апгрейдер'); renderUpgrader(); }
-        function toggleUserGift(idx) { if (!upgraderBusy) { const pos = selectedUserGifts.indexOf(idx); if (pos > -1) selectedUserGifts.splice(pos, 1); else if (selectedUserGifts.length < 6) selectedUserGifts.push(idx); renderUpgrader(); } }
-        function renderUpgrader() {
-            const uGrid = document.getElementById('upg-user-grid');
-            uGrid.innerHTML = state.items.length === 0 ? `<div class="empty-state">У вас пока нет наград для апгрейда. Откройте кейс в магазине!</div>` : state.items.map((item, idx) => renderGiftCardHTML(item, selectedUserGifts.includes(idx) ? 'selected' : '', `onclick="toggleUserGift(${idx})"`)).join('');
-            const totalBet = selectedUserGifts.reduce((s, i) => s + (GIFT_CATALOG[state.items[i]?.key]?.price || 0), 0);
-            document.getElementById('upg-sel-count').innerText = selectedUserGifts.length; document.getElementById('upg-sel-val').innerText = totalBet.toLocaleString('ru-RU');
-            document.getElementById('upg-target-grid').innerHTML = upgTargetKeys.map((key, idx) => {
-                const meta = GIFT_CATALOG[key], chance = totalBet > 0 ? Math.min(75, Math.max(1, ((totalBet / meta.price) * 85))).toFixed(1) : '0.0';
-                return renderGiftCardHTML({ key }, selectedTargetIdx === idx ? 'selected' : '', `onclick="if(!upgraderBusy){selectedTargetIdx=${idx}; renderUpgrader();}"`, `${chance}%`);
-            }).join('');
-            const targetMeta = GIFT_CATALOG[upgTargetKeys[selectedTargetIdx]], btn = document.getElementById('btn-do-upgrade'), radarText = document.getElementById('radar-chance-text');
-            if (totalBet > 0) { const chanceNum = Math.min(75, Math.max(1, (totalBet / targetMeta.price) * 85)); radarText.innerText = chanceNum.toFixed(1) + '%'; drawUpgraderRadar(chanceNum, 0); btn.disabled = false; btn.innerText = `Апгрейд на ${targetMeta.name} (${chanceNum.toFixed(1)}%)`; }
-            else { radarText.innerText = '0.0%'; drawUpgraderRadar(0, 0); btn.disabled = true; btn.innerText = 'Выберите награды для апгрейда'; }
-        }
-        function runUpgrade() {
-            if (upgraderBusy || selectedUserGifts.length === 0) return;
-            upgraderBusy = true; document.getElementById('btn-do-upgrade').disabled = true;
-            const totalBet = selectedUserGifts.reduce((s, i) => s + GIFT_CATALOG[state.items[i].key].price, 0);
-            const targetKey = upgTargetKeys[selectedTargetIdx], targetMeta = GIFT_CATALOG[targetKey], chance = Math.min(75, Math.max(1, (totalBet / targetMeta.price) * 85));
-            const rollPct = Math.random() * 100, isWin = rollPct <= chance, totalSpin = 360 * 4 + (rollPct / 100) * 360, start = performance.now();
-            function animRadar(now) {
-                const t = Math.min(1, (now - start) / 2600), ease = 1 - Math.pow(1 - t, 3); drawUpgraderRadar(chance, totalSpin * ease);
-                if (t < 1) requestAnimationFrame(animRadar);
-                else { upgraderBusy = false; selectedUserGifts.sort((a, b) => b - a).forEach(i => state.items.splice(i, 1)); selectedUserGifts = []; if (isWin) { addGift(targetKey, true); alert(`УСПЕХ! Вы получили ${targetMeta.name} (${targetMeta.price} 💎)!`); } else { updateUI(); alert('Неудача! Стрелка остановилась мимо зелёной зоны.'); } renderUpgrader(); }
+        let selectedUserGifts = [], selectedUpgradeKey = null, upgraderBusy = false, lastUpgrade = null;
+        const upgTargetKeys = ALL_KEYS.filter(key => GIFT_CATALOG[key].isNft);
+
+        function drawUpgraderRadar(chance, angle = 0) {
+            const canvas = document.getElementById('upgrader-canvas');
+            const ctx = canvas.getContext('2d');
+            const center = 170, radius = 126, start = -Math.PI / 2;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.beginPath();
+            ctx.arc(center, center, radius, 0, Math.PI * 2);
+            ctx.strokeStyle = '#354852';
+            ctx.lineWidth = 18;
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.arc(center, center, 100, 0, Math.PI * 2);
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = '#294047';
+            ctx.stroke();
+            if (chance > 0) {
+                ctx.beginPath();
+                ctx.arc(center, center, radius, start, start + Math.PI * 2 * chance / 100);
+                ctx.strokeStyle = '#83ead0';
+                ctx.lineWidth = 18;
+                ctx.stroke();
+                ctx.save();
+                ctx.translate(center, center);
+                ctx.rotate(start + angle * Math.PI / 180);
+                ctx.fillStyle = '#f0fff9';
+                ctx.beginPath();
+                ctx.moveTo(radius - 9, 0);
+                ctx.lineTo(radius + 21, -10);
+                ctx.lineTo(radius + 21, 10);
+                ctx.fill();
+                ctx.restore();
             }
-            requestAnimationFrame(animRadar);
+        }
+
+        function upgradeStake() {
+            selectedUserGifts = selectedUserGifts.filter(item => state.items.includes(item));
+            return selectedUserGifts.reduce((total, item) => total + getGiftMeta(item).price, 0);
+        }
+
+        function upgradeChance(stake, targetPrice) {
+            if (!stake || targetPrice <= stake) return 0;
+            return Math.round(Math.min(75, Math.max(1, stake / targetPrice * 85)) * 10) / 10;
+        }
+
+        function openUpgrader(source = null) {
+            openGame('upgrader', 'Апгрейдер');
+            if (upgraderBusy) return;
+            selectedUserGifts = source ? [source] : [];
+            selectedUpgradeKey = null;
+            lastUpgrade = null;
+            renderUpgrader();
+        }
+
+        function toggleUserGift(index) {
+            const item = state.items[index];
+            if (!item || upgraderBusy) return;
+            const selected = selectedUserGifts.indexOf(item);
+            if (selected !== -1) {
+                selectedUserGifts.splice(selected, 1);
+            } else if (selectedUserGifts.length < 6) {
+                selectedUserGifts.push(item);
+            }
+            lastUpgrade = null;
+            renderUpgrader();
+        }
+
+        function chooseUpgradeTarget(key) {
+            if (upgraderBusy || !upgTargetKeys.includes(key) || GIFT_CATALOG[key].price <= upgradeStake()) return;
+            selectedUpgradeKey = key;
+            lastUpgrade = null;
+            renderUpgrader();
+        }
+
+        function pickUpgradeRatio(ratio) {
+            const stake = upgradeStake();
+            if (!stake || upgraderBusy) return;
+            const key = upgTargetKeys.find(candidate => GIFT_CATALOG[candidate].price >= stake * ratio);
+            if (key) chooseUpgradeTarget(key);
+        }
+
+        function renderUpgrader() {
+            if (upgraderBusy) return;
+            const stake = upgradeStake();
+            const sourceGrid = document.getElementById('upg-user-grid');
+            sourceGrid.innerHTML = state.items.map((item, index) => {
+                const pressed = selectedUserGifts.includes(item);
+                return renderGiftCardHTML(item, { action: `toggleUserGift(${index})`, pressed,
+                    disabled: !pressed && selectedUserGifts.length === 6 });
+            }).join('') || '<div class="empty-state">Подарков пока нет. <button type="button" class="gift-filter" onclick="openCases()">В магазин</button></div>';
+            document.getElementById('upg-sel-count').textContent = selectedUserGifts.length;
+            const source = selectedUserGifts[0];
+            document.getElementById('upg-source-art').innerHTML = source ? renderGiftArt(source, '') : '+';
+            document.getElementById('upg-source-value').textContent = stake ? `💎 ${stake.toLocaleString('ru-RU')}` : 'Не выбраны';
+
+            const finalKey = upgTargetKeys[upgTargetKeys.length - 1];
+            document.querySelectorAll('.upgrade-options button').forEach(button => {
+                button.disabled = !stake || stake * Number(button.dataset.ratio) > GIFT_CATALOG[finalKey].price;
+            });
+            if (selectedUpgradeKey && GIFT_CATALOG[selectedUpgradeKey].price <= stake) selectedUpgradeKey = null;
+            document.getElementById('upg-target-grid').innerHTML = upgTargetKeys.map(key => {
+                const target = GIFT_CATALOG[key];
+                const chance = upgradeChance(stake, target.price);
+                return renderGiftCardHTML({ key }, { action: `chooseUpgradeTarget('${key}')`, pressed: selectedUpgradeKey === key,
+                    disabled: target.price <= stake, badge: chance ? `${chance.toLocaleString('ru-RU')}%` : '' });
+            }).join('');
+
+            const targetMeta = GIFT_CATALOG[selectedUpgradeKey];
+            const previewKey = selectedUpgradeKey || lastUpgrade?.target;
+            document.getElementById('upg-target-art').innerHTML = previewKey ? renderGiftArt({ key: previewKey }) : '+';
+            document.getElementById('upg-target-name').textContent = previewKey ? GIFT_CATALOG[previewKey].name : 'Не выбрана';
+            const chance = targetMeta ? upgradeChance(stake, targetMeta.price) : 0;
+            const displayedChance = lastUpgrade?.chance ?? chance;
+            document.getElementById('radar-chance-text').textContent = displayedChance
+                ? `${displayedChance.toLocaleString('ru-RU', { minimumFractionDigits: 1 })}%` : '—';
+            drawUpgraderRadar(displayedChance, lastUpgrade?.angle ?? 0);
+
+            const status = document.getElementById('upgrade-result');
+            status.dataset.outcome = lastUpgrade?.outcome ?? '';
+            if (lastUpgrade) {
+                status.textContent = lastUpgrade.outcome === 'win'
+                    ? `Улучшение удалось · получен ${GIFT_CATALOG[lastUpgrade.target].name}.`
+                    : 'Улучшение не удалось · подарки потрачены.';
+            } else if (chance) {
+                status.textContent = `Ставка: ${stake.toLocaleString('ru-RU')} 💎 · цель: ${targetMeta.price.toLocaleString('ru-RU')} 💎`;
+            } else {
+                status.textContent = 'Выберите подарки и цель дороже их общей стоимости.';
+            }
+            const button = document.getElementById('btn-do-upgrade');
+            button.textContent = 'Улучшить';
+            button.disabled = !chance;
+        }
+
+        function runUpgrade() {
+            if (upgraderBusy || !selectedUpgradeKey) return;
+            const target = selectedUpgradeKey;
+            const chance = upgradeChance(upgradeStake(), GIFT_CATALOG[target].price);
+            if (!chance) return;
+
+            upgraderBusy = true;
+            const button = document.getElementById('btn-do-upgrade');
+            button.disabled = true;
+            button.textContent = 'Радар крутится…';
+            document.getElementById('upgrade-result').textContent = 'Определяем результат…';
+            const roll = Math.random() * 100;
+            const won = roll < chance;
+            const angle = 360 * 4 + roll * 3.6;
+            state.items = state.items.filter(item => !selectedUserGifts.includes(item));
+            if (won) addGift(target, false);
+            selectedUserGifts = [];
+            selectedUpgradeKey = null;
+            updateUI();
+
+            const duration = matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 2200;
+            const start = performance.now();
+            function animate(now) {
+                const progress = duration ? Math.min(1, (now - start) / duration) : 1;
+                drawUpgraderRadar(chance, angle * (1 - (1 - progress) ** 3));
+                if (progress < 1) {
+                    requestAnimationFrame(animate);
+                    return;
+                }
+                lastUpgrade = { target, chance, angle, outcome: won ? 'win' : 'loss' };
+                upgraderBusy = false;
+                renderUpgrader();
+            }
+            requestAnimationFrame(animate);
         }
 
         // МАЙНЕР, СУДОКУ, БЛЭКДЖЕК, САПЁР
@@ -1027,10 +1413,8 @@
             document.getElementById('items-count').innerText = `${state.items.length} наград`;
             document.getElementById('nft-count').innerText = `${nftOnlyCount} NFT`;
 
-            const grid = document.getElementById('inventory-grid');
-            grid.innerHTML = state.items.length === 0
-                ? `<div class="empty-state">Инвентарь пуст.<br>Откройте кейсы в магазине или испытайте удачу в картах!</div>`
-                : state.items.map((item, idx) => renderGiftCardHTML(item, '', `onclick="sellItem(${idx})"`)).join('');
+            renderInventory();
+            if (document.getElementById('screen-upgrader').classList.contains('active')) renderUpgrader();
             renderMinerUI();
             if (doCloudPush) saveState();
         }
@@ -1051,7 +1435,16 @@
         }
         function goBack() { switchTab('games', 'Игры'); }
         function addGift(key, doUpdate = true) { const meta = GIFT_CATALOG[key] || GIFT_CATALOG.steel_ingot; state.items.push({ key, num: meta.isNft ? Math.floor(Math.random() * 899 + 100) : null }); if (doUpdate) updateUI(); }
-        function sellItem(idx) { const item = state.items[idx]; if (!item) return; const meta = GIFT_CATALOG[item.key] || GIFT_CATALOG.steel_ingot; if (confirm(`Продать ${meta.name} за ${meta.price} 💎?`)) { state.gems += meta.price; state.items.splice(idx, 1); updateUI(); } }
+        function sellItem(idx) {
+            const item = state.items[idx];
+            if (!item) return false;
+            const meta = getGiftMeta(item);
+            if (!confirm(`Продать ${meta.name} за ${meta.price} 💎?`)) return false;
+            state.gems += meta.price;
+            state.items.splice(idx, 1);
+            updateUI();
+            return true;
+        }
 
         const sudokuPuzzle = [[5,9,0,2,0,1,3,0,6],[4,2,0,0,0,3,7,0,0],[8,6,3,0,0,7,0,0,0],[0,0,9,0,0,0,6,0,0],[0,0,0,4,3,6,9,0,0],[0,4,0,0,0,9,0,0,5],[6,1,0,0,0,0,5,0,7],[0,7,5,0,6,0,8,9,3],[9,0,0,7,2,5,4,0,0]];
         let sUserGrid = [], sSelected = [0, 2], sTimer = null, sSec = 0;
