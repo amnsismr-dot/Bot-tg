@@ -567,16 +567,14 @@
         const tg = window.Telegram.WebApp;
         tg.expand();
 
-        const APP_VERSION = "2.2";
+        const APP_VERSION = "2.3";
 
         // Подключение к вашей облачной базе Supabase
         const SUPABASE_URL = "https://kcycpjrriegjfbzddbos.supabase.co";
         const SUPABASE_KEY = "sb_publishable_KsZOusKSAdAIlMp2sUFXow_xiHAWer2";
         const SB_HEADERS = {
             "apikey": SUPABASE_KEY,
-            "Authorization": "Bearer " + SUPABASE_KEY,
-            "Content-Type": "application/json",
-            "Prefer": "return=representation"
+            "Content-Type": "application/json"
         };
 
         const tgUser = tg.initDataUnsafe?.user || {};
@@ -640,9 +638,9 @@
         // Отправка баланса и инвентаря в Supabase
         async function pushToCloud() {
             try {
-                await fetch(`${SUPABASE_URL}/rest/v1/nervana_users`, {
+                const res = await fetch(`${SUPABASE_URL}/rest/v1/nervana_users?on_conflict=tg_id`, {
                     method: "POST",
-                    headers: { ...SB_HEADERS, "Prefer": "resolution=merge-duplicates" },
+                    headers: { ...SB_HEADERS, "Prefer": "resolution=merge-duplicates,return=representation" },
                     body: JSON.stringify({
                         tg_id: CURRENT_TG_ID,
                         username: CURRENT_USERNAME,
@@ -652,28 +650,45 @@
                         updated_at: new Date().toISOString()
                     })
                 });
-            } catch (e) {}
+                if (!res.ok) {
+                    throw new Error(`HTTP ${res.status}: ${await res.text()}`);
+                }
+                return true;
+            } catch (error) {
+                console.error('Не удалось сохранить игрока в Supabase', error);
+                return false;
+            }
         }
 
-        // Загрузка изменений из Supabase (если админ выдал или забрал валюту/NFT)
+        // Загрузка изменений из Supabase
         async function syncFromCloud(showAlert = false) {
             try {
                 const res = await fetch(`${SUPABASE_URL}/rest/v1/nervana_users?tg_id=eq.${CURRENT_TG_ID}&select=*`, {
                     headers: SB_HEADERS
                 });
-                const rows = await res.json();
-                if (rows && rows.length > 0) {
-                    const remote = rows[0];
-                    state.gems = Number(remote.gems) || 0;
-                    state.chips = Number(remote.chips) || 0;
-                    state.items = Array.isArray(remote.items) ? remote.items : [];
-                    localStorage.setItem('nervana_persistent_v1', JSON.stringify(state));
-                    updateUI(false);
-                    if (showAlert) alert('Баланс и инвентарь синхронизированы!');
-                } else {
-                    await pushToCloud();
+                if (!res.ok) {
+                    throw new Error(`HTTP ${res.status}: ${await res.text()}`);
                 }
-            } catch (e) {}
+                const rows = await res.json();
+                if (!Array.isArray(rows)) {
+                    throw new Error('Supabase вернул ответ в неожиданном формате');
+                }
+                if (rows.length === 0) {
+                    const saved = await pushToCloud();
+                    if (showAlert) alert(saved ? 'Профиль игрока сохранён в облаке!' : 'Не удалось сохранить профиль игрока в облаке.');
+                    return;
+                }
+                const remote = rows[0];
+                state.gems = Number(remote.gems) || 0;
+                state.chips = Number(remote.chips) || 0;
+                state.items = Array.isArray(remote.items) ? remote.items : [];
+                localStorage.setItem('nervana_persistent_v1', JSON.stringify(state));
+                updateUI(false);
+                if (showAlert) alert('Баланс и инвентарь синхронизированы!');
+            } catch (error) {
+                console.error('Не удалось загрузить игрока из Supabase', error);
+                if (showAlert) alert('Не удалось синхронизировать баланс и инвентарь.');
+            }
         }
 
         function checkVersionUpdate() {
