@@ -205,8 +205,8 @@
     </div>
 
     <div class="balance-bar">
-        <div class="bal-badge">💎 <span id="gems-bal">300</span></div>
-        <div class="bal-badge">🪙 <span id="chips-bal">0</span></div>
+        <div class="bal-badge">💎 <span id="gems-bal">—</span></div>
+        <div class="bal-badge">🪙 <span id="chips-bal">—</span></div>
     </div>
 
     <!-- КАТАЛОГ ИГР -->
@@ -567,7 +567,7 @@
         const tg = window.Telegram.WebApp;
         tg.expand();
 
-        const APP_VERSION = "2.3";
+        const APP_VERSION = "2.4";
 
         // Подключение к вашей облачной базе Supabase
         const SUPABASE_URL = "https://kcycpjrriegjfbzddbos.supabase.co";
@@ -619,6 +619,11 @@
 
         const ALL_KEYS = Object.keys(GIFT_CATALOG);
 
+        function readBalance(value) {
+            const amount = Number(value);
+            return Number.isSafeInteger(amount) && amount >= 0 ? amount : 0;
+        }
+
         let state = JSON.parse(localStorage.getItem('nervana_persistent_v1')) || {
             chips: 0,
             gems: 300,
@@ -626,6 +631,8 @@
             wheelFreeUsed: false,
             miner: { coreLv: 1, storageLv: 1, stored: 0, totalMined: 0, lastTick: Date.now() }
         };
+        state.gems = readBalance(state.gems);
+        state.chips = readBalance(state.chips);
 
         let syncTimeout = null;
 
@@ -644,8 +651,8 @@
                     body: JSON.stringify({
                         tg_id: CURRENT_TG_ID,
                         username: CURRENT_USERNAME,
-                        gems: state.gems,
-                        chips: state.chips,
+                        gems: readBalance(state.gems),
+                        chips: readBalance(state.chips),
                         items: state.items,
                         updated_at: new Date().toISOString()
                     })
@@ -664,7 +671,8 @@
         async function syncFromCloud(showAlert = false) {
             try {
                 const res = await fetch(`${SUPABASE_URL}/rest/v1/nervana_users?tg_id=eq.${CURRENT_TG_ID}&select=*`, {
-                    headers: SB_HEADERS
+                    headers: SB_HEADERS,
+                    cache: "no-store"
                 });
                 if (!res.ok) {
                     throw new Error(`HTTP ${res.status}: ${await res.text()}`);
@@ -679,8 +687,8 @@
                     return;
                 }
                 const remote = rows[0];
-                state.gems = Number(remote.gems) || 0;
-                state.chips = Number(remote.chips) || 0;
+                state.gems = readBalance(remote.gems);
+                state.chips = readBalance(remote.chips);
                 state.items = Array.isArray(remote.items) ? remote.items : [];
                 localStorage.setItem('nervana_persistent_v1', JSON.stringify(state));
                 updateUI(false);
@@ -1071,8 +1079,7 @@
 
         checkVersionUpdate();
         tickMiner();
-        updateUI(false);
-        syncFromCloud(false);
+        syncFromCloud(false).finally(() => updateUI(false));
     </script>
 </body>
 </html>
