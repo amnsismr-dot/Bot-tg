@@ -17,19 +17,16 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; user-select: none; -webkit-tap-highlight-color: transparent; }
         body { background-color: var(--bg-main); color: var(--text-main); height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
         
-        /* Шапка и баланс */
         .top-bar { display: flex; justify-content: space-between; align-items: center; padding: 10px 16px; position: relative; z-index: 10; }
         .icon-circle { width: 38px; height: 38px; border-radius: 50%; background: rgba(34, 34, 40, 0.9); border: 1px solid #2e2e36; display: flex; align-items: center; justify-content: center; font-size: 16px; cursor: pointer; color: #fff; }
         .title-pill { background: rgba(26, 26, 30, 0.95); padding: 8px 26px; border-radius: 20px; font-weight: 700; font-size: 16px; border: 1px solid #2c2c34; }
         .balance-bar { display: flex; gap: 8px; justify-content: flex-end; padding: 0 16px 10px; }
         .bal-badge { background: var(--bg-card); padding: 6px 12px; border-radius: 14px; font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 6px; border: 1px solid #282830; }
 
-        /* Экраны */
         .screen { flex: 1; overflow-y: auto; padding: 4px 16px 96px; display: none; }
         .screen.active { display: block; }
         .screen::-webkit-scrollbar { display: none; }
 
-        /* Каталог игр */
         .cat-title { font-size: 12px; font-weight: 700; color: var(--text-muted); letter-spacing: 1.5px; text-transform: uppercase; margin: 18px 0 10px 4px; }
         .cat-title:first-child { margin-top: 4px; }
         .game-banner { border-radius: 22px; padding: 18px 20px; margin-bottom: 12px; position: relative; overflow: hidden; border: 1px solid rgba(255,255,255,0.08); cursor: pointer; min-height: 144px; display: flex; flex-direction: column; justify-content: space-between; }
@@ -54,7 +51,6 @@
         .bg-sudoku { background: linear-gradient(135deg, #291c52 0%, #3e2a7a 60%, #181033 100%); }
         .bg-miner { background: linear-gradient(135deg, #4d260b 0%, #783b10 60%, #2b1405 100%); }
 
-        /* Карточки NFT и наград */
         .inv-card { background: linear-gradient(145deg, #1e1e24, #141418); border-radius: 22px; padding: 20px; text-align: center; border: 1px solid #2c2c34; margin-bottom: 16px; }
         .inv-label { font-size: 11px; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; }
         .inv-value { font-size: 32px; font-weight: 800; margin: 8px 0; }
@@ -87,7 +83,6 @@
         .theme-grand { background: radial-gradient(circle at 50% 45%, #7c3aed 0%, #2e1065 90%); }
         .theme-heaven { background: radial-gradient(circle at 50% 45%, #059669 0%, #022c22 90%); }
 
-        /* Общие кнопки и поля ввода */
         .game-box { background: var(--bg-card); border-radius: 22px; padding: 16px; border: 1px solid #2c2c34; text-align: center; }
         .primary-btn { width: 100%; background: linear-gradient(90deg, #e11d48, #be123c); color: #fff; border: none; padding: 14px; border-radius: 14px; font-weight: 700; font-size: 15px; cursor: pointer; margin-top: 12px; }
         .primary-btn:disabled { opacity: 0.4; }
@@ -100,13 +95,11 @@
         .custom-num-input { width: 100%; background: #1c1c22; border: 1px solid #363642; border-radius: 10px; padding: 10px; color: #fff; font-size: 18px; font-weight: 800; text-align: center; outline: none; }
         .custom-num-input:focus { border-color: #f43f5e; }
 
-        /* КАРТЫ / СЛОТЫ (Строгие иконки) */
         .slots-machine { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; background: #0d0d11; padding: 12px; border-radius: 18px; border: 1px solid #2a2a34; margin: 12px 0; }
         .slot-reel { aspect-ratio: 1; border-radius: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 8px; border: 1px solid rgba(255,255,255,0.1); transition: transform 0.15s; }
         .slot-reel svg { width: 58%; height: 58%; }
         .slot-reel span { font-size: 10px; font-weight: 700; margin-top: 4px; color: rgba(255,255,255,0.85); }
 
-        /* РАКЕТА */
         .rocket-stage { position: relative; width: 100%; height: 220px; background: radial-gradient(circle at 50% 100%, #1e293b 0%, #090d16 85%); border-radius: 18px; overflow: hidden; border: 1px solid #283548; margin-bottom: 12px; }
         #rocket-canvas { width: 100%; height: 100%; display: block; }
         .rocket-overlay { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; pointer-events: none; }
@@ -116,7 +109,6 @@
         .hist-badge { padding: 3px 8px; border-radius: 8px; font-size: 11px; font-weight: 700; background: #222228; color: #94a3b8; flex-shrink: 0; }
         .hist-badge.high { background: rgba(34, 197, 94, 0.2); color: #4ade80; }
 
-        /* РУЛЕТКА */
         .roulette-viewport { position: relative; width: 100%; height: 76px; background: #0d0d11; border-radius: 16px; overflow: hidden; border: 1px solid #2e2e38; margin: 12px 0; }
         .roulette-pointer { position: absolute; top: 0; bottom: 0; left: 50%; width: 3px; background: #fbbf24; z-index: 5; transform: translateX(-50%); box-shadow: 0 0 10px #fbbf24; }
         .roulette-track { display: flex; align-items: center; height: 100%; gap: 6px; padding-left: 50%; will-change: transform; }
@@ -125,12 +117,10 @@
         .r-black { background: linear-gradient(180deg, #3f3f46, #18181b); border: 1px solid #52525b; }
         .r-green { background: linear-gradient(180deg, #22c55e, #15803d); }
 
-        /* КОЛЕСО УДАЧИ */
         .wheel-container { position: relative; width: 250px; height: 250px; margin: 10px auto 16px; }
         .wheel-needle { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 12px solid transparent; border-right: 12px solid transparent; border-top: 22px solid #fbbf24; z-index: 5; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.8)); }
         #wheel-canvas { width: 100%; height: 100%; border-radius: 50%; box-shadow: 0 0 24px rgba(0,0,0,0.7), 0 0 0 4px #2c2c36; transition: transform 4.2s cubic-bezier(0.15, 0.85, 0.15, 1); }
 
-        /* АПГРЕЙДЕР */
         .upgrader-radar-box { background: var(--bg-card); border: 1px solid #2c2c34; border-radius: 22px; padding: 14px; margin-bottom: 12px; text-align: center; }
         .radar-wrap { position: relative; width: 170px; height: 170px; margin: 4px auto 10px; }
         #upgrader-canvas { width: 100%; height: 100%; }
@@ -139,7 +129,6 @@
         .upg-banner-btn:disabled { opacity: 0.4; }
         .sec-header { font-size: 11px; font-weight: 700; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; margin: 12px 0 6px; }
 
-        /* МАЙНЕР АТ-ПОЛЯ */
         .miner-hero { background: radial-gradient(circle at 50% 25%, #5c2d0c 0%, #241205 65%, #140b04 100%); border: 1px solid #4a270d; border-radius: 24px; padding: 22px 18px; text-align: center; margin-bottom: 12px; }
         .hex-cluster { font-size: 58px; margin: 4px 0 14px; filter: drop-shadow(0 0 18px #f59e0b); }
         .miner-lv-label { font-size: 11px; letter-spacing: 1.5px; color: #d97706; font-weight: 700; text-transform: uppercase; }
@@ -157,7 +146,6 @@
         .btn-upg-red { background: #9f1239; color: #fff; border: none; padding: 10px; border-radius: 12px; font-weight: 700; font-size: 13px; cursor: pointer; width: 100%; }
         .btn-upg-red:disabled { opacity: 0.45; }
 
-        /* СУДОКУ, BLACKJACK, САПЁР */
         .sudoku-top { background: var(--bg-card); border-radius: 18px; padding: 10px 14px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; border: 1px solid #2c2c34; }
         .sudoku-board { display: grid; grid-template-columns: repeat(9, 1fr); background: #2c2c35; border: 2px solid #4b4b59; border-radius: 12px; overflow: hidden; aspect-ratio: 1; }
         .s-cell { background: #16161c; border: 0.5px solid #282832; display: flex; align-items: center; justify-content: center; font-size: 17px; font-weight: 700; color: #fff; cursor: pointer; }
@@ -188,20 +176,17 @@
         .mine-cell.open { background: #163826; border-color: #22c55e; }
         .mine-cell.boom { background: #4c1414; border-color: #ef4444; }
 
-        /* Нижнее меню */
         .bottom-nav { position: fixed; bottom: 12px; left: 16px; right: 16px; background: rgba(22, 22, 26, 0.95); border: 1px solid #2c2c34; border-radius: 26px; display: flex; justify-content: space-around; padding: 8px 4px; backdrop-filter: blur(10px); z-index: 20; }
         .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--text-muted); font-size: 11px; cursor: pointer; padding: 5px 12px; border-radius: 16px; }
         .nav-item.active { color: #f43f5e; background: rgba(244, 63, 94, 0.12); font-weight: 600; }
         .nav-icon { font-size: 18px; }
 
-        /* Модальное окно обновления для всех пользователей */
         #update-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.88); backdrop-filter: blur(10px); display: none; align-items: center; justify-content: center; z-index: 999; padding: 20px; }
         .update-modal { background: var(--bg-card); border: 1.5px solid #f43f5e; border-radius: 24px; padding: 26px 20px; text-align: center; max-width: 320px; width: 100%; box-shadow: 0 0 36px rgba(244, 63, 94, 0.35); }
     </style>
 </head>
 <body>
 
-    <!-- Окно принудительного обновления при смене APP_VERSION -->
     <div id="update-overlay">
         <div class="update-modal">
             <div style="font-size: 46px; margin-bottom: 10px;">🔄</div>
@@ -351,7 +336,7 @@
         <div class="items-grid" id="inventory-grid"></div>
     </div>
 
-    <!-- МАГАЗИН / КЕЙСЫ (СЕТКА ВСЕХ NFT С БЕГАЮЩЕЙ ПОДСВЕТКОЙ И ВЫБОРОМ КОЛИЧЕСТВА) -->
+    <!-- МАГАЗИН / КЕЙСЫ -->
     <div id="screen-cases" class="screen">
         <div class="game-box" style="margin-bottom: 12px;">
             <div style="font-size:12px; color:var(--text-muted); font-weight:700; text-transform:uppercase;">Все доступные награды и NFT</div>
@@ -370,7 +355,7 @@
         </div>
     </div>
 
-    <!-- КАРТЫ / СЛОТЫ (ПРОИЗВОЛЬНАЯ СТАВКА ОТ 50 И СТРОГИЕ ИКОНКИ) -->
+    <!-- КАРТЫ / СЛОТЫ -->
     <div id="screen-slots" class="screen">
         <div class="game-box">
             <h3 style="margin-bottom:4px;">Карты наград</h3>
@@ -574,7 +559,7 @@
         <div class="nav-item" id="nav-cases" onclick="openCases()"><span class="nav-icon">💼</span>Магазин</div>
         <div class="nav-item" id="nav-slots" onclick="openSlots()"><span class="nav-icon">💠</span>Карты</div>
         <div class="nav-item active" id="nav-games" onclick="switchTab('games', 'Игры')"><span class="nav-icon">▶️</span>Игры</div>
-        <div class="nav-item" onclick="alert('Топ игроков: 1. Shinji (142 000 💎)')"><span class="nav-icon">🏆</span>Рейтинг</div>
+        <div class="nav-item" onclick="syncFromCloud(true)"><span class="nav-icon">🔄</span>Обновить</div>
         <div class="nav-item" id="nav-profile" onclick="switchTab('profile', 'Inventory')"><span class="nav-icon">👤</span>Профиль</div>
     </div>
 
@@ -582,11 +567,23 @@
         const tg = window.Telegram.WebApp;
         tg.expand();
 
-        // МЕНЯЙТЕ ЭТОТ НОМЕР ВЕРСИИ (например, "2.2", "2.3") при каждом обновлении кода на GitHub!
-        // У всех 50-100 пользователей сразу появится окно с кнопкой "Перезапустить" без сброса прогресса.
-        const APP_VERSION = "2.1";
+        const APP_VERSION = "2.2";
 
-        // Строгие и солидные векторные артефакты (без жаб, леденцов и черепов)
+        // Подключение к вашей облачной базе Supabase
+        const SUPABASE_URL = "https://kcycpjrriegjfbzddbos.supabase.co";
+        const SUPABASE_KEY = "sb_publishable_KsZOusKSAdAIlMp2sUFXow_xiHAWer2";
+        const SB_HEADERS = {
+            "apikey": SUPABASE_KEY,
+            "Authorization": "Bearer " + SUPABASE_KEY,
+            "Content-Type": "application/json",
+            "Prefer": "return=representation"
+        };
+
+        const tgUser = tg.initDataUnsafe?.user || {};
+        const CURRENT_TG_ID = tgUser.id || parseInt(localStorage.getItem('nervana_fallback_id')) || Math.floor(100000000 + Math.random() * 899999999);
+        localStorage.setItem('nervana_fallback_id', CURRENT_TG_ID);
+        const CURRENT_USERNAME = tgUser.username || tgUser.first_name || ("player_" + String(CURRENT_TG_ID).slice(-4));
+
         const GIFT_CATALOG = {
             steel_ingot: {
                 name: 'Стальной слиток', price: 85, isNft: false, theme: 'theme-steel',
@@ -624,7 +621,6 @@
 
         const ALL_KEYS = Object.keys(GIFT_CATALOG);
 
-        // Единый постоянный ключ хранилища (никогда не сбрасывается при обновлении кода)
         let state = JSON.parse(localStorage.getItem('nervana_persistent_v1')) || {
             chips: 0,
             gems: 300,
@@ -633,11 +629,53 @@
             miner: { coreLv: 1, storageLv: 1, stored: 0, totalMined: 0, lastTick: Date.now() }
         };
 
+        let syncTimeout = null;
+
         function saveState() {
             localStorage.setItem('nervana_persistent_v1', JSON.stringify(state));
+            clearTimeout(syncTimeout);
+            syncTimeout = setTimeout(pushToCloud, 600);
         }
 
-        // Проверка версии для всех пользователей
+        // Отправка баланса и инвентаря в Supabase
+        async function pushToCloud() {
+            try {
+                await fetch(`${SUPABASE_URL}/rest/v1/nervana_users`, {
+                    method: "POST",
+                    headers: { ...SB_HEADERS, "Prefer": "resolution=merge-duplicates" },
+                    body: JSON.stringify({
+                        tg_id: CURRENT_TG_ID,
+                        username: CURRENT_USERNAME,
+                        gems: state.gems,
+                        chips: state.chips,
+                        items: state.items,
+                        updated_at: new Date().toISOString()
+                    })
+                });
+            } catch (e) {}
+        }
+
+        // Загрузка изменений из Supabase (если админ выдал или забрал валюту/NFT)
+        async function syncFromCloud(showAlert = false) {
+            try {
+                const res = await fetch(`${SUPABASE_URL}/rest/v1/nervana_users?tg_id=eq.${CURRENT_TG_ID}&select=*`, {
+                    headers: SB_HEADERS
+                });
+                const rows = await res.json();
+                if (rows && rows.length > 0) {
+                    const remote = rows[0];
+                    state.gems = Number(remote.gems) || 0;
+                    state.chips = Number(remote.chips) || 0;
+                    state.items = Array.isArray(remote.items) ? remote.items : [];
+                    localStorage.setItem('nervana_persistent_v1', JSON.stringify(state));
+                    updateUI(false);
+                    if (showAlert) alert('Баланс и инвентарь синхронизированы!');
+                } else {
+                    await pushToCloud();
+                }
+            } catch (e) {}
+        }
+
         function checkVersionUpdate() {
             const seenVersion = localStorage.getItem('nervana_seen_version');
             if (seenVersion && seenVersion !== APP_VERSION) {
@@ -671,25 +709,16 @@
             `;
         }
 
-        // ================= МАГАЗИН КЕЙСОВ (БЕГАЮЩАЯ ПОДСВЕТКА ПО КВАДРАТИКАМ + КОЛИЧЕСТВО) =================
+        // МАГАЗИН КЕЙСОВ
         let caseOpeningBusy = false;
-
-        function openCases() {
-            openGame('cases', 'Магазин кейсов');
-            renderCaseBoard();
-            updateCaseCostUI();
-        }
-
+        function openCases() { openGame('cases', 'Магазин кейсов'); renderCaseBoard(); updateCaseCostUI(); }
         function renderCaseBoard(cursorIdx = -1, wonIndices = []) {
             const grid = document.getElementById('case-board-grid');
             grid.innerHTML = ALL_KEYS.map((key, idx) => {
-                let cls = '';
-                if (idx === cursorIdx) cls = 'case-cursor';
-                else if (wonIndices.includes(idx)) cls = 'case-won';
+                let cls = idx === cursorIdx ? 'case-cursor' : (wonIndices.includes(idx) ? 'case-won' : '');
                 return renderGiftCardHTML({ key }, cls, '', `${GIFT_CATALOG[key].price} 💎`);
             }).join('');
         }
-
         function updateCaseCostUI() {
             const inp = document.getElementById('case-qty-input');
             let qty = parseInt(inp.value, 10);
@@ -699,577 +728,274 @@
             const label = qty === 1 ? '1 кейс' : (qty < 5 ? `${qty} кейса` : `${qty} кейсов`);
             document.getElementById('btn-open-case').innerText = `Открыть ${label} за ${total.toLocaleString('ru-RU')} 💎`;
         }
-
         function pickWeightedGiftIndex() {
             const weights = [32, 22, 16, 12, 8, 5, 3.5, 1.5];
             let rnd = Math.random() * 100, acc = 0;
-            for (let i = 0; i < ALL_KEYS.length; i++) {
-                acc += weights[i];
-                if (rnd <= acc) return i;
-            }
+            for (let i = 0; i < ALL_KEYS.length; i++) { acc += weights[i]; if (rnd <= acc) return i; }
             return 0;
         }
-
         async function openCasesGridAnim() {
             if (caseOpeningBusy) return;
             const inp = document.getElementById('case-qty-input');
-            let qty = parseInt(inp.value, 10);
-            if (isNaN(qty) || qty < 1) qty = 1;
-            if (qty > 50) qty = 50;
+            let qty = Math.max(1, Math.min(50, parseInt(inp.value, 10) || 1));
             inp.value = qty;
-
             const totalCost = qty * 100;
             if (state.gems < totalCost) return alert(`Недостаточно алмазов (нужно ${totalCost} 💎)`);
 
-            state.gems -= totalCost;
-            updateUI();
-
+            state.gems -= totalCost; updateUI();
             caseOpeningBusy = true;
-            const btn = document.getElementById('btn-open-case');
-            const statusEl = document.getElementById('case-status-msg');
-            btn.disabled = true;
-            inp.disabled = true;
-            statusEl.innerText = 'Выбираем награды...';
+            const btn = document.getElementById('btn-open-case'), statusEl = document.getElementById('case-status-msg');
+            btn.disabled = true; inp.disabled = true; statusEl.innerText = 'Выбираем награды...';
 
-            const wonIndices = [];
-            const wonNames = [];
-
-            // Поочерёдный проход подсветки по квадратикам для каждого открываемого кейса
-            const visualSpins = Math.min(qty, 5); // Визуально крутим до 5 раз подряд, остальные начисляем мгновенно
+            const wonIndices = [], wonNames = [], visualSpins = Math.min(qty, 5);
             for (let c = 0; c < visualSpins; c++) {
-                const targetIdx = pickWeightedGiftIndex();
-                const steps = ALL_KEYS.length * 2 + targetIdx;
+                const targetIdx = pickWeightedGiftIndex(), steps = ALL_KEYS.length * 2 + targetIdx;
                 for (let s = 0; s <= steps; s++) {
-                    const currentSquare = s % ALL_KEYS.length;
-                    renderCaseBoard(currentSquare, wonIndices);
-                    const delay = 35 + Math.floor((s / steps) * 95);
-                    await new Promise(r => setTimeout(r, delay));
+                    renderCaseBoard(s % ALL_KEYS.length, wonIndices);
+                    await new Promise(r => setTimeout(r, 35 + Math.floor((s / steps) * 95)));
                 }
                 wonIndices.push(targetIdx);
                 const key = ALL_KEYS[targetIdx];
-                addGift(key, false);
-                wonNames.push(GIFT_CATALOG[key].name);
+                addGift(key, false); wonNames.push(GIFT_CATALOG[key].name);
                 renderCaseBoard(-1, wonIndices);
                 await new Promise(r => setTimeout(r, 220));
             }
-
-            // Если открыто больше 5 кейсов за раз, остальные тоже добавляем в инвентарь
             for (let c = visualSpins; c < qty; c++) {
-                const targetIdx = pickWeightedGiftIndex();
-                const key = ALL_KEYS[targetIdx];
-                addGift(key, false);
-                wonNames.push(GIFT_CATALOG[key].name);
+                const key = ALL_KEYS[pickWeightedGiftIndex()];
+                addGift(key, false); wonNames.push(GIFT_CATALOG[key].name);
             }
-
             updateUI();
-            statusEl.innerText = qty === 1
-                ? `Выпало: ${wonNames[0]}!`
-                : `Открыто ${qty} шт.! Получено: ${wonNames.slice(0, 3).join(', ')}${qty > 3 ? ` и ещё ${qty - 3}` : ''}`;
-
-            caseOpeningBusy = false;
-            btn.disabled = false;
-            inp.disabled = false;
+            statusEl.innerText = qty === 1 ? `Выпало: ${wonNames[0]}!` : `Открыто ${qty} шт.! Получено: ${wonNames.slice(0, 3).join(', ')}${qty > 3 ? ` и ещё ${qty - 3}` : ''}`;
+            caseOpeningBusy = false; btn.disabled = false; inp.disabled = false;
         }
 
-        // ================= КАРТЫ / СЛОТЫ (ОТ 50 И ЛЮБОЕ ЧИСЛО + СТРОГИЕ ИКОНКИ) =================
+        // КАРТЫ / СЛОТЫ
         let slotsBusy = false;
         const slotPoolKeys = ['steel_ingot', 'bronze_coin', 'silver_prism', 'gold_bar', 'azure_crystal', 'sovereign_crown'];
-
-        function openSlots() {
-            openGame('slots', 'Карты наград');
-            renderSlotReels(['gold_bar', 'azure_crystal', 'sovereign_crown']);
-            updateSlotBetUI();
-        }
-
+        function openSlots() { openGame('slots', 'Карты наград'); renderSlotReels(['gold_bar', 'azure_crystal', 'sovereign_crown']); updateSlotBetUI(); }
         function renderSlotReels(keys) {
-            const container = document.getElementById('slots-reels');
-            container.innerHTML = keys.map(k => {
+            document.getElementById('slots-reels').innerHTML = keys.map(k => {
                 const m = GIFT_CATALOG[k];
                 return `<div class="slot-reel ${m.theme}">${m.svg}<span>${m.name.split(' ')[0]}</span></div>`;
             }).join('');
         }
-
-        function setSlotBet(val) {
-            if (slotsBusy) return;
-            document.getElementById('slot-bet-input').value = val;
-            updateSlotBetUI();
-        }
-
+        function setSlotBet(val) { if (!slotsBusy) { document.getElementById('slot-bet-input').value = val; updateSlotBetUI(); } }
         function updateSlotBetUI() {
-            const inp = document.getElementById('slot-bet-input');
-            let betVal = parseInt(inp.value, 10);
-            if (isNaN(betVal) || betVal < 50) betVal = 50;
-            const mult = (betVal / 50).toFixed(1);
-            document.getElementById('slot-mult-preview').innerText = mult;
+            let betVal = Math.max(50, parseInt(document.getElementById('slot-bet-input').value, 10) || 50);
+            document.getElementById('slot-mult-preview').innerText = (betVal / 50).toFixed(1);
             document.getElementById('btn-spin-slots').innerText = `Открыть карты за ${betVal.toLocaleString('ru-RU')} 💎`;
         }
-
         async function spinSlots() {
             if (slotsBusy) return;
             const inp = document.getElementById('slot-bet-input');
-            let betVal = parseInt(inp.value, 10);
-            if (isNaN(betVal) || betVal < 50) {
-                betVal = 50;
-                inp.value = 50;
-            }
+            let betVal = Math.max(50, parseInt(inp.value, 10) || 50); inp.value = betVal;
             if (state.gems < betVal) return alert(`Недостаточно алмазов (нужно ${betVal} 💎)`);
 
-            state.gems -= betVal;
-            updateUI();
+            state.gems -= betVal; updateUI(); slotsBusy = true;
+            const btn = document.getElementById('btn-spin-slots'), msgEl = document.getElementById('slots-status-msg');
+            btn.disabled = true; msgEl.innerText = 'Тасуем карты...';
 
-            slotsBusy = true;
-            const btn = document.getElementById('btn-spin-slots');
-            const msgEl = document.getElementById('slots-status-msg');
-            btn.disabled = true;
-            msgEl.innerText = 'Тасуем карты...';
-
-            // Анимация смены карт
             for (let i = 0; i < 12; i++) {
-                const temp = [
-                    slotPoolKeys[Math.floor(Math.random() * slotPoolKeys.length)],
-                    slotPoolKeys[Math.floor(Math.random() * slotPoolKeys.length)],
-                    slotPoolKeys[Math.floor(Math.random() * slotPoolKeys.length)]
-                ];
-                renderSlotReels(temp);
+                renderSlotReels([0,1,2].map(() => slotPoolKeys[Math.floor(Math.random() * slotPoolKeys.length)]));
                 await new Promise(r => setTimeout(r, 70 + i * 10));
             }
-
-            // Повышаем шанс совпадения пропорционально ставке (от 22% до 45%)
             const winChance = Math.min(0.45, 0.22 + (betVal / 5000));
             let r1, r2, r3;
-            if (Math.random() < winChance) {
-                const chosen = slotPoolKeys[Math.floor(Math.random() * slotPoolKeys.length)];
-                r1 = r2 = r3 = chosen;
-            } else {
+            if (Math.random() < winChance) { r1 = r2 = r3 = slotPoolKeys[Math.floor(Math.random() * slotPoolKeys.length)]; }
+            else {
                 r1 = slotPoolKeys[Math.floor(Math.random() * slotPoolKeys.length)];
                 r2 = slotPoolKeys[Math.floor(Math.random() * slotPoolKeys.length)];
                 r3 = slotPoolKeys[Math.floor(Math.random() * slotPoolKeys.length)];
-                if (r1 === r2 && r2 === r3) {
-                    r3 = slotPoolKeys[(slotPoolKeys.indexOf(r1) + 1) % slotPoolKeys.length];
-                }
+                if (r1 === r2 && r2 === r3) r3 = slotPoolKeys[(slotPoolKeys.indexOf(r1) + 1) % slotPoolKeys.length];
             }
-
             renderSlotReels([r1, r2, r3]);
 
             if (r1 === r2 && r2 === r3) {
                 const gemBonus = Math.floor(betVal * 1.5);
-                state.gems += gemBonus;
-                addGift(r1, true);
-                msgEl.style.color = '#4ade80';
-                msgEl.innerText = `ПОБЕДА! Получен ${GIFT_CATALOG[r1].name} и +${gemBonus} 💎!`;
+                state.gems += gemBonus; addGift(r1, true);
+                msgEl.style.color = '#4ade80'; msgEl.innerText = `ПОБЕДА! Получен ${GIFT_CATALOG[r1].name} и +${gemBonus} 💎!`;
             } else if (r1 === r2 || r2 === r3 || r1 === r3) {
                 const refund = Math.floor(betVal * 0.5);
-                state.gems += refund;
-                updateUI();
-                msgEl.style.color = '#38bdf8';
-                msgEl.innerText = `2 совпадения! Возврат половины ставки: +${refund} 💎`;
+                state.gems += refund; updateUI();
+                msgEl.style.color = '#38bdf8'; msgEl.innerText = `2 совпадения! Возврат половины ставки: +${refund} 💎`;
             } else {
-                msgEl.style.color = '#94a3b8';
-                msgEl.innerText = 'Нет совпадений. Попробуйте ещё раз!';
+                msgEl.style.color = '#94a3b8'; msgEl.innerText = 'Нет совпадений. Попробуйте ещё раз!';
             }
-
-            slotsBusy = false;
-            btn.disabled = false;
+            slotsBusy = false; btn.disabled = false;
         }
 
-        // ================= РАКЕТА =================
+        // РАКЕТА
         let rocketAnim = null, rocketRunning = false, rocketMult = 1.0, rocketCrash = 1.0, rocketBet = 50, rocketStartTime = 0;
         const stars = Array.from({ length: 28 }, () => ({ x: Math.random() * 340, y: Math.random() * 220, r: Math.random() * 1.5 + 0.5 }));
-
-        function setRocketBet(val, btn) {
-            if (rocketRunning) return;
-            rocketBet = val;
-            document.querySelectorAll('#rocket-bets .bet-pill').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            document.getElementById('btn-rocket').innerText = `Запустить (${rocketBet} 💎)`;
-        }
-
+        function setRocketBet(val, btn) { if (!rocketRunning) { rocketBet = val; document.querySelectorAll('#rocket-bets .bet-pill').forEach(b => b.classList.remove('active')); btn.classList.add('active'); document.getElementById('btn-rocket').innerText = `Запустить (${rocketBet} 💎)`; } }
         function drawRocketScene(progress, crashed = false) {
-            const canvas = document.getElementById('rocket-canvas');
-            if (!canvas) return;
-            const ctx = canvas.getContext('2d');
-            const W = canvas.width, H = canvas.height;
-            ctx.clearRect(0, 0, W, H);
-
-            ctx.fillStyle = 'rgba(255,255,255,0.65)';
-            stars.forEach(s => {
-                if (rocketRunning) { s.x -= 0.6; s.y += 0.4; if (s.x < 0) s.x = W; if (s.y > H) s.y = 0; }
-                ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2); ctx.fill();
-            });
-
-            const t = Math.min(1, progress);
-            const rx = 45 + t * (W - 105);
-            const ry = H - 35 - Math.pow(t, 1.35) * (H - 80);
-
+            const canvas = document.getElementById('rocket-canvas'); if (!canvas) return;
+            const ctx = canvas.getContext('2d'), W = canvas.width, H = canvas.height;
+            ctx.clearRect(0, 0, W, H); ctx.fillStyle = 'rgba(255,255,255,0.65)';
+            stars.forEach(s => { if (rocketRunning) { s.x -= 0.6; s.y += 0.4; if (s.x < 0) s.x = W; if (s.y > H) s.y = 0; } ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2); ctx.fill(); });
+            const t = Math.min(1, progress), rx = 45 + t * (W - 105), ry = H - 35 - Math.pow(t, 1.35) * (H - 80);
             const grad = ctx.createLinearGradient(45, H - 35, rx, ry);
-            grad.addColorStop(0, 'rgba(56, 189, 248, 0.1)');
-            grad.addColorStop(1, crashed ? 'rgba(239, 68, 68, 0.8)' : 'rgba(56, 189, 248, 0.9)');
-            ctx.strokeStyle = grad;
-            ctx.lineWidth = 4;
-            ctx.beginPath();
-            ctx.moveTo(45, H - 35);
-            ctx.quadraticCurveTo(45 + t * (W - 105) * 0.5, H - 35, rx, ry);
-            ctx.stroke();
-
-            ctx.save();
-            ctx.translate(rx, ry);
-            if (crashed) {
-                ctx.font = '44px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText('💥', 0, 0);
-            } else {
-                const angle = -Math.atan2(Math.pow(t, 0.35) * (H - 80), W - 105) - 0.15;
-                ctx.rotate(angle);
-                const flameLen = 14 + Math.random() * 10;
-                ctx.fillStyle = '#f97316';
+            grad.addColorStop(0, 'rgba(56, 189, 248, 0.1)'); grad.addColorStop(1, crashed ? 'rgba(239, 68, 68, 0.8)' : 'rgba(56, 189, 248, 0.9)');
+            ctx.strokeStyle = grad; ctx.lineWidth = 4; ctx.beginPath(); ctx.moveTo(45, H - 35); ctx.quadraticCurveTo(45 + t * (W - 105) * 0.5, H - 35, rx, ry); ctx.stroke();
+            ctx.save(); ctx.translate(rx, ry);
+            if (crashed) { ctx.font = '44px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText('💥', 0, 0); }
+            else {
+                ctx.rotate(-Math.atan2(Math.pow(t, 0.35) * (H - 80), W - 105) - 0.15);
+                const flameLen = 14 + Math.random() * 10; ctx.fillStyle = '#f97316';
                 ctx.beginPath(); ctx.moveTo(-16, -5); ctx.lineTo(-16 - flameLen, 0); ctx.lineTo(-16, 5); ctx.fill();
-                ctx.fillStyle = '#f8fafc';
-                ctx.beginPath(); ctx.ellipse(0, 0, 20, 9, 0, 0, Math.PI * 2); ctx.fill();
-                ctx.fillStyle = '#ef4444';
-                ctx.beginPath(); ctx.moveTo(14, -6); ctx.lineTo(25, 0); ctx.lineTo(14, 6); ctx.fill();
-                ctx.fillStyle = '#38bdf8';
-                ctx.beginPath(); ctx.arc(4, 0, 4, 0, Math.PI * 2); ctx.fill();
+                ctx.fillStyle = '#f8fafc'; ctx.beginPath(); ctx.ellipse(0, 0, 20, 9, 0, 0, Math.PI * 2); ctx.fill();
+                ctx.fillStyle = '#ef4444'; ctx.beginPath(); ctx.moveTo(14, -6); ctx.lineTo(25, 0); ctx.lineTo(14, 6); ctx.fill();
+                ctx.fillStyle = '#38bdf8'; ctx.beginPath(); ctx.arc(4, 0, 4, 0, Math.PI * 2); ctx.fill();
             }
             ctx.restore();
         }
-
         function openRocket() { openGame('rocket', 'Ракета'); setTimeout(() => drawRocketScene(0, false), 50); }
-
         function toggleRocket() {
-            const btn = document.getElementById('btn-rocket');
-            const multEl = document.getElementById('rocket-mult');
-            const lblEl = document.getElementById('rocket-status-label');
-
+            const btn = document.getElementById('btn-rocket'), multEl = document.getElementById('rocket-mult'), lblEl = document.getElementById('rocket-status-label');
             if (!rocketRunning) {
                 if (state.gems < rocketBet) return alert(`Недостаточно алмазов (нужно ${rocketBet} 💎)`);
-                state.gems -= rocketBet; updateUI();
-                rocketRunning = true; rocketMult = 1.00;
+                state.gems -= rocketBet; updateUI(); rocketRunning = true; rocketMult = 1.00;
                 rocketCrash = Math.random() < 0.08 ? 1.02 : +(1.15 + Math.random() * 4.2).toFixed(2);
-                rocketStartTime = performance.now();
-                multEl.style.color = '#ffffff'; lblEl.innerText = 'Ракета набирает высоту...';
-
+                rocketStartTime = performance.now(); multEl.style.color = '#ffffff'; lblEl.innerText = 'Ракета набирает высоту...';
                 function loop(now) {
                     if (!rocketRunning) return;
                     const sec = (now - rocketStartTime) / 1000;
                     rocketMult = +(1 + Math.pow(sec, 1.45) * 0.45).toFixed(2);
-                    const winNow = Math.floor(rocketBet * rocketMult);
-                    multEl.innerText = rocketMult.toFixed(2) + 'x';
-                    btn.innerText = `Забрать ${winNow} 💎`;
+                    multEl.innerText = rocketMult.toFixed(2) + 'x'; btn.innerText = `Забрать ${Math.floor(rocketBet * rocketMult)} 💎`;
                     drawRocketScene(sec / 5.5, false);
-
                     if (rocketMult >= rocketCrash) {
-                        rocketRunning = false;
-                        multEl.style.color = '#ef4444';
-                        lblEl.innerText = `Улетела на ${rocketCrash.toFixed(2)}x`;
-                        btn.innerText = `Запустить (${rocketBet} 💎)`;
-                        drawRocketScene(sec / 5.5, true);
-                        addRocketHistory(rocketCrash);
-                        return;
+                        rocketRunning = false; multEl.style.color = '#ef4444'; lblEl.innerText = `Улетела на ${rocketCrash.toFixed(2)}x`;
+                        btn.innerText = `Запустить (${rocketBet} 💎)`; drawRocketScene(sec / 5.5, true); addRocketHistory(rocketCrash); return;
                     }
                     rocketAnim = requestAnimationFrame(loop);
                 }
                 rocketAnim = requestAnimationFrame(loop);
             } else {
                 rocketRunning = false; cancelAnimationFrame(rocketAnim);
-                const win = Math.floor(rocketBet * rocketMult);
-                state.gems += win; updateUI();
-                multEl.style.color = '#4ade80';
-                lblEl.innerText = `Вы забрали +${win} 💎 на ${rocketMult.toFixed(2)}x!`;
-                btn.innerText = `Запустить (${rocketBet} 💎)`;
-                addRocketHistory(rocketCrash);
+                const win = Math.floor(rocketBet * rocketMult); state.gems += win; updateUI();
+                multEl.style.color = '#4ade80'; lblEl.innerText = `Вы забрали +${win} 💎 на ${rocketMult.toFixed(2)}x!`;
+                btn.innerText = `Запустить (${rocketBet} 💎)`; addRocketHistory(rocketCrash);
             }
         }
+        function addRocketHistory(val) { const strip = document.getElementById('rocket-history'); strip.innerHTML = `<div class="hist-badge ${val >= 2.0 ? 'high' : ''}">${val.toFixed(2)}x</div>` + strip.innerHTML; }
 
-        function addRocketHistory(val) {
-            const strip = document.getElementById('rocket-history');
-            strip.innerHTML = `<div class="hist-badge ${val >= 2.0 ? 'high' : ''}">${val.toFixed(2)}x</div>` + strip.innerHTML;
-        }
-
-        // ================= РУЛЕТКА =================
+        // РУЛЕТКА
         let rouletteBet = 50, rouletteSpinning = false;
-        const wheelOrder = [
-            { num: 0, color: 'green' }, { num: 1, color: 'red' }, { num: 2, color: 'black' },
-            { num: 3, color: 'red' }, { num: 4, color: 'black' }, { num: 5, color: 'red' },
-            { num: 6, color: 'black' }, { num: 7, color: 'red' }, { num: 8, color: 'black' },
-            { num: 9, color: 'red' }, { num: 10, color: 'black' }, { num: 11, color: 'red' },
-            { num: 12, color: 'black' }, { num: 13, color: 'red' }, { num: 14, color: 'black' }
-        ];
-
-        function setRouletteBet(val, btn) {
-            if (rouletteSpinning) return;
-            rouletteBet = val;
-            document.querySelectorAll('#roulette-bets .bet-pill').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-        }
-
-        function buildRouletteTrack() {
-            const track = document.getElementById('roulette-track');
-            track.style.transition = 'none'; track.style.transform = 'translateX(0px)';
-            let html = '';
-            for (let rep = 0; rep < 6; rep++) wheelOrder.forEach(item => { html += `<div class="r-tile r-${item.color}">${item.num}</div>`; });
-            track.innerHTML = html;
-        }
-
+        const wheelOrder = [{ num: 0, color: 'green' }, { num: 1, color: 'red' }, { num: 2, color: 'black' }, { num: 3, color: 'red' }, { num: 4, color: 'black' }, { num: 5, color: 'red' }, { num: 6, color: 'black' }, { num: 7, color: 'red' }, { num: 8, color: 'black' }, { num: 9, color: 'red' }, { num: 10, color: 'black' }, { num: 11, color: 'red' }, { num: 12, color: 'black' }, { num: 13, color: 'red' }, { num: 14, color: 'black' }];
+        function setRouletteBet(val, btn) { if (!rouletteSpinning) { rouletteBet = val; document.querySelectorAll('#roulette-bets .bet-pill').forEach(b => b.classList.remove('active')); btn.classList.add('active'); } }
+        function buildRouletteTrack() { const track = document.getElementById('roulette-track'); track.style.transition = 'none'; track.style.transform = 'translateX(0px)'; let html = ''; for (let rep = 0; rep < 6; rep++) wheelOrder.forEach(item => { html += `<div class="r-tile r-${item.color}">${item.num}</div>`; }); track.innerHTML = html; }
         function openRoulette() { openGame('roulette', 'Рулетка'); buildRouletteTrack(); }
-
         function playRoulette(choice) {
             if (rouletteSpinning) return;
             if (state.gems < rouletteBet) return alert(`Недостаточно алмазов (нужно ${rouletteBet} 💎)`);
-            state.gems -= rouletteBet; updateUI(); rouletteSpinning = true;
-            document.getElementById('roulette-res').innerText = 'Шарик запущен...';
-
+            state.gems -= rouletteBet; updateUI(); rouletteSpinning = true; document.getElementById('roulette-res').innerText = 'Шарик запущен...';
             buildRouletteTrack();
-            const winIdx = Math.floor(Math.random() * wheelOrder.length);
-            const targetTileIndex = 4 * wheelOrder.length + winIdx;
-            const offset = -(targetTileIndex * 60 + 27 + (Math.floor(Math.random() * 24) - 12));
-
+            const winIdx = Math.floor(Math.random() * wheelOrder.length), offset = -((4 * wheelOrder.length + winIdx) * 60 + 27 + (Math.floor(Math.random() * 24) - 12));
             const track = document.getElementById('roulette-track');
-            requestAnimationFrame(() => {
-                track.style.transition = 'transform 3.8s cubic-bezier(0.12, 0.85, 0.18, 1)';
-                track.style.transform = `translateX(${offset}px)`;
-            });
-
+            requestAnimationFrame(() => { track.style.transition = 'transform 3.8s cubic-bezier(0.12, 0.85, 0.18, 1)'; track.style.transform = `translateX(${offset}px)`; });
             setTimeout(() => {
-                rouletteSpinning = false;
-                const landed = wheelOrder[winIdx];
-                const hist = document.getElementById('roulette-history');
-                hist.innerHTML = `<div class="r-tile r-${landed.color}" style="width:26px; height:26px; font-size:11px; border-radius:7px;">${landed.num}</div>` + hist.innerHTML;
-
-                if (landed.color === choice) {
-                    const win = rouletteBet * (landed.color === 'green' ? 14 : 2);
-                    state.gems += win; updateUI();
-                    document.getElementById('roulette-res').innerText = `Выпало ${landed.num}! Выигрыш +${win} 💎`;
-                } else {
-                    document.getElementById('roulette-res').innerText = `Выпало ${landed.num}. Ставка не сыграла.`;
-                }
+                rouletteSpinning = false; const landed = wheelOrder[winIdx];
+                document.getElementById('roulette-history').innerHTML = `<div class="r-tile r-${landed.color}" style="width:26px; height:26px; font-size:11px; border-radius:7px;">${landed.num}</div>` + document.getElementById('roulette-history').innerHTML;
+                if (landed.color === choice) { const win = rouletteBet * (landed.color === 'green' ? 14 : 2); state.gems += win; updateUI(); document.getElementById('roulette-res').innerText = `Выпало ${landed.num}! Выигрыш +${win} 💎`; }
+                else { document.getElementById('roulette-res').innerText = `Выпало ${landed.num}. Ставка не сыграла.`; }
             }, 3950);
         }
 
-        // ================= КОЛЕСО УДАЧИ =================
-        const wheelSectors = [
-            { label: '50 💎', type: 'gems', val: 50, color: '#2563eb' },
-            { label: '150 🪙', type: 'chips', val: 150, color: '#3f3f46' },
-            { label: '150 💎', type: 'gems', val: 150, color: '#9333ea' },
-            { label: '300 🪙', type: 'chips', val: 300, color: '#27272a' },
-            { label: '300 💎', type: 'gems', val: 300, color: '#e11d48' },
-            { label: '500 🪙', type: 'chips', val: 500, color: '#3f3f46' },
-            { label: '100 💎', type: 'gems', val: 100, color: '#059669' },
-            { label: '750 💎', type: 'gems', val: 750, color: '#d97706' }
-        ];
+        // КОЛЕСО УДАЧИ
+        const wheelSectors = [{ label: '50 💎', type: 'gems', val: 50, color: '#2563eb' }, { label: '150 🪙', type: 'chips', val: 150, color: '#3f3f46' }, { label: '150 💎', type: 'gems', val: 150, color: '#9333ea' }, { label: '300 🪙', type: 'chips', val: 300, color: '#27272a' }, { label: '300 💎', type: 'gems', val: 300, color: '#e11d48' }, { label: '500 🪙', type: 'chips', val: 500, color: '#3f3f46' }, { label: '100 💎', type: 'gems', val: 100, color: '#059669' }, { label: '750 💎', type: 'gems', val: 750, color: '#d97706' }];
         let wheelAngle = 0, wheelBusy = false;
-
         function drawWheelCanvas() {
-            const canvas = document.getElementById('wheel-canvas');
-            if (!canvas) return;
-            const ctx = canvas.getContext('2d');
-            const cx = 125, cy = 125, r = 122, arc = (Math.PI * 2) / wheelSectors.length;
+            const canvas = document.getElementById('wheel-canvas'); if (!canvas) return;
+            const ctx = canvas.getContext('2d'), cx = 125, cy = 125, r = 122, arc = (Math.PI * 2) / wheelSectors.length;
             ctx.clearRect(0, 0, 250, 250);
             wheelSectors.forEach((sec, i) => {
                 const start = i * arc - Math.PI / 2, end = start + arc;
-                ctx.beginPath(); ctx.moveTo(cx, cy); ctx.arc(cx, cy, r, start, end);
-                ctx.fillStyle = sec.color; ctx.fill(); ctx.strokeStyle = '#141418'; ctx.lineWidth = 2; ctx.stroke();
-                ctx.save(); ctx.translate(cx, cy); ctx.rotate(start + arc / 2);
-                ctx.fillStyle = '#ffffff'; ctx.font = 'bold 13px sans-serif'; ctx.textAlign = 'right';
-                ctx.fillText(sec.label, r - 16, 5); ctx.restore();
+                ctx.beginPath(); ctx.moveTo(cx, cy); ctx.arc(cx, cy, r, start, end); ctx.fillStyle = sec.color; ctx.fill(); ctx.strokeStyle = '#141418'; ctx.lineWidth = 2; ctx.stroke();
+                ctx.save(); ctx.translate(cx, cy); ctx.rotate(start + arc / 2); ctx.fillStyle = '#ffffff'; ctx.font = 'bold 13px sans-serif'; ctx.textAlign = 'right'; ctx.fillText(sec.label, r - 16, 5); ctx.restore();
             });
-            ctx.beginPath(); ctx.arc(cx, cy, 22, 0, Math.PI * 2); ctx.fillStyle = '#16161a'; ctx.fill();
-            ctx.strokeStyle = '#fbbf24'; ctx.lineWidth = 3; ctx.stroke();
+            ctx.beginPath(); ctx.arc(cx, cy, 22, 0, Math.PI * 2); ctx.fillStyle = '#16161a'; ctx.fill(); ctx.strokeStyle = '#fbbf24'; ctx.lineWidth = 3; ctx.stroke();
         }
-
         function openWheel() { openGame('wheel', 'Колесо удачи'); drawWheelCanvas(); document.getElementById('btn-spin-wheel').disabled = state.wheelFreeUsed; }
-
         function executeWheelSpin() {
-            if (wheelBusy) return;
-            wheelBusy = true;
-            const winIdx = Math.floor(Math.random() * wheelSectors.length);
-            const sliceDeg = 360 / wheelSectors.length;
+            if (wheelBusy) return; wheelBusy = true;
+            const winIdx = Math.floor(Math.random() * wheelSectors.length), sliceDeg = 360 / wheelSectors.length;
             const stopRotation = (360 - (winIdx * sliceDeg + sliceDeg / 2)) % 360;
-            const delta = 360 * 5 + ((stopRotation - (wheelAngle % 360) + 360) % 360);
-            wheelAngle += delta;
-
-            document.getElementById('wheel-canvas').style.transform = `rotate(${wheelAngle}deg)`;
-            document.getElementById('wheel-res').innerText = 'Барабан крутится...';
-
-            setTimeout(() => {
-                wheelBusy = false;
-                const prize = wheelSectors[winIdx];
-                if (prize.type === 'gems') state.gems += prize.val; else state.chips += prize.val;
-                updateUI();
-                document.getElementById('wheel-res').innerText = `Вы выиграли: ${prize.label}!`;
-            }, 4300);
+            wheelAngle += 360 * 5 + ((stopRotation - (wheelAngle % 360) + 360) % 360);
+            document.getElementById('wheel-canvas').style.transform = `rotate(${wheelAngle}deg)`; document.getElementById('wheel-res').innerText = 'Барабан крутится...';
+            setTimeout(() => { wheelBusy = false; const prize = wheelSectors[winIdx]; if (prize.type === 'gems') state.gems += prize.val; else state.chips += prize.val; updateUI(); document.getElementById('wheel-res').innerText = `Вы выиграли: ${prize.label}!`; }, 4300);
         }
-
         function spinWheel() { if (!state.wheelFreeUsed && !wheelBusy) { state.wheelFreeUsed = true; document.getElementById('btn-spin-wheel').disabled = true; executeWheelSpin(); } }
         function spinWheelPaid() { if (!wheelBusy) { if (state.gems < 100) return alert('Нужно 100 💎'); state.gems -= 100; updateUI(); executeWheelSpin(); } }
 
-        // ================= АПГРЕЙДЕР =================
+        // АПГРЕЙДЕР
         let selectedUserGifts = [], selectedTargetIdx = 0, upgraderBusy = false;
         const upgTargetKeys = ['silver_prism', 'gold_bar', 'azure_crystal', 'master_goblet', 'sovereign_crown', 'aegis_core'];
-
         function drawUpgraderRadar(chancePct, needleDeg = 0) {
-            const canvas = document.getElementById('upgrader-canvas');
-            if (!canvas) return;
-            const ctx = canvas.getContext('2d');
-            const cx = 85, cy = 85, r = 68;
-            ctx.clearRect(0, 0, 170, 170);
-
-            ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2);
-            ctx.strokeStyle = '#272730'; ctx.lineWidth = 14; ctx.stroke();
-
-            if (chancePct > 0) {
-                const start = -Math.PI / 2;
-                ctx.beginPath(); ctx.arc(cx, cy, r, start, start + (Math.PI * 2) * (chancePct / 100));
-                ctx.strokeStyle = '#22c55e'; ctx.lineWidth = 14; ctx.lineCap = 'round'; ctx.stroke();
-            }
-
-            ctx.save(); ctx.translate(cx, cy); ctx.rotate((needleDeg - 90) * Math.PI / 180);
-            ctx.fillStyle = '#ffffff';
-            ctx.beginPath(); ctx.moveTo(r + 12, 0); ctx.lineTo(r + 2, -6); ctx.lineTo(r + 2, 6); ctx.fill();
-            ctx.restore();
+            const canvas = document.getElementById('upgrader-canvas'); if (!canvas) return;
+            const ctx = canvas.getContext('2d'), cx = 85, cy = 85, r = 68;
+            ctx.clearRect(0, 0, 170, 170); ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.strokeStyle = '#272730'; ctx.lineWidth = 14; ctx.stroke();
+            if (chancePct > 0) { const start = -Math.PI / 2; ctx.beginPath(); ctx.arc(cx, cy, r, start, start + (Math.PI * 2) * (chancePct / 100)); ctx.strokeStyle = '#22c55e'; ctx.lineWidth = 14; ctx.lineCap = 'round'; ctx.stroke(); }
+            ctx.save(); ctx.translate(cx, cy); ctx.rotate((needleDeg - 90) * Math.PI / 180); ctx.fillStyle = '#ffffff'; ctx.beginPath(); ctx.moveTo(r + 12, 0); ctx.lineTo(r + 2, -6); ctx.lineTo(r + 2, 6); ctx.fill(); ctx.restore();
         }
-
         function openUpgrader() { selectedUserGifts = []; openGame('upgrader', 'Апгрейдер'); renderUpgrader(); }
-
-        function toggleUserGift(idx) {
-            if (upgraderBusy) return;
-            const pos = selectedUserGifts.indexOf(idx);
-            if (pos > -1) selectedUserGifts.splice(pos, 1);
-            else if (selectedUserGifts.length < 6) selectedUserGifts.push(idx);
-            renderUpgrader();
-        }
-
+        function toggleUserGift(idx) { if (!upgraderBusy) { const pos = selectedUserGifts.indexOf(idx); if (pos > -1) selectedUserGifts.splice(pos, 1); else if (selectedUserGifts.length < 6) selectedUserGifts.push(idx); renderUpgrader(); } }
         function renderUpgrader() {
             const uGrid = document.getElementById('upg-user-grid');
-            if (state.items.length === 0) {
-                uGrid.innerHTML = `<div class="empty-state">У вас пока нет наград для апгрейда. Откройте кейс в магазине!</div>`;
-            } else {
-                uGrid.innerHTML = state.items.map((item, idx) =>
-                    renderGiftCardHTML(item, selectedUserGifts.includes(idx) ? 'selected' : '', `onclick="toggleUserGift(${idx})"`)
-                ).join('');
-            }
-
+            uGrid.innerHTML = state.items.length === 0 ? `<div class="empty-state">У вас пока нет наград для апгрейда. Откройте кейс в магазине!</div>` : state.items.map((item, idx) => renderGiftCardHTML(item, selectedUserGifts.includes(idx) ? 'selected' : '', `onclick="toggleUserGift(${idx})"`)).join('');
             const totalBet = selectedUserGifts.reduce((s, i) => s + (GIFT_CATALOG[state.items[i]?.key]?.price || 0), 0);
-            document.getElementById('upg-sel-count').innerText = selectedUserGifts.length;
-            document.getElementById('upg-sel-val').innerText = totalBet.toLocaleString('ru-RU');
-
-            const tGrid = document.getElementById('upg-target-grid');
-            tGrid.innerHTML = upgTargetKeys.map((key, idx) => {
-                const meta = GIFT_CATALOG[key];
-                const chance = totalBet > 0 ? Math.min(75, Math.max(1, ((totalBet / meta.price) * 85))).toFixed(1) : '0.0';
+            document.getElementById('upg-sel-count').innerText = selectedUserGifts.length; document.getElementById('upg-sel-val').innerText = totalBet.toLocaleString('ru-RU');
+            document.getElementById('upg-target-grid').innerHTML = upgTargetKeys.map((key, idx) => {
+                const meta = GIFT_CATALOG[key], chance = totalBet > 0 ? Math.min(75, Math.max(1, ((totalBet / meta.price) * 85))).toFixed(1) : '0.0';
                 return renderGiftCardHTML({ key }, selectedTargetIdx === idx ? 'selected' : '', `onclick="if(!upgraderBusy){selectedTargetIdx=${idx}; renderUpgrader();}"`, `${chance}%`);
             }).join('');
-
-            const targetMeta = GIFT_CATALOG[upgTargetKeys[selectedTargetIdx]];
-            const btn = document.getElementById('btn-do-upgrade');
-            const radarText = document.getElementById('radar-chance-text');
-
-            if (totalBet > 0) {
-                const chanceNum = Math.min(75, Math.max(1, (totalBet / targetMeta.price) * 85));
-                radarText.innerText = chanceNum.toFixed(1) + '%';
-                drawUpgraderRadar(chanceNum, 0);
-                btn.disabled = false;
-                btn.innerText = `Апгрейд на ${targetMeta.name} (${chanceNum.toFixed(1)}%)`;
-            } else {
-                radarText.innerText = '0.0%';
-                drawUpgraderRadar(0, 0);
-                btn.disabled = true;
-                btn.innerText = 'Выберите награды для апгрейда';
-            }
+            const targetMeta = GIFT_CATALOG[upgTargetKeys[selectedTargetIdx]], btn = document.getElementById('btn-do-upgrade'), radarText = document.getElementById('radar-chance-text');
+            if (totalBet > 0) { const chanceNum = Math.min(75, Math.max(1, (totalBet / targetMeta.price) * 85)); radarText.innerText = chanceNum.toFixed(1) + '%'; drawUpgraderRadar(chanceNum, 0); btn.disabled = false; btn.innerText = `Апгрейд на ${targetMeta.name} (${chanceNum.toFixed(1)}%)`; }
+            else { radarText.innerText = '0.0%'; drawUpgraderRadar(0, 0); btn.disabled = true; btn.innerText = 'Выберите награды для апгрейда'; }
         }
-
         function runUpgrade() {
             if (upgraderBusy || selectedUserGifts.length === 0) return;
-            upgraderBusy = true;
-            document.getElementById('btn-do-upgrade').disabled = true;
-
+            upgraderBusy = true; document.getElementById('btn-do-upgrade').disabled = true;
             const totalBet = selectedUserGifts.reduce((s, i) => s + GIFT_CATALOG[state.items[i].key].price, 0);
-            const targetKey = upgTargetKeys[selectedTargetIdx];
-            const targetMeta = GIFT_CATALOG[targetKey];
-            const chance = Math.min(75, Math.max(1, (totalBet / targetMeta.price) * 85));
-
-            const rollPct = Math.random() * 100;
-            const isWin = rollPct <= chance;
-            const totalSpin = 360 * 4 + (rollPct / 100) * 360;
-            const start = performance.now();
-
+            const targetKey = upgTargetKeys[selectedTargetIdx], targetMeta = GIFT_CATALOG[targetKey], chance = Math.min(75, Math.max(1, (totalBet / targetMeta.price) * 85));
+            const rollPct = Math.random() * 100, isWin = rollPct <= chance, totalSpin = 360 * 4 + (rollPct / 100) * 360, start = performance.now();
             function animRadar(now) {
-                const t = Math.min(1, (now - start) / 2600);
-                const ease = 1 - Math.pow(1 - t, 3);
-                drawUpgraderRadar(chance, totalSpin * ease);
+                const t = Math.min(1, (now - start) / 2600), ease = 1 - Math.pow(1 - t, 3); drawUpgraderRadar(chance, totalSpin * ease);
                 if (t < 1) requestAnimationFrame(animRadar);
-                else {
-                    upgraderBusy = false;
-                    selectedUserGifts.sort((a, b) => b - a).forEach(i => state.items.splice(i, 1));
-                    selectedUserGifts = [];
-                    if (isWin) { addGift(targetKey, true); alert(`УСПЕХ! Вы получили ${targetMeta.name} (${targetMeta.price} 💎)!`); }
-                    else { updateUI(); alert('Неудача! Стрелка остановилась мимо зелёной зоны.'); }
-                    renderUpgrader();
-                }
+                else { upgraderBusy = false; selectedUserGifts.sort((a, b) => b - a).forEach(i => state.items.splice(i, 1)); selectedUserGifts = []; if (isWin) { addGift(targetKey, true); alert(`УСПЕХ! Вы получили ${targetMeta.name} (${targetMeta.price} 💎)!`); } else { updateUI(); alert('Неудача! Стрелка остановилась мимо зелёной зоны.'); } renderUpgrader(); }
             }
             requestAnimationFrame(animRadar);
         }
 
-        // ================= МАЙНЕР, СУДОКУ, БЛЭКДЖЕК, САПЁР =================
+        // МАЙНЕР, СУДОКУ, БЛЭКДЖЕК, САПЁР
         function getMinerRate() { return 60 + (state.miner.coreLv - 1) * 19; }
         function getMinerHours() { return 4 + (state.miner.storageLv - 1) * 2; }
         function getMinerMaxCap() { return getMinerRate() * getMinerHours(); }
-
         function tickMiner() {
-            const now = Date.now();
-            const elapsedSec = Math.floor((now - state.miner.lastTick) / 1000);
+            const now = Date.now(), elapsedSec = Math.floor((now - state.miner.lastTick) / 1000);
             if (elapsedSec > 0) {
-                const earned = elapsedSec * (getMinerRate() / 3600);
-                const cap = getMinerMaxCap();
-                if (state.miner.stored < cap) {
-                    const add = Math.min(cap - state.miner.stored, earned);
-                    state.miner.stored += add;
-                    state.miner.totalMined += add;
-                }
-                state.miner.lastTick = now;
-                saveState();
+                const earned = elapsedSec * (getMinerRate() / 3600), cap = getMinerMaxCap();
+                if (state.miner.stored < cap) { const add = Math.min(cap - state.miner.stored, earned); state.miner.stored += add; state.miner.totalMined += add; }
+                state.miner.lastTick = now; localStorage.setItem('nervana_persistent_v1', JSON.stringify(state));
             }
             renderMinerUI();
         }
         setInterval(tickMiner, 1000);
-
         function renderMinerUI() {
             const rate = getMinerRate(), hours = getMinerHours(), cap = getMinerMaxCap();
-            document.getElementById('miner-main-lv').innerText = state.miner.coreLv;
-            document.getElementById('mined-chips').innerText = Math.floor(state.miner.stored);
+            document.getElementById('miner-main-lv').innerText = state.miner.coreLv; document.getElementById('mined-chips').innerText = Math.floor(state.miner.stored);
             document.getElementById('miner-bar').style.width = Math.min(100, (state.miner.stored / cap) * 100) + '%';
-            document.getElementById('miner-rate-text').innerText = rate;
-            document.getElementById('miner-cap-hours').innerText = hours;
-            document.getElementById('miner-total-all').innerText = Math.floor(state.miner.totalMined);
-
+            document.getElementById('miner-rate-text').innerText = rate; document.getElementById('miner-cap-hours').innerText = hours; document.getElementById('miner-total-all').innerText = Math.floor(state.miner.totalMined);
             const coreCost = state.miner.coreLv * 1500, storCost = state.miner.storageLv * 2500;
-            document.getElementById('core-lv').innerText = state.miner.coreLv;
-            document.getElementById('core-diff').innerText = state.miner.coreLv < 25 ? `${rate} → ${rate + 19} фишек/час` : 'Макс. уровень';
-            document.getElementById('core-cost').innerText = coreCost.toLocaleString('ru-RU');
-            document.getElementById('btn-upg-core').disabled = state.miner.coreLv >= 25;
-
-            document.getElementById('storage-lv').innerText = state.miner.storageLv;
-            document.getElementById('storage-diff').innerText = state.miner.storageLv < 11 ? `${hours} → ${hours + 2} часов` : 'Макс. уровень';
-            document.getElementById('storage-cost').innerText = storCost.toLocaleString('ru-RU');
-            document.getElementById('btn-upg-storage').disabled = state.miner.storageLv >= 11;
+            document.getElementById('core-lv').innerText = state.miner.coreLv; document.getElementById('core-diff').innerText = state.miner.coreLv < 25 ? `${rate} → ${rate + 19} фишек/час` : 'Макс. уровень';
+            document.getElementById('core-cost').innerText = coreCost.toLocaleString('ru-RU'); document.getElementById('btn-upg-core').disabled = state.miner.coreLv >= 25;
+            document.getElementById('storage-lv').innerText = state.miner.storageLv; document.getElementById('storage-diff').innerText = state.miner.storageLv < 11 ? `${hours} → ${hours + 2} часов` : 'Макс. уровень';
+            document.getElementById('storage-cost').innerText = storCost.toLocaleString('ru-RU'); document.getElementById('btn-upg-storage').disabled = state.miner.storageLv >= 11;
         }
+        function claimMiner() { const amt = Math.floor(state.miner.stored); if (amt <= 0) return alert('Пока нечего забирать!'); state.chips += amt; state.miner.stored -= amt; updateUI(); alert(`Забрано ${amt} 🪙!`); }
+        function upgradeCore() { const cost = state.miner.coreLv * 1500; if (state.gems < cost) return alert(`Недостаточно алмазов (нужно ${cost} 💎)`); state.chips += Math.floor(state.miner.stored); state.miner.stored = 0; state.gems -= cost; state.miner.coreLv++; updateUI(); }
+        function upgradeStorage() { const cost = state.miner.storageLv * 2500; if (state.gems < cost) return alert(`Недостаточно алмазов (нужно ${cost} 💎)`); state.chips += Math.floor(state.miner.stored); state.miner.stored = 0; state.gems -= cost; state.miner.storageLv++; updateUI(); }
 
-        function claimMiner() {
-            const amt = Math.floor(state.miner.stored);
-            if (amt <= 0) return alert('Пока нечего забирать!');
-            state.chips += amt; state.miner.stored -= amt; updateUI(); alert(`Забрано ${amt} 🪙!`);
-        }
-
-        function upgradeCore() {
-            const cost = state.miner.coreLv * 1500;
-            if (state.gems < cost) return alert(`Недостаточно алмазов (нужно ${cost} 💎)`);
-            state.chips += Math.floor(state.miner.stored); state.miner.stored = 0; state.gems -= cost; state.miner.coreLv++; updateUI();
-        }
-
-        function upgradeStorage() {
-            const cost = state.miner.storageLv * 2500;
-            if (state.gems < cost) return alert(`Недостаточно алмазов (нужно ${cost} 💎)`);
-            state.chips += Math.floor(state.miner.stored); state.miner.stored = 0; state.gems -= cost; state.miner.storageLv++; updateUI();
-        }
-
-        function updateUI() {
+        function updateUI(doCloudPush = true) {
             const invTotal = state.items.reduce((sum, item) => sum + (GIFT_CATALOG[item.key]?.price || 0), 0);
             const nftOnlyCount = state.items.filter(item => GIFT_CATALOG[item.key]?.isNft).length;
             document.getElementById('chips-bal').innerText = state.chips.toLocaleString('ru-RU');
@@ -1279,128 +1005,49 @@
             document.getElementById('nft-count').innerText = `${nftOnlyCount} NFT`;
 
             const grid = document.getElementById('inventory-grid');
-            if (state.items.length === 0) {
-                grid.innerHTML = `<div class="empty-state">Инвентарь пуст.<br>Откройте кейсы в магазине или испытайте удачу в картах!</div>`;
-            } else {
-                grid.innerHTML = state.items.map((item, idx) =>
-                    renderGiftCardHTML(item, '', `onclick="sellItem(${idx})"`)
-                ).join('');
-            }
+            grid.innerHTML = state.items.length === 0
+                ? `<div class="empty-state">Инвентарь пуст.<br>Откройте кейсы в магазине или испытайте удачу в картах!</div>`
+                : state.items.map((item, idx) => renderGiftCardHTML(item, '', `onclick="sellItem(${idx})"`)).join('');
             renderMinerUI();
-            saveState();
+            if (doCloudPush) saveState();
         }
 
         function switchTab(tab, title) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
             document.getElementById('screen-' + tab).classList.add('active');
-            const navEl = document.getElementById('nav-' + tab);
-            if (navEl) navEl.classList.add('active');
-            document.getElementById('page-title').innerText = title;
-            document.getElementById('btn-back').style.visibility = 'hidden';
+            const navEl = document.getElementById('nav-' + tab); if (navEl) navEl.classList.add('active');
+            document.getElementById('page-title').innerText = title; document.getElementById('btn-back').style.visibility = 'hidden';
         }
-
         function openGame(gameId, title) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
             document.getElementById('screen-' + gameId).classList.add('active');
-            const navEl = document.getElementById('nav-' + gameId);
-            if (navEl) navEl.classList.add('active');
-            document.getElementById('page-title').innerText = title;
-            document.getElementById('btn-back').style.visibility = 'visible';
+            const navEl = document.getElementById('nav-' + gameId); if (navEl) navEl.classList.add('active');
+            document.getElementById('page-title').innerText = title; document.getElementById('btn-back').style.visibility = 'visible';
         }
-
         function goBack() { switchTab('games', 'Игры'); }
+        function addGift(key, doUpdate = true) { const meta = GIFT_CATALOG[key] || GIFT_CATALOG.steel_ingot; state.items.push({ key, num: meta.isNft ? Math.floor(Math.random() * 899 + 100) : null }); if (doUpdate) updateUI(); }
+        function sellItem(idx) { const item = state.items[idx]; if (!item) return; const meta = GIFT_CATALOG[item.key] || GIFT_CATALOG.steel_ingot; if (confirm(`Продать ${meta.name} за ${meta.price} 💎?`)) { state.gems += meta.price; state.items.splice(idx, 1); updateUI(); } }
 
-        function addGift(key, doUpdate = true) {
-            const meta = GIFT_CATALOG[key] || GIFT_CATALOG.steel_ingot;
-            state.items.push({ key, num: meta.isNft ? Math.floor(Math.random() * 899 + 100) : null });
-            if (doUpdate) updateUI();
-        }
-
-        function sellItem(idx) {
-            const item = state.items[idx];
-            if (!item) return;
-            const meta = GIFT_CATALOG[item.key] || GIFT_CATALOG.steel_ingot;
-            if (confirm(`Продать ${meta.name} за ${meta.price} 💎?`)) {
-                state.gems += meta.price; state.items.splice(idx, 1); updateUI();
-            }
-        }
-
-        // СУДОКУ
-        const sudokuPuzzle = [
-            [5,9,0, 2,0,1, 3,0,6], [4,2,0, 0,0,3, 7,0,0], [8,6,3, 0,0,7, 0,0,0],
-            [0,0,9, 0,0,0, 6,0,0], [0,0,0, 4,3,6, 9,0,0], [0,4,0, 0,0,9, 0,0,5],
-            [6,1,0, 0,0,0, 5,0,7], [0,7,5, 0,6,0, 8,9,3], [9,0,0, 7,2,5, 4,0,0]
-        ];
+        const sudokuPuzzle = [[5,9,0,2,0,1,3,0,6],[4,2,0,0,0,3,7,0,0],[8,6,3,0,0,7,0,0,0],[0,0,9,0,0,0,6,0,0],[0,0,0,4,3,6,9,0,0],[0,4,0,0,0,9,0,0,5],[6,1,0,0,0,0,5,0,7],[0,7,5,0,6,0,8,9,3],[9,0,0,7,2,5,4,0,0]];
         let sUserGrid = [], sSelected = [0, 2], sTimer = null, sSec = 0;
         function openSudoku() { openGame('sudoku', 'Судоку'); initSudoku(); }
-        function initSudoku() {
-            sUserGrid = sudokuPuzzle.map(r => [...r]); sSelected = [0, 2]; sSec = 0; clearInterval(sTimer);
-            sTimer = setInterval(() => { sSec++; const m = Math.floor(sSec / 60), s = sSec % 60; document.getElementById('sudoku-timer').innerText = `${m}:${s < 10 ? '0'+s : s}`; }, 1000);
-            renderSudoku();
-        }
-        function renderSudoku() {
-            const board = document.getElementById('sudoku-board'); board.innerHTML = '';
-            for (let r = 0; r < 9; r++) for (let c = 0; c < 9; c++) {
-                const isFixed = sudokuPuzzle[r][c] !== 0, val = sUserGrid[r][c], isSel = sSelected[0] === r && sSelected[1] === c;
-                board.innerHTML += `<div class="s-cell ${(c===2||c===5)?'b-right':''} ${(r===2||r===5)?'b-bottom':''} ${isFixed?'fixed':'user-num'} ${isSel?'selected':''}" onclick="sSelected=[${r},${c}]; renderSudoku();">${val || ''}</div>`;
-            }
-            const pad = document.getElementById('sudoku-numpad'); pad.innerHTML = '';
-            for (let n = 1; n <= 9; n++) pad.innerHTML += `<div class="num-btn" onclick="inputSudoku(${n})">${n}</div>`;
-        }
+        function initSudoku() { sUserGrid = sudokuPuzzle.map(r => [...r]); sSelected = [0, 2]; sSec = 0; clearInterval(sTimer); sTimer = setInterval(() => { sSec++; const m = Math.floor(sSec / 60), s = sSec % 60; document.getElementById('sudoku-timer').innerText = `${m}:${s < 10 ? '0'+s : s}`; }, 1000); renderSudoku(); }
+        function renderSudoku() { const board = document.getElementById('sudoku-board'); board.innerHTML = ''; for (let r = 0; r < 9; r++) for (let c = 0; c < 9; c++) { const isFixed = sudokuPuzzle[r][c] !== 0, val = sUserGrid[r][c], isSel = sSelected[0] === r && sSelected[1] === c; board.innerHTML += `<div class="s-cell ${(c===2||c===5)?'b-right':''} ${(r===2||r===5)?'b-bottom':''} ${isFixed?'fixed':'user-num'} ${isSel?'selected':''}" onclick="sSelected=[${r},${c}]; renderSudoku();">${val || ''}</div>`; } const pad = document.getElementById('sudoku-numpad'); pad.innerHTML = ''; for (let n = 1; n <= 9; n++) pad.innerHTML += `<div class="num-btn" onclick="inputSudoku(${n})">${n}</div>`; }
         function inputSudoku(num) { const [r, c] = sSelected; if (sudokuPuzzle[r][c] === 0) { sUserGrid[r][c] = num; renderSudoku(); } }
-        function checkSudokuWin() {
-            for (let r = 0; r < 9; r++) for (let c = 0; c < 9; c++) if (sUserGrid[r][c] === 0) return alert('Заполните все клетки!');
-            for (let i = 0; i < 9; i++) if (new Set(sUserGrid[i]).size !== 9 || new Set(sUserGrid.map(r => r[i])).size !== 9) return alert('Есть повторы цифр!');
-            clearInterval(sTimer); state.gems += 500; updateUI(); alert('Победа! +500 💎'); goBack();
-        }
+        function checkSudokuWin() { for (let r = 0; r < 9; r++) for (let c = 0; c < 9; c++) if (sUserGrid[r][c] === 0) return alert('Заполните все клетки!'); for (let i = 0; i < 9; i++) if (new Set(sUserGrid[i]).size !== 9 || new Set(sUserGrid.map(r => r[i])).size !== 9) return alert('Есть повторы цифр!'); clearInterval(sTimer); state.gems += 500; updateUI(); alert('Победа! +500 💎'); goBack(); }
 
-        // САПЁР
         let minesActive = false, minesWin = 0, bombIdx = -1;
-        function startMines() {
-            if (minesActive) { state.gems += minesWin; minesActive = false; updateUI(); alert(`Забрано ${minesWin} 💎!`); document.getElementById('btn-mines-action').innerText = 'Начать игру (50 💎)'; return; }
-            if (state.gems < 50) return alert('Нужно 50 💎');
-            state.gems -= 50; updateUI(); minesActive = true; minesWin = 50; bombIdx = Math.floor(Math.random() * 15);
-            document.getElementById('mines-win').innerText = minesWin; document.getElementById('btn-mines-action').innerText = `Забрать ${minesWin} 💎`;
-            const grid = document.getElementById('mines-grid'); grid.innerHTML = '';
-            for (let i = 0; i < 15; i++) grid.innerHTML += `<div class="mine-cell" onclick="clickMine(this, ${i})">?</div>`;
-        }
-        function clickMine(el, idx) {
-            if (!minesActive || el.classList.contains('open')) return;
-            if (idx === bombIdx) { el.classList.add('boom'); el.innerText = '💥'; minesActive = false; document.getElementById('btn-mines-action').innerText = 'Подорвались! Играть снова (50 💎)'; }
-            else { el.classList.add('open'); el.innerText = '💎'; minesWin += 50; document.getElementById('mines-win').innerText = minesWin; document.getElementById('btn-mines-action').innerText = `Забрать ${minesWin} 💎`; }
-        }
+        function startMines() { if (minesActive) { state.gems += minesWin; minesActive = false; updateUI(); alert(`Забрано ${minesWin} 💎!`); document.getElementById('btn-mines-action').innerText = 'Начать игру (50 💎)'; return; } if (state.gems < 50) return alert('Нужно 50 💎'); state.gems -= 50; updateUI(); minesActive = true; minesWin = 50; bombIdx = Math.floor(Math.random() * 15); document.getElementById('mines-win').innerText = minesWin; document.getElementById('btn-mines-action').innerText = `Забрать ${minesWin} 💎`; const grid = document.getElementById('mines-grid'); grid.innerHTML = ''; for (let i = 0; i < 15; i++) grid.innerHTML += `<div class="mine-cell" onclick="clickMine(this, ${i})">?</div>`; }
+        function clickMine(el, idx) { if (!minesActive || el.classList.contains('open')) return; if (idx === bombIdx) { el.classList.add('boom'); el.innerText = '💥'; minesActive = false; document.getElementById('btn-mines-action').innerText = 'Подорвались! Играть снова (50 💎)'; } else { el.classList.add('open'); el.innerText = '💎'; minesWin += 50; document.getElementById('mines-win').innerText = minesWin; document.getElementById('btn-mines-action').innerText = `Забрать ${minesWin} 💎`; } }
 
-        // БЛЭКДЖЕК
         let deck = [], playerHand = [], dealerHand = [], bet = 50, gameOver = true;
         const suits = ['♠', '♣', '♥', '♦'], values = ['2','3','4','5','6','7','8','9','10','J','Q','K','A'];
         function createDeck() { deck = []; for (let s of suits) for (let v of values) deck.push({ s, v }); deck.sort(() => Math.random() - 0.5); }
-        function getScore(hand) {
-            let score = 0, aces = 0;
-            for (let c of hand) { if (['J','Q','K'].includes(c.v)) score += 10; else if (c.v === 'A') { score += 11; aces++; } else score += parseInt(c.v); }
-            while (score > 21 && aces > 0) { score -= 10; aces--; }
-            return score;
-        }
-        function renderCards(hideDealer = true) {
-            const pDiv = document.getElementById('player-cards'), dDiv = document.getElementById('dealer-cards');
-            pDiv.innerHTML = ''; dDiv.innerHTML = '';
-            playerHand.forEach(c => { const r = c.s === '♥' || c.s === '♦'; pDiv.innerHTML += `<div class="card ${r?'red':''}"><div>${c.v}</div><div style="text-align:right">${c.s}</div></div>`; });
-            dealerHand.forEach((c, idx) => {
-                if (idx === 1 && hideDealer) dDiv.innerHTML += `<div class="card hidden"></div>`;
-                else { const r = c.s === '♥' || c.s === '♦'; dDiv.innerHTML += `<div class="card ${r?'red':''}"><div>${c.v}</div><div style="text-align:right">${c.s}</div></div>`; }
-            });
-            document.getElementById('player-score').innerText = getScore(playerHand);
-            document.getElementById('dealer-score').innerText = hideDealer ? getScore([dealerHand[0]]) : getScore(dealerHand);
-        }
-        function startBJ() {
-            bet = 50; if (state.gems < bet) return alert('Недостаточно алмазов (50 💎)');
-            state.gems -= bet; updateUI(); gameOver = false;
-            document.getElementById('bj-status').innerText = ''; document.getElementById('bet-text').innerText = bet; document.getElementById('center-bet-val').innerText = bet;
-            document.getElementById('btn-restart').style.display = 'none'; toggleBJ(true); createDeck();
-            playerHand = [deck.pop(), deck.pop()]; dealerHand = [deck.pop(), deck.pop()]; renderCards(true);
-            if (getScore(playerHand) === 21) stand();
-        }
+        function getScore(hand) { let score = 0, aces = 0; for (let c of hand) { if (['J','Q','K'].includes(c.v)) score += 10; else if (c.v === 'A') { score += 11; aces++; } else score += parseInt(c.v); } while (score > 21 && aces > 0) { score -= 10; aces--; } return score; }
+        function renderCards(hideDealer = true) { const pDiv = document.getElementById('player-cards'), dDiv = document.getElementById('dealer-cards'); pDiv.innerHTML = ''; dDiv.innerHTML = ''; playerHand.forEach(c => { const r = c.s === '♥' || c.s === '♦'; pDiv.innerHTML += `<div class="card ${r?'red':''}"><div>${c.v}</div><div style="text-align:right">${c.s}</div></div>`; }); dealerHand.forEach((c, idx) => { if (idx === 1 && hideDealer) dDiv.innerHTML += `<div class="card hidden"></div>`; else { const r = c.s === '♥' || c.s === '♦'; dDiv.innerHTML += `<div class="card ${r?'red':''}"><div>${c.v}</div><div style="text-align:right">${c.s}</div></div>`; } }); document.getElementById('player-score').innerText = getScore(playerHand); document.getElementById('dealer-score').innerText = hideDealer ? getScore([dealerHand[0]]) : getScore(dealerHand); }
+        function startBJ() { bet = 50; if (state.gems < bet) return alert('Недостаточно алмазов (50 💎)'); state.gems -= bet; updateUI(); gameOver = false; document.getElementById('bj-status').innerText = ''; document.getElementById('bet-text').innerText = bet; document.getElementById('center-bet-val').innerText = bet; document.getElementById('btn-restart').style.display = 'none'; toggleBJ(true); createDeck(); playerHand = [deck.pop(), deck.pop()]; dealerHand = [deck.pop(), deck.pop()]; renderCards(true); if (getScore(playerHand) === 21) stand(); }
         function toggleBJ(on) { ['btn-hit','btn-stand','btn-double'].forEach(id => document.getElementById(id).disabled = !on); }
         function hit() { if (!gameOver) { playerHand.push(deck.pop()); renderCards(true); if (getScore(playerHand) > 21) endBJ('Перебор! Вы проиграли.', 0); } }
         function doubleBet() { if (state.gems < bet) return alert('Не хватает алмазов'); state.gems -= bet; bet *= 2; updateUI(); document.getElementById('bet-text').innerText = bet; document.getElementById('center-bet-val').innerText = bet; playerHand.push(deck.pop()); renderCards(true); if (getScore(playerHand) > 21) endBJ('Перебор!', 0); else stand(); }
@@ -1409,7 +1056,8 @@
 
         checkVersionUpdate();
         tickMiner();
-        updateUI();
+        updateUI(false);
+        syncFromCloud(false);
     </script>
 </body>
 </html>
