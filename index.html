@@ -723,7 +723,7 @@
         const tg = window.Telegram.WebApp;
         tg.expand();
 
-        const APP_VERSION = "2.7";
+        const APP_VERSION = "2.8";
 
         // Подключение к вашей облачной базе Supabase
         const SUPABASE_URL = "https://kcycpjrriegjfbzddbos.supabase.co";
@@ -734,9 +734,9 @@
         };
 
         const tgUser = tg.initDataUnsafe?.user || {};
-        const CURRENT_TG_ID = tgUser.id || parseInt(localStorage.getItem('nervana_fallback_id')) || Math.floor(100000000 + Math.random() * 899999999);
-        localStorage.setItem('nervana_fallback_id', CURRENT_TG_ID);
-        const CURRENT_USERNAME = tgUser.username || tgUser.first_name || ("player_" + String(CURRENT_TG_ID).slice(-4));
+        const tgId = Number(tgUser.id);
+        const CURRENT_TG_ID = tg.initData && Number.isSafeInteger(tgId) && tgId > 0 ? tgId : null;
+        const CURRENT_USERNAME = tgUser.username || tgUser.first_name || ("player_" + String(tgId).slice(-4));
 
         const GIFT_CATALOG = {
             steel_ingot: {
@@ -964,6 +964,7 @@
 
         function saveState() {
             localStorage.setItem('nervana_persistent_v1', JSON.stringify(state));
+            if (CURRENT_TG_ID === null) return;
             localRevision++;
             clearTimeout(syncTimeout);
             syncTimeout = setTimeout(() => {
@@ -985,6 +986,7 @@
 
         // Отправка баланса и инвентаря в Supabase
         async function pushToCloud() {
+            if (CURRENT_TG_ID === null) return false;
             try {
                 const res = await fetch(`${SUPABASE_URL}/rest/v1/nervana_users?on_conflict=tg_id`, {
                     method: "POST",
@@ -1010,6 +1012,10 @@
 
         // Загрузка изменений из Supabase
         async function syncFromCloud(showAlert = false) {
+            if (CURRENT_TG_ID === null) {
+                if (showAlert) alert('Облачное сохранение доступно при запуске игры из Telegram.');
+                return;
+            }
             try {
                 clearTimeout(syncTimeout);
                 syncTimeout = null;
@@ -1088,8 +1094,10 @@
 
         function getGiftTraits(item, meta) {
             const serial = meta.isNft ? readBalance(item.num) : 0;
-            const [theme, backdrop] = serial ? giftBackdrops[serial % giftBackdrops.length] : [meta.theme, 'Классический'];
-            const [symbol, symbolName] = giftSymbols[Math.floor(serial / giftBackdrops.length) % giftSymbols.length];
+            const customBackdrop = meta.isNft && giftBackdrops.find(([, name]) => name === item.backdrop);
+            const customSymbol = meta.isNft && giftSymbols.find(([, name]) => name === item.symbol);
+            const [theme, backdrop] = customBackdrop || (serial ? giftBackdrops[serial % giftBackdrops.length] : [meta.theme, 'Классический']);
+            const [symbol, symbolName] = customSymbol || giftSymbols[Math.floor(serial / giftBackdrops.length) % giftSymbols.length];
             return { serial, theme, backdrop, symbol, symbolName };
         }
 
@@ -1295,7 +1303,8 @@
             if (viewedGift && document.getElementById('gift-sheet').open) {
                 const selected = viewedGift;
                 const matches = item => item?.key === selected.key && (item?.num ?? null) === (selected.num ?? null)
-                    && (item?.model ?? '') === (selected.model ?? '');
+                    && (item?.model ?? '') === (selected.model ?? '')
+                    && (item?.backdrop ?? '') === (selected.backdrop ?? '') && (item?.symbol ?? '') === (selected.symbol ?? '');
                 const occurrence = state.items.filter(matches).indexOf(selected);
                 viewedGift = items.filter(matches)[occurrence] ?? null;
                 if (!viewedGift) {
